@@ -5,12 +5,13 @@
 package sframe
 
 import java.awt.event.ActionListener
+import javax.swing.JButton
 
 /**
  * @author Steven Dobay
  */
 case class Button(private val initText: String = "") extends Component {
- private val button = new javax.swing.JButton(initText)
+ private val button = new JButton(initText)
  private var dim = Dim(0, 0)
  private var container: Option[Container] = None
 
@@ -81,4 +82,11 @@ case class Button(private val initText: String = "") extends Component {
   */
  def property_=(key: String, value: AnyRef) =
   button.putClientProperty(key, value)
+
+ override def equals(obj: Any) =
+  if(obj.isInstanceOf[Button])
+   obj.asInstanceOf[Button].getWrapped == getWrapped
+  else if(obj.isInstanceOf[JButton])
+   obj.asInstanceOf[JButton] == getWrapped
+  else false
 }

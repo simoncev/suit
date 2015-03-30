@@ -57,4 +57,11 @@ case class RadioButtonMenuItem(private val initTitle: String,
       override def actionPerformed(e: event.ActionEvent): Unit =
         proc(ActionEvent(e))
     })
+
+  override def equals(obj: Any) =
+    if(obj.isInstanceOf[Button])
+      obj.asInstanceOf[Button].getWrapped == getWrapped
+    else if(obj.isInstanceOf[JRadioButtonMenuItem])
+      obj.asInstanceOf[JRadioButtonMenuItem] == getWrapped
+    else false
 }

@@ -5,12 +5,13 @@ package sframe
 
 import java.awt.Color
 import java.awt.event.MouseListener
+import javax.swing.JLabel
 
 /**
  * @author Steven Dobay
  */
 case class Label(private val initTitle: String) extends Component {
-  private val label = new javax.swing.JLabel(initTitle)
+  private val label = new JLabel(initTitle)
   private var container: Option[Container] = None
 
   label.putClientProperty("scala-frame-wrapper", this)
@@ -78,4 +79,11 @@ case class Label(private val initTitle: String) extends Component {
    */
   def property_=(key: String, value: AnyRef) =
     label.putClientProperty(key, value)
+
+  override def equals(obj: Any) =
+    if(obj.isInstanceOf[Button])
+      obj.asInstanceOf[Button].getWrapped == getWrapped
+    else if(obj.isInstanceOf[JLabel])
+      obj.asInstanceOf[JLabel] == getWrapped
+    else false
 }
