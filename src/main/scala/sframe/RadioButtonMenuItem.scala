@@ -16,6 +16,9 @@ case class RadioButtonMenuItem(private val initTitle: String,
                                private val isSelected: Boolean = false)
   extends MenuItem(new JRadioButtonMenuItem(initTitle, isSelected)) {
 
+  protected type Wrapper = RadioButtonMenuItem
+  protected type Wrapped = JRadioButtonMenuItem
+
   private def radioMenuItem = menuItem.asInstanceOf[JRadioButtonMenuItem]
 
   /**
@@ -58,10 +61,14 @@ case class RadioButtonMenuItem(private val initTitle: String,
         proc(ActionEvent(e))
     })
 
+  /**
+   * @param obj
+   * @return true if the wrapped objects equals
+   */
   override def equals(obj: Any) =
-    if(obj.isInstanceOf[Button])
-      obj.asInstanceOf[Button].getWrapped == getWrapped
+    if(obj.isInstanceOf[RadioButtonMenuItem])
+      obj.asInstanceOf[Component].wrapped == wrapped
     else if(obj.isInstanceOf[JRadioButtonMenuItem])
-      obj.asInstanceOf[JRadioButtonMenuItem] == getWrapped
+      obj.asInstanceOf[JRadioButtonMenuItem] == wrapped
     else false
 }

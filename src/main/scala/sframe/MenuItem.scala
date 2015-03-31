@@ -9,20 +9,9 @@ import javax.swing.JComponent
 /**
  * @author Steven Dobay
  */
-abstract class MenuItem(protected var menuItem: JComponent)
-  extends Component {
+abstract class MenuItem(protected var menuItem: JComponent) extends Component {
 
   menuItem.putClientProperty("scala-frame-wrapper", this)
-
-  /**
-   * @param p
-   */
-  def setContainer(p: Container) = {}
-
-  /**
-   * @return with a pointer to the parent optionally
-   */
-  override def getContainer: Option[Container] = None
 
   /**
    * Adds the action-handling to the menuitem.
@@ -39,17 +28,5 @@ abstract class MenuItem(protected var menuItem: JComponent)
   /**
    * @return with the wrapped menuitem
    */
-  def getWrapped = menuItem
-
-  /**
-   * @param key
-   * @return with the property at the given key
-   */
-  def property(key: String) = menuItem.getClientProperty(key)
-
-  /**
-   * Puts the property to the client property
-   */
-  def property_=(key: String, value: AnyRef) =
-    menuItem.putClientProperty(key, value)
+  def wrapped = menuItem
 }

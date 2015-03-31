@@ -56,10 +56,14 @@ case class CheckBoxMenuItem(private val initTitle: String,
         proc(ActionEvent(e))
     })
 
+  /**
+   * @param obj
+   * @return true if the wrapped objects equals
+   */
   override def equals(obj: Any) =
-    if(obj.isInstanceOf[Button])
-      obj.asInstanceOf[Button].getWrapped == getWrapped
+    if(obj.isInstanceOf[CheckBoxMenuItem])
+      obj.asInstanceOf[Component].wrapped == wrapped
     else if(obj.isInstanceOf[JCheckBoxMenuItem])
-      obj.asInstanceOf[JCheckBoxMenuItem] == getWrapped
+      obj.asInstanceOf[JCheckBoxMenuItem] == wrapped
     else false
 }

@@ -28,7 +28,7 @@ object popups {
    */
   def warning(parent: Frame, msg: String, title: String = ""): Unit =
     JOptionPane.showMessageDialog(
-      parent.getWrapped,
+      parent.wrapped,
       msg, title,
       JOptionPane.WARNING_MESSAGE
     )
@@ -42,7 +42,7 @@ object popups {
    */
   def info(parent: Frame, msg: String, title: String = ""): Unit =
     JOptionPane.showMessageDialog(
-      parent.getWrapped,
+      parent.wrapped,
       msg, title,
       JOptionPane.INFORMATION_MESSAGE
     )
@@ -56,7 +56,7 @@ object popups {
    */
   def plain(parent: Frame, msg: String, title: String = ""): Unit =
     JOptionPane.showMessageDialog(
-      parent.getWrapped,
+      parent.wrapped,
       msg, title,
       JOptionPane.PLAIN_MESSAGE
     )
@@ -69,7 +69,7 @@ object popups {
    */
   def yesNo(parent: Frame, msg: String, title: String = "") = {
     val res = JOptionPane.showConfirmDialog(
-      parent.getWrapped,
+      parent.wrapped,
       msg, title,
       JOptionPane.YES_NO_OPTION
     )
@@ -84,7 +84,7 @@ object popups {
    */
   def yesNoCancel(parent: Frame, msg: String, title: String = "") = {
     val res = JOptionPane.showConfirmDialog(
-      parent.getWrapped,
+      parent.wrapped,
       msg, title,
       JOptionPane.YES_NO_CANCEL_OPTION
     )
@@ -99,7 +99,7 @@ object popups {
    */
   def input(parent: Frame, msg: String, title: String = ""): String =
     JOptionPane.showInputDialog(
-      parent.getWrapped,
+      parent.wrapped,
       msg, title
     )
 
@@ -114,7 +114,7 @@ object popups {
   def choice(parent: Frame, msg: String, title: String = "",
              choices: Array[AnyRef], defaultChoice: Any) =
     JOptionPane.showInputDialog(
-     parent.getWrapped,
+     parent.wrapped,
      msg, title,
      JOptionPane.QUESTION_MESSAGE, null,
      choices, defaultChoice

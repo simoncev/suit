@@ -1,5 +1,6 @@
 /**
  * Copyright© Steven Dobay 2015
+ * LICENSE: LGPLv3.0 - https://github.com/stevendobay/scala-frame/blob/master/LICENSE
  */
 package sframe
 
@@ -7,5 +8,5 @@ package sframe
  * @author Steven Dobay
  */
 trait Layout {
-  def getWrapped: java.awt.LayoutManager
+  def wrapped: java.awt.LayoutManager
 }

@@ -9,7 +9,7 @@ import javax.swing.{JFrame, JMenuBar, JMenu}
  * @author Steven Dobay
  */
 case class Frame(private val initTitle: String) extends Container {
-  private var jframe = new JFrame(initTitle)
+  private val jframe = new JFrame(initTitle)
   private var dim = Dim(0, 0)
   private var layoutM: Layout = layouts.FlowLayout()
   private var menuBar: Option[JMenuBar] = None
@@ -20,7 +20,7 @@ case class Frame(private val initTitle: String) extends Container {
    */
   show
   jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
-  jframe.setLayout(layoutM.getWrapped)
+  jframe.setLayout(layoutM.wrapped)
 
 
   /**
@@ -110,8 +110,8 @@ case class Frame(private val initTitle: String) extends Container {
    * @param comp
    */
   def +=(comp: Component) = {
-    jframe.getContentPane.add(comp.getWrapped)
-    comp.setContainer(this)
+    jframe.getContentPane.add(comp.wrapped)
+    comp.container = this
     updateUI
   }
 
@@ -120,8 +120,8 @@ case class Frame(private val initTitle: String) extends Container {
    * @param comp
    */
   def -=(comp: Component) = {
-    jframe.getContentPane.remove(comp.getWrapped)
-    comp.setContainer(this)
+    jframe.getContentPane.remove(comp.wrapped)
+    comp.container = this
     updateUI
   }
 
@@ -130,8 +130,8 @@ case class Frame(private val initTitle: String) extends Container {
    * @param comp
    */
   def add(comp: Component): Unit = {
-    jframe.getContentPane.add(comp.getWrapped)
-    comp.setContainer(this)
+    jframe.getContentPane.add(comp.wrapped)
+    comp.container = this
   }
 
   /**
@@ -139,8 +139,8 @@ case class Frame(private val initTitle: String) extends Container {
    * @param comp
    */
   def remove(comp: Component) = {
-    jframe.getContentPane.remove(comp.getWrapped)
-    comp.setContainer(this)
+    jframe.getContentPane.remove(comp.wrapped)
+    comp.container = this
   }
 
   /**
@@ -171,7 +171,7 @@ case class Frame(private val initTitle: String) extends Container {
    */
   def layout_=(layout: Layout) = {
     layoutM = layout
-    jframe.setLayout(layout.getWrapped)
+    jframe.setLayout(layout.wrapped)
   }
 
   /**
@@ -200,7 +200,7 @@ case class Frame(private val initTitle: String) extends Container {
   /**
    * @return with the wrapped JFrame
    */
-  def getWrapped = jframe
+  def wrapped = jframe
 }
 
 object Frame {

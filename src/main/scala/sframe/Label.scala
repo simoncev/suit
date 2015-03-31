@@ -12,7 +12,6 @@ import javax.swing.JLabel
  */
 case class Label(private val initTitle: String) extends Component {
   private val label = new JLabel(initTitle)
-  private var container: Option[Container] = None
 
   label.putClientProperty("scala-frame-wrapper", this)
 
@@ -28,36 +27,14 @@ case class Label(private val initTitle: String) extends Component {
   def text_=(t: String) = label.setText(t)
 
   /**
-   * @return with the label's background
-   */
-  def background = label.getBackground
-
-  /**
-   * Sets the label's background
-   * @param background
-   */
-  def background_=(background: Color) =
-    label.setBackground(background)
-
-  /**
    * @return with the name of the class
    */
   def className = "Label"
 
   /**
-   * @return with a pointer to the parent optionally
-   */
-  def getContainer = container
-
-  /**
-   * @param c
-   */
-  def setContainer(c: Container) = container = Some(c)
-
-  /**
    * @return with a pointer to the wrapped JComponent
    */
-  def getWrapped = label
+  def wrapped = label
 
   /**
    * @param proc
@@ -69,21 +46,13 @@ case class Label(private val initTitle: String) extends Component {
     )
 
   /**
-   * @param key
-   * @return with the property at the given key
+   * @param obj
+   * @return true if the wrapped objects equals
    */
-  def property(key: String) = label.getClientProperty(key)
-
-  /**
-   * Puts the property to the client property
-   */
-  def property_=(key: String, value: AnyRef) =
-    label.putClientProperty(key, value)
-
   override def equals(obj: Any) =
-    if(obj.isInstanceOf[Button])
-      obj.asInstanceOf[Button].getWrapped == getWrapped
+    if(obj.isInstanceOf[Label])
+      obj.asInstanceOf[Component].wrapped == wrapped
     else if(obj.isInstanceOf[JLabel])
-      obj.asInstanceOf[JLabel] == getWrapped
+      obj.asInstanceOf[JLabel] == wrapped
     else false
 }

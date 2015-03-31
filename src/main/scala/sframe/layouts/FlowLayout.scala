@@ -37,5 +37,5 @@ case class FlowLayout() extends Layout {
   /**
    * @return with a pointer to the wrapped layout manager
    */
-  def getWrapped = layout
+  def wrapped = layout
 }

@@ -12,22 +12,6 @@ import javax.swing.JButton
  */
 case class Button(private val initText: String = "") extends Component {
  private val button = new JButton(initText)
- private var dim = Dim(0, 0)
- private var container: Option[Container] = None
-
- /**
-  * @return with the size of th button
-  */
- def size = dim
-
- /**
-  * Sets the size of the button
-  * @param d
-  */
- def size_=(d: Dim) = {
-  dim = d
-  button.setSize(dim)
- }
 
  /**
   * @return with the button's text
@@ -53,18 +37,7 @@ case class Button(private val initText: String = "") extends Component {
   /**
    * @return with a pointer to the wrapped JComponent
    */
- def getWrapped = button
-
- /**
-  * @return with a pointer to the parent optionally
-  */
- override def getContainer: Option[Container] = container
-
- /**
-  * Sets the parent of the component
-  * @param c
-  */
- def setContainer(c: Container) = container = Some(c)
+ def wrapped = button
 
  /**
   * @return with the name of the class
@@ -72,21 +45,13 @@ case class Button(private val initText: String = "") extends Component {
  def className = "Button"
 
  /**
-  * @param key
-  * @return with the property at the given key
+  * @param obj
+  * @return true if the wrapped objects equals
   */
- def property(key: String) = button.getClientProperty(key)
-
- /**
-  * Puts the property to the client property
-  */
- def property_=(key: String, value: AnyRef) =
-  button.putClientProperty(key, value)
-
  override def equals(obj: Any) =
   if(obj.isInstanceOf[Button])
-   obj.asInstanceOf[Button].getWrapped == getWrapped
+   obj.asInstanceOf[Component].wrapped == wrapped
   else if(obj.isInstanceOf[JButton])
-   obj.asInstanceOf[JButton] == getWrapped
+   obj.asInstanceOf[JButton] == wrapped
   else false
 }

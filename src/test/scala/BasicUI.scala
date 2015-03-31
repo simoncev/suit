@@ -69,4 +69,8 @@ object BasicUI extends App("Basic UI") {
                 popups.yesNo(content, "Could you handle the yesno?")
               }
 
+  content += ListView("A", "B", "C").onSelection { (self, from, to) =>
+       println("from " + from + " - to " + to)
+  }
+
 }

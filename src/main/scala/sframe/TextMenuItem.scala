@@ -41,10 +41,14 @@ case class TextMenuItem(private val initTitle: String)
         proc(ActionEvent(e))
     })
 
+  /**
+   * @param obj
+   * @return true if the wrapped objects equals
+   */
   override def equals(obj: Any) =
-    if(obj.isInstanceOf[Button])
-      obj.asInstanceOf[Button].getWrapped == getWrapped
+    if(obj.isInstanceOf[TextMenuItem])
+      obj.asInstanceOf[Component].wrapped == wrapped
     else if(obj.isInstanceOf[JMenuItem])
-      obj.asInstanceOf[JMenuItem] == getWrapped
+      obj.asInstanceOf[JMenuItem] == wrapped
     else false
 }

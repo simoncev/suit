@@ -27,13 +27,13 @@ case class Menu(private val initTitle: String) {
    * Adds the item to the menu
    * @param item
    */
-  def +=(item: MenuItem): Unit = menu.add(item.getWrapped)
+  def +=(item: MenuItem): Unit = menu.add(item.wrapped)
 
   /**
    * Removes the item from the menu
    * @param item
    */
-  def -=(item: MenuItem): Unit = menu.remove(item.getWrapped)
+  def -=(item: MenuItem): Unit = menu.remove(item.wrapped)
 
   /**
    * Adds the items to the menu
@@ -41,7 +41,7 @@ case class Menu(private val initTitle: String) {
    * @return with the menu's pointer
    */
   def withItems(items: Array[MenuItem]): Menu = {
-    for (item <- items) menu.add(item.getWrapped)
+    for (item <- items) menu.add(item.wrapped)
     this
   }
 
