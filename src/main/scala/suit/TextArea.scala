@@ -13,6 +13,8 @@ import javax.swing.JTextArea
 case class TextArea(private val initText: String = "")
    extends Component with Bindable[String] {
 
+  type Wrapped = JTextArea
+
   private val area = new JTextArea(initText)
 
   def text = area.getText()

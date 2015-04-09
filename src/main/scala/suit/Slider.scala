@@ -13,6 +13,8 @@ case class Slider(private val initMin: Int = 0,
                   private val initMax: Int = 100)
    extends Widget with Bindable[Int] {
 
+  type Wrapped = JSlider
+
   private val slider = new JSlider(initMin, initMax)
 
   slider.putClientProperty ("scala-frame-wrapper", this)

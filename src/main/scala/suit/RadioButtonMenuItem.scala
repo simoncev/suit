@@ -16,9 +16,6 @@ case class RadioButtonMenuItem(private val initTitle: String,
                                private val isSelected: Boolean = false)
   extends MenuItem(new JRadioButtonMenuItem(initTitle, isSelected)) {
 
-  protected type Wrapper = RadioButtonMenuItem
-  protected type Wrapped = JRadioButtonMenuItem
-
   private def radioMenuItem = menuItem.asInstanceOf[JRadioButtonMenuItem]
 
   /**

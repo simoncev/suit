@@ -14,6 +14,11 @@ import suit._
 object BasicUI extends App("Basic UI") {
 
   /**
+   * Setting the layout model
+   */
+  frame.layout = layouts.GridLayout(4, 2)
+
+  /**
    * Setting the size of the frame
    */
   frame.size = Dim(300, 300)
@@ -81,7 +86,12 @@ object BasicUI extends App("Basic UI") {
    */
   frame += new Label_("Fancy label!") {
     text := "I changed the text!"
-    background := Color.BLUE
+    foreGround := Color.BLUE
+  }.pack
+
+  frame += new PasswordField_() {
+    foreGround := Color.RED
+    preferredSize := Dim(100, 20)
   }.pack
 
 }

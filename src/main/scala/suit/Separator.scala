@@ -9,6 +9,7 @@ import javax.swing.JSeparator
  * @author Steven Dobay
  */
 case class Separator() extends Widget {
+
   private val sep = new JSeparator()
 
   sep.putClientProperty ("scala-frame-wrapper", this)

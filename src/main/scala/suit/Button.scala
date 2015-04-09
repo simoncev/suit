@@ -11,6 +11,7 @@ import javax.swing.JButton
  * @author Steven Dobay
  */
 case class Button(private val initText: String = "") extends Widget {
+
  private val button = new JButton(initText)
 
  /**

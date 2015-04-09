@@ -9,6 +9,7 @@ import javax.swing.JLabel
  * @author Steven Dobay
  */
 case class Label(private val initTitle: String) extends Widget {
+
   private val label = new JLabel(initTitle)
 
   label.putClientProperty("scala-frame-wrapper", this)

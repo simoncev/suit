@@ -14,6 +14,7 @@ import javax.swing.filechooser.FileFilter
 case class FileChooser(private val initSelected: Array[File]
                          = Array.fill(0)(null))
   extends Component with Bindable[Array[File]] {
+
   private val chooser = new JFileChooser()
 
   if(!initSelected.isEmpty) chooser.setSelectedFiles(initSelected)

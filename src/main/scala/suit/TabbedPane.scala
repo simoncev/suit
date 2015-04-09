@@ -8,7 +8,9 @@ import javax.swing.{Icon, JTabbedPane}
 /**
  * @author Steven Dobay
  */
-case class TabbedPane() extends Component with Container {
+case class TabbedPane()
+  extends Component with Container {
+
   private val tabs = new JTabbedPane()
 
   tabs.putClientProperty ("scala-frame-wrapper", this)

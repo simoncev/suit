@@ -11,7 +11,8 @@ import javax.swing.JPopupMenu
 case class PopupMenu() extends Component {
   private val popup = new JPopupMenu
 
-  def +=(item: MenuItem) = popup.add(item.wrapped)
+  def +=(item: MenuItem) =
+    popup.add(item.wrapped)
 
   def ++=(items: MenuItem*) =
    for(item <- items) popup.add(item.wrapped)

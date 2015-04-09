@@ -13,6 +13,9 @@ case class Table(private val initRows: Int,
                  private val initColumns: Int,
                  private val columnNames: Array[Object])
    extends Component {
+
+  type Wrapped = JTable
+
   private val data = Array.ofDim[AnyRef](initRows, initColumns)
   private val table = new JTable(data, columnNames)
   private val scrollPane = new JScrollPane(table)

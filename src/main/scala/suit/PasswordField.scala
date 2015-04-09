@@ -4,17 +4,17 @@
 package suit
 
 import java.awt.event.{InputMethodEvent, InputMethodListener}
-import javax.swing.JTextField
+import javax.swing.{JPasswordField, JTextField}
 
 /**
  * @author Steven Dobay
  */
 case class PasswordField(private val initText: String = "")
-  extends Widget with Bindable[String] {
+  extends Widget with Bindable[Array[Char]] {
 
-  private val field = new JTextField(initText)
+  private val field = new JPasswordField(initText)
 
-  def text = field.getText
+  def text = field.getPassword
 
   def text_=(t: String) = field.setText(t)
 
@@ -32,7 +32,7 @@ case class PasswordField(private val initText: String = "")
     this
   }
 
-  protected def onChange(v: HolderOf[String]) =
+  protected def onChange(v: HolderOf[Array[Char]]) =
     onEdit(_ => v.value = text)
 
   def className = "PasswordField"

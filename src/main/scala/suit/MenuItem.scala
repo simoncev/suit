@@ -9,10 +9,11 @@ import javax.swing.JComponent
 /**
  * @author Steven Dobay
  */
-abstract class MenuItem(protected var menuItem: JComponent) extends Component {
+abstract class MenuItem (protected var menuItem: JComponent)
+  extends Component {
 
   /**
-   * @return with the wrapped menuitem
+   * @return with the wrapped menu item
    */
   def wrapped = menuItem
 }

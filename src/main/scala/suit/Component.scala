@@ -13,6 +13,8 @@ import javax.swing.border.Border
  */
 trait Component { self =>
 
+  type ComponentType = self.type
+
   /**
    * @return with a pointer to the wrapped JComponent
    */

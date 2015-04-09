@@ -8,7 +8,8 @@ import javax.swing.JRadioButton
 /**
  * @author Steven Dobay
  */
-case class RadioButton(private val initTitle: String) extends Widget {
+case class RadioButton(private val initTitle: String)
+   extends Widget {
   private val button = new JRadioButton(initTitle)
 
   def isSelected() = button.isSelected

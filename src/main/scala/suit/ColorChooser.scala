@@ -12,6 +12,7 @@ import javax.swing.JColorChooser
  */
 case class ColorChooser(private val initColor: Color = Color.WHITE)
    extends Component with Bindable[Color] {
+
   private val chooser = new JColorChooser()
 
   chooser.setColor(initColor)
