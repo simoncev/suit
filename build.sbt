@@ -1,6 +1,6 @@
-name := "scala-frame"
+name := "suit"
 
-version := "0.1.1"
+version := "0.5.0"
 
 scalaVersion := "2.11.6"
 

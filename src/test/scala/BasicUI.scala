@@ -2,8 +2,11 @@
  * Copyright© Steven Dobay 2015
  * LICENSE: LGPLv3.0 - https://github.com/stevendobay/scala-frame/blob/master/LICENSE
  */
+package scala.test
 
-import sframe._
+import java.awt.Color
+
+import suit._
 
 /**
  * @author Steven Dobay
@@ -13,64 +16,72 @@ object BasicUI extends App("Basic UI") {
   /**
    * Setting the size of the frame
    */
-  content.size = Dim(300, 300)
+  frame.size = Dim(300, 300)
 
   /**
    * Creating menus for the menubar
    */
-  content.addMenus(
+  frame.addMenus(
     /**
      * Adding a simple menu with a title; the "++=" operator
      * can add multiple menus as varargs
      *
      */
-    Menu("General") ++=(
+    Menu("General") ++= (
 
       /**
-       * Adding a simple textmenu item with action by the "&>" operator
+       * Adding a simple textmenu item with action by the "@>" operator
        */
-      TextMenuItem("A") &> { mouseEvent =>
-        popups.info(content, "A!")
+      TextMenuItem("A") @> { mouseEvent =>
+        popups.info(frame, "A!")
         println("The A action!")
       },
-      CheckBoxMenuItem("B") &> (_ => popups.warning(content, "NO BEEEEE!")),
-      TextMenuItem("Class name") &> ( mouseEvent =>
-         popups.info(content, "You clicked from a " +
+      CheckBoxMenuItem("B") @> (_ => popups.warning(frame, "NO BEEEEE!")),
+      TextMenuItem("Class name") @> ( mouseEvent =>
+         popups.info(frame, "You clicked from a " +
                               mouseEvent.getSource.className + "!")//we can get the source class
         )
       ),
     Menu("Exit") ++= (
-      TextMenuItem("Exit") &> (_ => popups.warning(content, "I can't exit!"))
+      TextMenuItem("Exit") @> (_ => popups.warning(frame, "I can't exit!"))
       )
   )
 
   /**
    * Adding the simple label
    */
-  content += Label("Take this: ")
+  frame += Label("Take this: ")
 
   /**
    * Adding a simple button and an actionevent handler
    * with the '@>' operator(same as withAction)
    */
-  content += Button("Click me!") @> { _ =>
+  frame += Button("Click me!") @> { _ =>
 
     /**
      * Using the choice dialog from the popups
      */
-    val res = popups.choice(content, "Choose: ", "Hello!",
+    val res = popups.choice(frame, "Choose: ", "Hello!",
       Array("A", "B", "C"), "A")
     println(res)
   }
 
-  content += Button("Other Button!")
-              .handleClick(_ => popups.info(content, "OH, MY CLICK EVENT!"))
+  frame += Button("Other Button!")
+              .handleClick(_ => popups.info(frame, "OH, MY CLICK EVENT!"))
               .handleMouseExit { _ =>
-                popups.yesNo(content, "Could you handle the yesno?")
+                popups.yesNo(frame, "Could you handle the yesno?")
               }
 
-  content += ListView("A", "B", "C").onSelection { (self, from, to) =>
+  frame += ListView("A", "B", "C").onSelection { (self, from, to) =>
        println("from " + from + " - to " + to)
   }
+
+  /**
+   * Example for using tree-syntax with property-based dispatch
+   */
+  frame += new Label_("Fancy label!") {
+    text := "I changed the text!"
+    background := Color.BLUE
+  }.pack
 
 }
