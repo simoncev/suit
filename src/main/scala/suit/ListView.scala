@@ -10,7 +10,9 @@ import javax.swing.{JScrollPane, JList, ListSelectionModel}
 /**
  * @author Steven Dobay
  */
-case class ListView(items: AnyRef*) extends Widget {
+case class ListView(items: AnyRef*)
+   extends Component with Bindable[List[AnyRef]] {
+
   private var list = new JList(items.toArray)
 
   /**
@@ -94,6 +96,17 @@ case class ListView(items: AnyRef*) extends Widget {
     list.addMouseListener(
       new MouseHandler().handleClick(e => proc(e.toActionEvent)).create
     )
+
+  protected def onChange(v: HolderOf[List[AnyRef]]) = {
+    val event = list.getListSelectionListeners.last
+    list.removeListSelectionListener(event)
+    list.addListSelectionListener(new ListSelectionListener {
+      override def valueChanged(e: ListSelectionEvent): Unit = {
+        v.value = items.slice(e.getFirstIndex, e.getLastIndex).toList
+        event.valueChanged(e)
+      }
+    })
+  }
 
   /**
    * @return with a pointer to the wrapped JComponent

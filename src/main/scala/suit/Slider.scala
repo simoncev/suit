@@ -4,12 +4,15 @@
 package suit
 
 import javax.swing.JSlider
+import javax.swing.event.{ChangeEvent, ChangeListener}
 
 /**
  * @author Steven Dobay
  */
 case class Slider(private val initMin: Int = 0,
-                  private val initMax: Int = 100) extends Widget {
+                  private val initMax: Int = 100)
+   extends Widget with Bindable[Int] {
+
   private val slider = new JSlider(initMin, initMax)
 
   slider.putClientProperty ("scala-frame-wrapper", this)
@@ -23,6 +26,13 @@ case class Slider(private val initMin: Int = 0,
 
   def value = slider.getValue
   def value_=(v: Int) = slider.setValue(v)
+
+  protected def onChange(v: HolderOf[Int]) = {
+    slider.addChangeListener(new ChangeListener {
+      override def stateChanged(e: ChangeEvent): Unit =
+        v.value = value
+    })
+  }
 
   def wrapped = slider
 

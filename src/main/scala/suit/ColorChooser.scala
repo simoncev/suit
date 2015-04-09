@@ -4,13 +4,14 @@
 package suit
 
 import java.awt.Color
+import java.beans.{PropertyChangeEvent, PropertyChangeListener}
 import javax.swing.JColorChooser
 
 /**
  * @author Steven Dobay
  */
 case class ColorChooser(private val initColor: Color = Color.WHITE)
-   extends Component {
+   extends Component with Bindable[Color] {
   private val chooser = new JColorChooser()
 
   chooser.setColor(initColor)
@@ -22,6 +23,13 @@ case class ColorChooser(private val initColor: Color = Color.WHITE)
   def color_=(c: Int) = chooser.setColor(c)
   def color_=(rgb: (Int, Int, Int)) =
     chooser.setColor(rgb._1, rgb._2, rgb._3)
+
+  protected def onChange(h: HolderOf[Color]) =
+    chooser.addPropertyChangeListener("color",
+      new PropertyChangeListener {
+       override def propertyChange(evt: PropertyChangeEvent): Unit =
+         h.value = color
+      })
 
   def wrapped = chooser
   def className = "ColorChooser"

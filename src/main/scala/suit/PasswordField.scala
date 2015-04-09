@@ -9,7 +9,9 @@ import javax.swing.JTextField
 /**
  * @author Steven Dobay
  */
-case class PasswordField(private val initText: String = "") extends Widget {
+case class PasswordField(private val initText: String = "")
+  extends Widget with Bindable[String] {
+
   private val field = new JTextField(initText)
 
   def text = field.getText
@@ -29,6 +31,9 @@ case class PasswordField(private val initText: String = "") extends Widget {
     onEdit(e)
     this
   }
+
+  protected def onChange(v: HolderOf[String]) =
+    onEdit(_ => v.value = text)
 
   def className = "PasswordField"
 

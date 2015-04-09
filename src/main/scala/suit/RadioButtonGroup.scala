@@ -4,12 +4,13 @@
 package suit
 
 import javax.swing.JPanel
+import javax.swing.event.{ChangeEvent, ChangeListener}
 
 /**
  * @author Steven Dobay
  */
-case class RadioButtonGroup() extends Container
-                                 with Component {
+case class RadioButtonGroup()
+  extends Container with Component with Bindable[List[Boolean]] {
   private val panel = new JPanel
   private var buttons = new Array[RadioButton](5)
 
@@ -46,9 +47,15 @@ case class RadioButtonGroup() extends Container
     case _         => None
   }
 
+  protected def onChange(v: HolderOf[List[Boolean]]) = {
+     for(btn <- buttons) btn.wrapped.addChangeListener(
+       new ChangeListener {
+        override def stateChanged(e: ChangeEvent): Unit =
+          v.value = buttons.map(_.isSelected).toList
+     })
+  }
+
   def className = "RadioButtonGroup"
 
   def wrapped = panel
-
-
 }

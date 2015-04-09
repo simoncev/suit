@@ -3,6 +3,7 @@
  */
 package suit
 
+import java.awt.event.ActionListener
 import java.io.File
 import javax.swing.JFileChooser
 import javax.swing.filechooser.FileFilter
@@ -12,7 +13,7 @@ import javax.swing.filechooser.FileFilter
  */
 case class FileChooser(private val initSelected: Array[File]
                          = Array.fill(0)(null))
-  extends Component {
+  extends Component with Bindable[Array[File]] {
   private val chooser = new JFileChooser()
 
   if(!initSelected.isEmpty) chooser.setSelectedFiles(initSelected)
@@ -46,6 +47,14 @@ case class FileChooser(private val initSelected: Array[File]
   def withFilter(pred: File => Boolean, goalDescription: String = "") = {
     addFilter(pred, goalDescription)
     this
+  }
+
+  protected def onChange(v: HolderOf[Array[File]]) = {
+    chooser.addActionListener(new ActionListener() {
+      override def actionPerformed(e: java.awt.event.ActionEvent): Unit = {
+        v.value = selectedFiles()
+      }
+    })
   }
 
   def wrapped = chooser

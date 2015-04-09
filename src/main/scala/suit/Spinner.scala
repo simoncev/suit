@@ -4,17 +4,27 @@
 package suit
 
 import javax.swing.JSpinner
+import javax.swing.event.{ChangeEvent, ChangeListener}
 
 /**
  * @author Steven Dobay
  */
-case class Spinner() extends Widget {
+case class Spinner()
+   extends Widget with Bindable[Int] {
+
   private val spinner = new JSpinner()
 
   spinner.putClientProperty("scala-frame-wrapper", this)
 
-  def value = spinner.getValue
+  def value: Int = spinner.getValue.asInstanceOf[Int]
   def value_=(v: Int) = spinner.setValue(v)
+
+  protected def onChange(v: HolderOf[Int]) = {
+    spinner.addChangeListener(new ChangeListener {
+      override def stateChanged(e: ChangeEvent): Unit =
+      v.value = value
+    })
+  }
 
   def wrapped = spinner
 

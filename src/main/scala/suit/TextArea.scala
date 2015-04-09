@@ -4,12 +4,15 @@
 package suit
 
 import java.awt.Rectangle
+import java.awt.event.{InputMethodEvent, InputMethodListener}
 import javax.swing.JTextArea
 
 /**
  * @author Steven Dobay
  */
-case class TextArea(private val initText: String = "") extends Component {
+case class TextArea(private val initText: String = "")
+   extends Component with Bindable[String] {
+
   private val area = new JTextArea(initText)
 
   def text = area.getText()
@@ -57,6 +60,14 @@ case class TextArea(private val initText: String = "") extends Component {
 
   def wrapStyleWord_=(word: Boolean) =
     area.setWrapStyleWord(word)
+
+  protected def onChange(v: HolderOf[String]) = {
+    area.addInputMethodListener(new InputMethodListener {
+      override def caretPositionChanged(event: InputMethodEvent): Unit = {}
+      override def inputMethodTextChanged(event: InputMethodEvent): Unit =
+        v.value = text
+    })
+  }
 
   def wrapped = area
   def className = "TextArea"
