@@ -14,8 +14,6 @@ case class Table(private val initRows: Int,
                  private val columnNames: Array[Object])
    extends Component {
 
-  type Wrapped = JTable
-
   private val data = Array.ofDim[AnyRef](initRows, initColumns)
   private val table = new JTable(data, columnNames)
   private val scrollPane = new JScrollPane(table)
@@ -41,7 +39,7 @@ case class Table(private val initRows: Int,
   def valueAt(x: Int, y: Int) =
     table.getValueAt(x, y)
 
-  def editingColumn() = table.getEditingColumn
+  def editingColumn = table.getEditingColumn
 
   /**
    * @param ix
@@ -49,7 +47,7 @@ case class Table(private val initRows: Int,
   def editingColumn(ix: Int) =
     table.setEditingColumn(ix)
 
-  def editingRow() = table.getEditingRow
+  def editingRow = table.getEditingRow
 
   /**
    * @param ix
@@ -62,10 +60,12 @@ case class Table(private val initRows: Int,
 
   def selectedColumnsCount() =
     table.getSelectedColumnCount
+
   def selectedRowsCount() =
     table.getSelectedRowCount
 
   def selectedRows() = table.getSelectedRows
+
   def selectedColumns() = table.getSelectedColumns
 
   /**
