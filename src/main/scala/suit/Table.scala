@@ -23,7 +23,7 @@ case class Table(private val initRows: Int,
   def rows() = table.getRowCount
   def columns() = table.getColumnCount
 
-  def tabelData() = data
+  def tableData() = data
 
   /**
    * @param obj
