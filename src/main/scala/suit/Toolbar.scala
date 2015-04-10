@@ -15,7 +15,7 @@ case class Toolbar() extends ContainerComponent {
 
   def addSeparator = toolbar.add(new JToolBar.Separator())
 
-  def wrapped = toolbar
+  protected[suit] def wrapped = toolbar
 
   def className = "ToolBar"
 }

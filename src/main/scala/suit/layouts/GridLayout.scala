@@ -53,7 +53,7 @@ case class GridLayout(var rows: Int, var columns: Int) extends Layout {
   /**
    * @return with a pointer to the wrapped layout manager
    */
-  def wrapped = layout
+  protected[suit] def wrapped = layout
 }
 
 object GridLayout {

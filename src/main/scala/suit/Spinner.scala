@@ -26,7 +26,7 @@ case class Spinner()
     })
   }
 
-  def wrapped = spinner
+  protected[suit] def wrapped = spinner
 
   def className = "Spinner"
 }

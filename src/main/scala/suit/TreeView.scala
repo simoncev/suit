@@ -117,6 +117,6 @@ case class TreeView() extends Component {
   def isEditable(path: JTreePath) =
     tree.isPathEditable(path)
   
-  def wrapped = tree
+  protected[suit] def wrapped = tree
   def className = "TreeView"
 }

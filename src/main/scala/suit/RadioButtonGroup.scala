@@ -57,5 +57,5 @@ case class RadioButtonGroup()
 
   def className = "RadioButtonGroup"
 
-  def wrapped = panel
+  protected[suit] def wrapped = panel
 }

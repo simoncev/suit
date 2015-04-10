@@ -37,5 +37,5 @@ case class CardLayout() extends Layout {
   /**
    * @return with a pointer to the wrapped layout manager
    */
-  def wrapped = layout
+  protected[suit] def wrapped = layout
 }

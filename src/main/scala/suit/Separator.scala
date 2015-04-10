@@ -14,7 +14,7 @@ case class Separator() extends Widget {
 
   sep.putClientProperty ("scala-frame-wrapper", this)
 
-  def wrapped = sep
+  protected[suit] def wrapped = sep
 
   def className = "Separator"
 }

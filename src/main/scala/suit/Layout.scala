@@ -8,5 +8,5 @@ package suit
  * @author Steven Dobay
  */
 trait Layout {
-  def wrapped: java.awt.LayoutManager
+  protected[suit] def wrapped: java.awt.LayoutManager
 }

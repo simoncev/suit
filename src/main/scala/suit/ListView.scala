@@ -111,7 +111,7 @@ case class ListView(items: AnyRef*)
   /**
    * @return with a pointer to the wrapped JComponent
    */
-  def wrapped = list
+  protected[suit] def wrapped = list
 
   /**
    * Sets the

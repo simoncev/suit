@@ -35,6 +35,6 @@ case class ProgressBar(private val lowerBound: Int = 0,
     })
   }
 
-  def wrapped = bar
+  protected[suit] def wrapped = bar
   def className = "ProgressBar"
 }

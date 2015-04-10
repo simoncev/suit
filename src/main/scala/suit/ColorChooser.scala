@@ -32,7 +32,7 @@ case class ColorChooser(private val initColor: Color = Color.WHITE)
          h.value = color
       })
 
-  def wrapped = chooser
+  protected[suit] def wrapped = chooser
   def className = "ColorChooser"
 }
 

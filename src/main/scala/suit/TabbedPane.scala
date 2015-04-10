@@ -47,7 +47,7 @@ case class TabbedPane()
   def tabCount() = tabs.getTabCount
   def selectedIndex() = tabs.getSelectedIndex
 
-  def wrapped = tabs
+  protected[suit] def wrapped = tabs
 
   def className = "TabbedPane"
 }

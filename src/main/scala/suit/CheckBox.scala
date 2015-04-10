@@ -32,7 +32,7 @@ case class CheckBox(private val initIsChecked: Boolean = false)
     })
   }
 
-  def wrapped = btn
+  protected[suit] def wrapped = btn
 
   def className = "CheckBox"
 }

@@ -34,7 +34,7 @@ case class Label(private val initTitle: String) extends Widget {
   /**
    * @return with a pointer to the wrapped JComponent
    */
-  def wrapped = label
+  protected[suit] def wrapped = label
 
   /**
    * @param proc

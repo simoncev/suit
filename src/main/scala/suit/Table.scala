@@ -110,6 +110,6 @@ case class Table(private val initRows: Int,
   def isRowSelected(ix: Int) =
     table.isRowSelected(ix)
 
-  def wrapped = table
+  protected[suit] def wrapped = table
   def className = "Table"
 }

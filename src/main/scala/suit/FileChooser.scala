@@ -58,7 +58,7 @@ case class FileChooser(private val initSelected: Array[File]
     })
   }
 
-  def wrapped = chooser
+  protected[suit] def wrapped = chooser
   def className = "FileChooser"
 }
 

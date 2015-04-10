@@ -14,6 +14,6 @@ case class Panel() extends ContainerComponent {
 
   panel.putClientProperty ("scala-frame-wrapper", this)
 
-  def wrapped = panel
+  protected[suit] def wrapped = panel
   def className = "Panel"
 }

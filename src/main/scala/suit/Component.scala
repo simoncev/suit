@@ -18,7 +18,7 @@ trait Component { self =>
   /**
    * @return with a pointer to the wrapped JComponent
    */
-  def wrapped: JComponent
+  protected[suit] def wrapped: JComponent
 
   protected var containerObj: Option[Container] = None
 

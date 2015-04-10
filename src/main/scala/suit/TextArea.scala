@@ -71,6 +71,6 @@ case class TextArea(private val initText: String = "")
     })
   }
 
-  def wrapped = area
+  protected[suit] def wrapped = area
   def className = "TextArea"
 }

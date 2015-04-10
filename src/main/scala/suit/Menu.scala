@@ -94,13 +94,13 @@ case class Menu(private val initTitle: String) {
   /**
    * @return with the wrapped object
    */
- def wrapped = menu
+ protected[suit] def wrapped = menu
 
   /**
    * Updates the wrapped jmenu
    * @param m
    */
- def wrapped_=(m: JMenu) = this.menu = m
+ protected[suit] def wrapped_=(m: JMenu) = this.menu = m
 
   /**
    * @param obj

@@ -39,6 +39,6 @@ case class TextField(private val initText: String = "")
 
   def className = "TextField"
 
-  def wrapped = field
+  protected[suit] def wrapped = field
 
 }

@@ -38,7 +38,7 @@ case class Button(private val initText: String = "") extends Widget {
   /**
    * @return with a pointer to the wrapped JComponent
    */
- def wrapped = button
+ protected[suit] def wrapped = button
 
  /**
   * @return with the name of the class

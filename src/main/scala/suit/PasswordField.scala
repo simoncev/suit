@@ -37,6 +37,6 @@ case class PasswordField(private val initText: String = "")
 
   def className = "PasswordField"
 
-  def wrapped = field
+  protected[suit] def wrapped = field
 
 }

@@ -27,7 +27,7 @@ case class ToggleButton()
     })
   }
 
-  def wrapped = button
+  protected[suit] def wrapped = button
 
   def className = "ToggleButton"
 }

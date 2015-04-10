@@ -19,7 +19,7 @@ case class PopupMenu() extends Component {
 
   def -=(item: MenuItem) = popup.remove(item.wrapped)
 
-  def wrapped = popup
+  protected[suit] def wrapped = popup
 
   def className = "PopupMenu"
 }

@@ -36,7 +36,7 @@ case class Slider(private val initMin: Int = 0,
     })
   }
 
-  def wrapped = slider
+  protected[suit] def wrapped = slider
 
   def className = "Slider"
 }

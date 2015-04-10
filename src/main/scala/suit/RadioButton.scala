@@ -30,5 +30,5 @@ case class RadioButton(private val initTitle: String)
   /**
    * @return with a pointer to the wrapped JComponent
    */
-  def wrapped = button
+  protected[suit] def wrapped = button
 }

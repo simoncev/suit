@@ -15,5 +15,5 @@ abstract class MenuItem (protected var menuItem: JComponent)
   /**
    * @return with the wrapped menu item
    */
-  def wrapped = menuItem
+  protected[suit] def wrapped = menuItem
 }
