@@ -9,30 +9,17 @@ import javax.swing.JComponent
 /**
  * @author Steven Dobay
  */
-case class MouseEvent(private var cSource: JComponent, private val cId: Int,
-                      private val cWhen: Long, private val cModifiers: Int,
-                      private val cX: Int, private val cY: Int,
-                      private val cClickCount: Int,
-                      private val cPopupTrigger: Boolean)
- extends java.awt.event.MouseEvent(cSource.asInstanceOf[JComponent],
-                                   cId, cWhen, cModifiers,
-                                   cX, cY, cClickCount, cPopupTrigger) {
-
-  /**
-   * Converting to the new component to link it in the source
-   */
-  private val compSource = cSource.getClientProperty("scala-frame-wrapper")
-                              .asInstanceOf[Component]
-
-  /**
-   * @return with the wrapper source
-   */
-  override def getSource = compSource
-
+case class MouseEvent(private val cSource: Component,
+                      private val cId: Int,
+                      private val cWhen: Long,
+                      x: Int, y: Int,
+                      clickCount: Int,
+                      popupTrigger: Boolean)
+  extends Event(cSource, cId, cWhen) {
   /**
    * @return with a new actionevent
    */
-  def toActionEvent = new ActionEvent(cSource, cId, cWhen, cModifiers)
+  def toActionEvent = new ActionEvent(source, id, when)
 }
 
 object MouseEvent {
@@ -41,7 +28,9 @@ object MouseEvent {
    * @return with a new MouseEvent created from a java.awt.event.MouseEvent
    */
   def apply(e: java.awt.event.MouseEvent) =
-   new MouseEvent(e.getSource.asInstanceOf[JComponent],
-                  e.getID, e.getWhen, e.getModifiers,
+   new MouseEvent(e.getSource.asInstanceOf[JComponent]
+                             .getClientProperty("scala-frame-wrapper")
+                             .asInstanceOf[Component],
+                  e.getID, e.getWhen,
                   e.getX, e.getY, e.getClickCount, e.isPopupTrigger)
 }

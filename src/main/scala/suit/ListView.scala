@@ -11,7 +11,7 @@ import javax.swing.{JScrollPane, JList, ListSelectionModel}
  * @author Steven Dobay
  */
 case class ListView(items: AnyRef*)
-   extends Component with Bindable[List[AnyRef]] {
+   extends Component with Bindable[List[AnyRef]] with Stateful[List[AnyRef]] {
 
   private var list = new JList(items.toArray)
 
@@ -97,7 +97,7 @@ case class ListView(items: AnyRef*)
       new MouseHandler().handleClick(e => proc(e.toActionEvent)).create
     )
 
-  protected def onChange(v: HolderOf[List[AnyRef]]) = {
+  protected def onChangeDoBind(v: HolderOf[List[AnyRef]]) = {
     val event = list.getListSelectionListeners.last
     list.removeListSelectionListener(event)
     list.addListSelectionListener(new ListSelectionListener {
@@ -107,6 +107,21 @@ case class ListView(items: AnyRef*)
       }
     })
   }
+
+  protected type EventType = SelectionEvent
+  protected type ListenerType = ListSelectionListener
+
+  protected def createAndGetListener(proc: EventType => Unit) = {
+    val listener = new ListenerType {
+      override def valueChanged(e: ListSelectionEvent): Unit =
+       proc(SelectionEvent(e))
+    }
+    list.addListSelectionListener(listener)
+    listener
+  }
+
+  protected def removeListener(l: ListenerType) =
+    list.removeListSelectionListener(l)
 
   /**
    * @return with a pointer to the wrapped JComponent

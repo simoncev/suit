@@ -44,7 +44,7 @@ object BasicUI extends App("Basic UI") {
       CheckBoxMenuItem("B") @> (_ => popups.warning(frame, "NO BEEEEE!")),
       TextMenuItem("Class name") @> ( mouseEvent =>
          popups.info(frame, "You clicked from a " +
-                              mouseEvent.getSource.className + "!")//we can get the source class
+                              mouseEvent.source.className + "!")//we can get the source class
         )
       ),
     Menu("Exit") ++= (
@@ -94,4 +94,8 @@ object BasicUI extends App("Basic UI") {
     preferredSize := Dim(100, 20)
   }.pack
 
+  frame += new CheckBox_() {
+    text := "Click!"
+    onChange := (_ => popups.info(frame, "Don't!"))
+  }.pack()
 }

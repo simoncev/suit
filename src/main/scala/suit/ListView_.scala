@@ -25,5 +25,7 @@ abstract class ListView_(items: AnyRef*) extends Component_ {
 
   val onSelection = Property[(ListView, Int, Int) => Unit](view.onSelection(_))
 
+  val onChange = Property[SelectionEvent => Unit](view.changeEvents += _)
+
   override val onAction = Property[ActionEvent => Unit](view.onAction(_))
 }

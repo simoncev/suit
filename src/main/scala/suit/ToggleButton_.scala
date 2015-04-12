@@ -16,4 +16,8 @@ abstract class ToggleButton_ extends Widget_ {
   val text = Property[String](btn.text = _)
 
   val toggled = Property[Boolean](b => if(b) btn.doClick())
+
+  val holder = Property[HolderOf[Boolean]](btn.holder = _)
+
+  val onChange = Property[ChangeEvent => Unit](btn.changeEvents += _)
 }

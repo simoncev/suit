@@ -7,7 +7,7 @@ package suit
  * @author Steven Dobay
  */
 case class CheckBox_(private val isChecked: Boolean = false)
- extends Component_ {
+ extends Widget_ {
 
   private val btn = new CheckBox(isChecked)
 
@@ -16,6 +16,10 @@ case class CheckBox_(private val isChecked: Boolean = false)
   )
 
   val text = Property[String](btn.text = _)
+
+  val holder = Property[HolderOf[Boolean]](btn.holder = _)
+
+  val onChange = Property[ChangeEvent => Unit](btn.changeEvents += _)
 
   def pack() = btn
 }

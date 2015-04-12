@@ -8,11 +8,18 @@ import java.awt.event.InputMethodEvent
 /**
  * @author Steven Dobay
  */
-case class EditEvent(source: Component, when: Long,
-                     committedChars: Int)
+case class EditEvent(private val cSource: Component,
+                     private val cId: Int,
+                     private val cWhen: Long,
+                     committedChars: Int,
+                     caretJustMoved: Boolean,
+                     caretPosition: Int)
+ extends ChangeEvent(cSource, cId, cWhen, committedChars)
 
 object EditEvent {
-  def apply(ime: InputMethodEvent) =
+  def apply(ime: InputMethodEvent, caretMoved: Boolean) =
    new EditEvent(ime.getSource.asInstanceOf[Component],
-                 ime.getWhen, ime.getCommittedCharacterCount)
+                 ime.getID,
+                 ime.getWhen, ime.getCommittedCharacterCount,
+                 caretMoved, ime.getCaret.getCharIndex)
 }

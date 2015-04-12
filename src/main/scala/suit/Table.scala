@@ -4,6 +4,7 @@
 package suit
 
 import java.awt.Color
+import java.awt.event.{InputMethodEvent, InputMethodListener}
 import javax.swing.{JScrollPane, JTable}
 
 /**
@@ -12,7 +13,7 @@ import javax.swing.{JScrollPane, JTable}
 case class Table(private val initRows: Int,
                  private val initColumns: Int,
                  private val columnNames: Array[Object])
-   extends Component {
+   extends Component with Stateful[Array[Array[AnyRef]]] {
 
   private val data = Array.ofDim[AnyRef](initRows, initColumns)
   private val table = new JTable(data, columnNames)
@@ -109,6 +110,23 @@ case class Table(private val initRows: Int,
 
   def isRowSelected(ix: Int) =
     table.isRowSelected(ix)
+
+  protected type EventType = EditEvent
+  protected type ListenerType = InputMethodListener
+
+  protected def createAndGetListener(proc: EventType => Unit) = {
+    val listener = new ListenerType {
+      override def caretPositionChanged(event: InputMethodEvent): Unit =
+         proc(EditEvent(event, true))
+      override def inputMethodTextChanged(event: InputMethodEvent): Unit =
+         proc(EditEvent(event, false))
+    }
+    table.addInputMethodListener(listener)
+    listener
+  }
+
+  protected def removeListener(l: ListenerType) =
+   table.removeInputMethodListener(l)
 
   protected[suit] def wrapped = table
   def className = "Table"

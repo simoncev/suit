@@ -8,14 +8,14 @@ package suit
  *
  * Binds a component's contained value into the given Holder instance
  */
-trait Bindable[T] {
+trait Bindable[T] extends Stateful[T] {
   protected var holderV = HolderOf[T]()
 
-  protected def onChange(variable: HolderOf[T]): Unit
+  protected def onChangeDoBind(variable: HolderOf[T]): Unit
 
   def holder = holderV
   def holder_=(h: HolderOf[T]) = {
     holderV = h
-    onChange(h)
+    onChangeDoBind(h)
   }
 }

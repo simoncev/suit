@@ -3,14 +3,14 @@
  */
 package suit
 
+import java.awt.event.ActionListener
 import javax.swing.JCheckBox
-import javax.swing.event.{ChangeEvent, ChangeListener}
 
 /**
  * @author Steven Dobay
  */
 case class CheckBox(private val initIsChecked: Boolean = false)
- extends Component with Bindable[Boolean] {
+ extends Component with Bindable[Boolean] with Stateful[Boolean] {
 
   private val btn = new JCheckBox()
   btn.setSelected(initIsChecked)
@@ -25,12 +25,23 @@ case class CheckBox(private val initIsChecked: Boolean = false)
 
   def text_=(t: String) = btn.setText(t)
 
-  protected def onChange(v: HolderOf[Boolean]) = {
-    btn.addChangeListener(new ChangeListener {
-      override def stateChanged(e: ChangeEvent): Unit =
-       v.value = isSelected()
-    })
+  protected def onChangeDoBind(v: HolderOf[Boolean]) =
+   changeEvents += (_ => v.value = isSelected())
+
+  protected type EventType = ChangeEvent
+  protected type ListenerType = ActionListener
+
+  protected def createAndGetListener(proc: EventType => Unit) = {
+   val listener = new ListenerType {
+    override def actionPerformed(e: java.awt.event.ActionEvent): Unit =
+     proc(ChangeEvent(e))
+   }
+   btn.addActionListener(listener)
+   listener
   }
+
+ protected def removeListener(l: ListenerType) =
+  btn.removeActionListener(l)
 
   protected[suit] def wrapped = btn
 

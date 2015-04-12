@@ -11,7 +11,7 @@ import javax.swing.JTextArea
  * @author Steven Dobay
  */
 case class TextArea(private val initText: String = "")
-   extends Component with Bindable[String] {
+   extends Component with Bindable[String] with Stateful[String] {
 
   type Wrapped = JTextArea
 
@@ -63,13 +63,30 @@ case class TextArea(private val initText: String = "")
   def wrapStyleWord_=(word: Boolean) =
     area.setWrapStyleWord(word)
 
-  protected def onChange(v: HolderOf[String]) = {
+  protected def onChangeDoBind(v: HolderOf[String]) = {
     area.addInputMethodListener(new InputMethodListener {
       override def caretPositionChanged(event: InputMethodEvent): Unit = {}
       override def inputMethodTextChanged(event: InputMethodEvent): Unit =
         v.value = text
     })
   }
+
+  protected type EventType = EditEvent
+  protected type ListenerType = InputMethodListener
+
+  protected def createAndGetListener(proc: EventType => Unit) = {
+    val listener = new ListenerType {
+      override def caretPositionChanged(event: InputMethodEvent): Unit =
+       proc(EditEvent(event, true))
+      override def inputMethodTextChanged(event: InputMethodEvent): Unit =
+       proc(EditEvent(event, false))
+    }
+    area.addInputMethodListener(listener)
+    listener
+  }
+
+  protected def removeListener(l: ListenerType) =
+   area.removeInputMethodListener(l)
 
   protected[suit] def wrapped = area
   def className = "TextArea"

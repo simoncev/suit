@@ -10,24 +10,23 @@ import javax.swing.JComponent
 /**
  * @author Steven Dobay
  */
-case class ActionEvent(private var cSource: JComponent, private val cId: Int,
-                       private val cWhen: Long, private val cModifiers: Int)
-  extends JActionEvent(cSource, cId, "", cWhen, cModifiers) {
-
-   private val compSource = cSource.getClientProperty("scala-frame-wrapper")
-                               .asInstanceOf[Component]
-
-  override def getSource = compSource
+case class ActionEvent(private val cSource: Component,
+                       private val cId: Int,
+                       private val cWhen: Long)
+ extends Event(cSource, cId, cWhen) {
 
   def toMouseEvent =
-    new MouseEvent(cSource, cId, cWhen, cModifiers, -1, -1, 1, false)
+    new MouseEvent(source, id, when, -1, -1, 1, false)
 
   def toAWTActionEvent: JActionEvent =
-    new JActionEvent(cSource, cId, "", cWhen, cModifiers)
+    new JActionEvent(source.wrapped, id, "", when, -1)
 }
 
 object ActionEvent {
-  def apply(e: java.awt.event.ActionEvent) =
-   new ActionEvent(e.getSource.asInstanceOf[JComponent],
-                   e.getID, e.getWhen, e.getModifiers)
+  def apply(e: java.awt.event.ActionEvent) = {
+    val comp = e.getSource.asInstanceOf[JComponent]
+                .getClientProperty("scala-frame-wrapper")
+                .asInstanceOf[Component]
+    new ActionEvent(comp, e.getID, e.getWhen)
+  }
 }
