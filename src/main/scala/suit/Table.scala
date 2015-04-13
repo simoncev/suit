@@ -13,9 +13,9 @@ import javax.swing.{JScrollPane, JTable}
 case class Table(private val initRows: Int,
                  private val initColumns: Int,
                  private val columnNames: Array[Object])
-   extends Component with Stateful[Array[Array[AnyRef]]] {
+   extends Bindable[Array[Array[AnyRef]]] {
 
-  private val data = Array.ofDim[AnyRef](initRows, initColumns)
+  private var data = Array.ofDim[AnyRef](initRows, initColumns)
   private val table = new JTable(data, columnNames)
   private val scrollPane = new JScrollPane(table)
 
@@ -111,11 +111,17 @@ case class Table(private val initRows: Int,
   def isRowSelected(ix: Int) =
     table.isRowSelected(ix)
 
-  protected type EventType = EditEvent
-  protected type ListenerType = InputMethodListener
+  protected[suit] def wrapped = table
+  def className = "Table"
 
-  protected def createAndGetListener(proc: EventType => Unit) = {
-    val listener = new ListenerType {
+  /**
+   * Section of Stateful's methods
+   */
+  protected type ChangeEventType = EditEvent
+  protected type ChangeListenerType = InputMethodListener
+
+  protected def createAndAddChangeListener(proc: ChangeEventType => Unit) = {
+    val listener = new ChangeListenerType {
       override def caretPositionChanged(event: InputMethodEvent): Unit =
          proc(EditEvent(event, true))
       override def inputMethodTextChanged(event: InputMethodEvent): Unit =
@@ -125,9 +131,8 @@ case class Table(private val initRows: Int,
     listener
   }
 
-  protected def removeListener(l: ListenerType) =
+  protected def removeChangeListener(l: ChangeListenerType) =
    table.removeInputMethodListener(l)
 
-  protected[suit] def wrapped = table
-  def className = "Table"
+  def bindValue() = data
 }

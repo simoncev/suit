@@ -17,4 +17,6 @@ abstract class TextField_(private val txt: String = "")
   val text = Property[String](field.text = _)
 
   val onEdit = Property[ChangeEvent => Unit](field.changeEvents += _)
+
+  val onChange = Property[ChangeEvent => Unit](field.changeEvents += _)
 }

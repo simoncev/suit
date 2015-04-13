@@ -4,7 +4,9 @@
  */
 package suit
 
-import java.awt.{Font, Color}
+import java.awt.event.{FocusEvent => JFocusEvent}
+import java.awt.event.{MouseMotionListener, FocusListener, MouseListener}
+import java.awt.{event, Font, Color}
 import javax.swing.JComponent
 import javax.swing.border.Border
 
@@ -211,88 +213,56 @@ trait Component { self =>
   def contains(x: Int, y: Int) = wrapped.contains(x, y)
 
   /**
-   * Handles the click actions
-   * @param e
+   * Manager of mouse events
    */
-  def onClick(e: MouseEvent => Unit): Unit =
-    wrapped.addMouseListener(new MouseHandler().handleClick(e).create)
+  object mouseEvents extends EventManager[MouseHandler, MouseListener] {
+    protected def removeListener(l: MouseListener): Unit =
+      wrapped.removeMouseListener(l)
 
-  /**
-   * Handles the click actions
-   * @param e
-   * @return with itself
-   */
-  def handleClick(e: MouseEvent => Unit) = {
-    onClick(e)
-    self
+    protected def createAndAddListener(h: MouseHandler): MouseListener = {
+       val listener = h.create
+       wrapped.addMouseListener(listener)
+       listener
+    }
+  }
+
+   /**
+    * Manager of focus events.
+    */
+  object focusEvents extends EventManager[FocusEvent => Unit, FocusListener] {
+    protected def removeListener(l: FocusListener) =
+     wrapped.removeFocusListener(l)
+
+    protected def createAndAddListener(proc: FocusEvent => Unit) = {
+      val l = new FocusListener {
+        override def focusGained(e: JFocusEvent): Unit =
+          proc(FocusEvent(e).copy(focusGained = true))
+        override def focusLost(e: JFocusEvent): Unit =
+          proc(FocusEvent(e))
+      }
+      wrapped.addFocusListener(l)
+      l
+    }
   }
 
   /**
-   * Handles the press actions
-   * @param e
+   * Manager of mouse-motions
    */
-  def onMousePress(e: MouseEvent => Unit): Unit =
-    wrapped.addMouseListener(new MouseHandler().handlePress(e).create)
+  object mouseMotions
+    extends EventManager[MouseMotionEvent => Unit, MouseMotionListener] {
+     protected def createAndAddListener(proc: MouseMotionEvent => Unit) = {
+       val l = new MouseMotionListener {
+        override def mouseMoved(e: event.MouseEvent): Unit =
+          proc(MouseMotionEvent(e, true))
+        override def mouseDragged(e: event.MouseEvent): Unit =
+          proc(MouseMotionEvent(e, false))
+       }
+       wrapped.addMouseMotionListener(l)
+       l
+     }
 
-  /**
-   * Handles the mousepress actions
-   * @param e
-   * @return with itself
-   */
-  def handleMousePress(e: MouseEvent => Unit): self.type  = {
-    onMousePress(e)
-    self
-  }
-
-  /**
-   * Handles the enter actions
-   * @param e
-   */
-  def onMouseEnter(e: MouseEvent => Unit): Unit =
-    wrapped.addMouseListener(new MouseHandler().handleEnter(e).create)
-
-  /**
-   * Handles the mouse-enter actions
-   * @param e
-   * @return with itself
-   */
-  def handleMouseEnter(e: MouseEvent => Unit): self.type  = {
-    onMouseEnter(e)
-    self
-  }
-
-  /**
-   * Handles the exit actions
-   * @param e
-   */
-  def onMouseExit(e: MouseEvent => Unit): Unit =
-    wrapped.addMouseListener(new MouseHandler().handleExit(e).create)
-
-  /**
-   * Handles the mouse-exit actions
-   * @param e
-   * @return with itself
-   */
-  def handleMouseExit(e: MouseEvent => Unit): self.type  = {
-    onMouseExit(e)
-    self
-  }
-
-  /**
-   * Handles the release actions
-   * @param e
-   */
-  def onMouseRelease(e: MouseEvent => Unit): Unit =
-    wrapped.addMouseListener(new MouseHandler().handleRelease(e).create)
-
-  /**
-   * Handles the mouse-release actions
-   * @param e
-   * @return with itself
-   */
-  def handleMouseRelease(e: MouseEvent => Unit): self.type  = {
-    onMouseRelease(e)
-    self
+    protected def removeListener(l: MouseMotionListener) =
+     wrapped.removeMouseMotionListener(l)
   }
 
   override def equals(obj: Any) =

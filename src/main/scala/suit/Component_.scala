@@ -12,8 +12,6 @@ import javax.swing.border.Border
  */
 trait Component_ { self =>
 
-  protected type ME = MouseEvent => Unit
-
   def pack(): Component
 
   val preferredSize = Property[Dim](pack.preferredSize = _)
@@ -24,7 +22,8 @@ trait Component_ { self =>
 
   val foreGround = Property[Color](pack.foreGround = _)
 
-  val visible = Property[Boolean](b => if(b) pack.show else pack.hide)
+  val visible =
+    Property[Boolean](b => if(b) pack.show else pack.hide)
 
   val border = Property[Border](pack.border = _)
 
@@ -34,14 +33,15 @@ trait Component_ { self =>
 
   val opaque = Property[Boolean](pack.setOpaque(_))
 
-  val property = Property[(String, AnyRef)](t => pack.property_=(t._1, t._2))
+  val property =
+    Property[(String, AnyRef)](t => pack.property_=(t._1, t._2))
 
   val popupMenu = Property[PopupMenu](pack.popupMenu = _)
 
-  val onAction = Property[ActionEvent => Unit](pack.onAction(_))
-  val onClick = Property[ME](pack.handleClick(_))
-  val onMousePress = Property[ME](pack.handleMousePress(_))
-  val onMouseEnter = Property[ME](pack.handleMouseEnter(_))
-  val onMouseExit = Property[ME](pack.handleMouseExit(_))
-  val onMouseRelease = Property[ME](pack.handleMouseRelease(_))
+  val onFocus = Property[FocusEvent => Unit](pack.focusEvents += _)
+
+  val onMouseEvent = Property[MouseHandler](pack.mouseEvents += _)
+
+  val onMouseMotionEvent =
+    Property[MouseMotionEvent => Unit](pack.mouseMotions += _)
 }

@@ -4,6 +4,8 @@
 package suit
 
 import java.awt.event.InputMethodEvent
+import javax.swing.JComponent
+import helpers.ComponentHelpers._
 
 /**
  * @author Steven Dobay
@@ -18,7 +20,7 @@ case class EditEvent(private val cSource: Component,
 
 object EditEvent {
   def apply(ime: InputMethodEvent, caretMoved: Boolean) =
-   new EditEvent(ime.getSource.asInstanceOf[Component],
+   new EditEvent(ime.getSource.asInstanceOf[JComponent].readSuitComponent,
                  ime.getID,
                  ime.getWhen, ime.getCommittedCharacterCount,
                  caretMoved, ime.getCaret.getCharIndex)

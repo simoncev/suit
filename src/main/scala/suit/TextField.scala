@@ -11,13 +11,7 @@ import javax.swing.JTextField
  * Simple component to get text-based inputs.
  */
 case class TextField(private val initText: String = "")
-   extends Widget with Bindable[String] with Stateful[String] {
-
-  /**
-   * The super type's representation
-   */
-  protected type ChangerEvent = EditEvent
-  protected type ListenerType = InputMethodListener
+   extends Bindable[String] with Widget {
 
   private val field = new JTextField(initText)
 
@@ -27,24 +21,29 @@ case class TextField(private val initText: String = "")
 
   def text_=(t: String) = field.setText(t)
 
-  protected def onChangeDoBind(v: HolderOf[String]) =
-   changeEvents += (_ => v.value = text)
+  def className = "TextField"
 
-  protected def createAndGetListener(proc: EventType => Unit): ListenerType = {
-    val iml = new ListenerType {
+  protected[suit] def wrapped = field
+
+  /**
+   * Section of Stateful's methods
+   */
+  protected type ChangeEventType = EditEvent
+  protected type ChangeListenerType = InputMethodListener
+
+  protected def createAndAddChangeListener(proc: ChangeEventType => Unit): ChangeListenerType = {
+    val iml = new ChangeListenerType {
       override def caretPositionChanged(ev: InputMethodEvent): Unit =
-       proc(EditEvent(ev, true).asInstanceOf[EventType])
+       proc(EditEvent(ev, true))
       override def inputMethodTextChanged(ev: InputMethodEvent): Unit =
-       proc(EditEvent(ev, false).asInstanceOf[EventType])
+       proc(EditEvent(ev, false))
     }
     field.addInputMethodListener(iml)
     iml
   }
 
-  protected def removeListener(l: ListenerType): Unit =
+  protected def removeChangeListener(l: ChangeListenerType): Unit =
     field.removeInputMethodListener(l)
 
-  def className = "TextField"
-
-  protected[suit] def wrapped = field
+  def bindValue() = text
 }

@@ -13,7 +13,7 @@ import javax.swing.filechooser.FileFilter
  */
 case class FileChooser(private val initSelected: Array[File]
                          = Array.fill(0)(null))
-  extends Component with Bindable[Array[File]] with Stateful[Array[File]] {
+  extends Bindable[Array[File]] {
 
   private val chooser = new JFileChooser()
 
@@ -50,14 +50,17 @@ case class FileChooser(private val initSelected: Array[File]
     this
   }
 
-  protected def onChangeDoBind(v: HolderOf[Array[File]]) =
-    changeEvents += (_ => v.value = selectedFiles())
+  protected[suit] def wrapped = chooser
+  def className = "FileChooser"
 
-  protected type EventType = ChangeEvent
-  protected type ListenerType = ActionListener
+  /**
+   * Section of Stateful's methods
+   */
+  protected type ChangeEventType = ChangeEvent
+  protected type ChangeListenerType = ActionListener
 
-  protected def createAndGetListener(proc: EventType => Unit) = {
-    val listener = new ListenerType {
+  protected def createAndAddChangeListener(proc: ChangeEventType => Unit) = {
+    val listener = new ChangeListenerType {
       override def actionPerformed(e: java.awt.event.ActionEvent): Unit =
        proc(ChangeEvent(e))
     }
@@ -65,11 +68,10 @@ case class FileChooser(private val initSelected: Array[File]
     listener
   }
 
-  protected def removeListener(l: ListenerType) =
+  protected def removeChangeListener(l: ChangeListenerType) =
    chooser.removeActionListener(l)
 
-  protected[suit] def wrapped = chooser
-  def className = "FileChooser"
+  def bindValue() = selectedFiles()
 }
 
 object FileChooser {

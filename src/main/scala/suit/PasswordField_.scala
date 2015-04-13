@@ -8,11 +8,14 @@ package suit
  */
 abstract class PasswordField_(private val txt: String = "")
   extends Widget_ {
-  private val field = new PasswordField(txt)
+  private val field = new PasswordField()
+  field.password = txt
 
   def pack() = field
 
-  val text = Property[String](field.text = _)
+  val password = Property[String](field.password = _)
 
   val onEdit = Property[EditEvent => Unit](field.onEdit(_))
+
+  val onChange = Property[ChangeEvent => Unit](field.changeEvents += _)
 }

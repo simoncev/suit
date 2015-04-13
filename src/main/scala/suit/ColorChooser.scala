@@ -11,7 +11,7 @@ import javax.swing.{JComponent, JColorChooser}
  * @author Steven Dobay
  */
 case class ColorChooser(private val initColor: Color = Color.WHITE)
-   extends Component with Bindable[Color] with Stateful[Color] {
+   extends Bindable[Color]{
 
   private val chooser = new JColorChooser()
 
@@ -25,13 +25,16 @@ case class ColorChooser(private val initColor: Color = Color.WHITE)
   def color_=(rgb: (Int, Int, Int)) =
     chooser.setColor(rgb._1, rgb._2, rgb._3)
 
-  protected def onChangeDoBind(h: HolderOf[Color]) =
-     changeEvents += (_ => h.value = color)
+  protected[suit] def wrapped = chooser
+  def className = "ColorChooser"
 
-  protected type EventType = ChangeEvent
-  protected type ListenerType = PropertyChangeListener
+  /**
+   * Section of Stateful's methods
+   */
+  protected type ChangeEventType = ChangeEvent
+  protected type ChangeListenerType = PropertyChangeListener
 
-  protected def createAndGetListener(proc: EventType => Unit) = {
+  protected def createAndAddChangeListener(proc: ChangeEventType => Unit) = {
     val listener = new PropertyChangeListener {
       override def propertyChange(e: PropertyChangeEvent): Unit =
         proc(ChangeEvent(e.getSource.asInstanceOf[JComponent]
@@ -43,11 +46,10 @@ case class ColorChooser(private val initColor: Color = Color.WHITE)
     listener
   }
 
-  protected def removeListener(l: ListenerType) =
+  protected def removeChangeListener(l: ChangeListenerType) =
     chooser.removePropertyChangeListener(l)
 
-  protected[suit] def wrapped = chooser
-  def className = "ColorChooser"
+  def bindValue() = color
 }
 
 object ColorChooser {

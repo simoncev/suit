@@ -24,4 +24,6 @@ abstract class TextArea_(private val txt: String = "")
   val tabSize = Property[Int](area.tabSize = _)
 
   val wrapStyleWord = Property[Boolean](area.wrapStyleWord = _)
+
+  val onChange = Property[ChangeEvent => Unit](area.changeEvents += _)
 }

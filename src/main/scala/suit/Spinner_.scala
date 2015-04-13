@@ -14,4 +14,6 @@ abstract class Spinner_ extends Widget_ {
   def pack() = spinner
 
   val value = Property[Int](spinner.value = _)
+
+  val onChange = Property[ChangeEvent => Unit](pack().changeEvents += _)
 }

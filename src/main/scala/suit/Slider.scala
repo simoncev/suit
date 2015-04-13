@@ -11,7 +11,7 @@ import javax.swing.event.ChangeListener
  */
 case class Slider(private val initMin: Int = 0,
                   private val initMax: Int = 100)
-   extends Widget with Bindable[Int] with Stateful[Int] {
+   extends Bindable[Int] with Widget {
 
   type Wrapped = JSlider
 
@@ -29,29 +29,27 @@ case class Slider(private val initMin: Int = 0,
   def value = slider.getValue
   def value_=(v: Int) = slider.setValue(v)
 
-  protected def onChangeDoBind(v: HolderOf[Int]) = {
-    slider.addChangeListener(new ChangeListener {
-      override def stateChanged(e: javax.swing.event.ChangeEvent): Unit =
-        v.value = value
-    })
-  }
+  protected[suit] def wrapped = slider
 
-  protected type EventType = ChangeEvent
-  protected type ListenerType = ChangeListener
+  def className = "Slider"
 
-  protected def createAndGetListener(proc: EventType => Unit) = {
-   val listener = new ListenerType {
-     override def stateChanged(e: event.ChangeEvent): Unit =
-      proc(ChangeEvent(e))
-   }
+  /**
+   * Section of Stateful's methods
+   */
+  protected type ChangeEventType = ChangeEvent
+  protected type ChangeListenerType = ChangeListener
+
+  protected def createAndAddChangeListener(proc: ChangeEventType => Unit) = {
+    val listener = new ChangeListenerType {
+      override def stateChanged(e: event.ChangeEvent): Unit =
+        proc(ChangeEvent(e))
+    }
     slider.addChangeListener(listener)
     listener
   }
 
-  protected def removeListener(l: ListenerType) =
-   slider.removeChangeListener(l)
+  protected def removeChangeListener(l: ChangeListenerType) =
+    slider.removeChangeListener(l)
 
-  protected[suit] def wrapped = slider
-
-  def className = "Slider"
+  def bindValue() = value
 }

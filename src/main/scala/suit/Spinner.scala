@@ -10,7 +10,7 @@ import javax.swing.event.ChangeListener
  * @author Steven Dobay
  */
 case class Spinner()
-   extends Widget with Bindable[Int] with Stateful[Int] {
+   extends Bindable[Int] with Widget {
 
   private val spinner = new JSpinner()
 
@@ -19,18 +19,18 @@ case class Spinner()
   def value: Int = spinner.getValue.asInstanceOf[Int]
   def value_=(v: Int) = spinner.setValue(v)
 
-  protected def onChangeDoBind(v: HolderOf[Int]) = {
-    spinner.addChangeListener(new ChangeListener {
-      override def stateChanged(e: event.ChangeEvent): Unit =
-      v.value = value
-    })
-  }
+  protected[suit] def wrapped = spinner
 
-  protected type EventType = ChangeEvent
-  protected type ListenerType = ChangeListener
+  def className = "Spinner"
 
-  protected def createAndGetListener(proc: EventType => Unit) = {
-   val listener = new ListenerType {
+  /**
+   * Section of Stateful's methods
+   */
+  protected type ChangeEventType = ChangeEvent
+  protected type ChangeListenerType = ChangeListener
+
+  protected def createAndAddChangeListener(proc: ChangeEventType => Unit) = {
+   val listener = new ChangeListenerType {
      override def stateChanged(e: event.ChangeEvent): Unit =
       proc(ChangeEvent(e))
    }
@@ -38,10 +38,8 @@ case class Spinner()
     listener
   }
 
-  protected def removeListener(l: ListenerType) =
+  protected def removeChangeListener(l: ChangeListenerType) =
    spinner.removeChangeListener(l)
 
-  protected[suit] def wrapped = spinner
-
-  def className = "Spinner"
+  def bindValue() = value
 }

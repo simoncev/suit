@@ -71,12 +71,6 @@ object BasicUI extends App("Basic UI") {
     println(res)
   }
 
-  frame += Button("Other Button!")
-              .handleClick(_ => popups.info(frame, "OH, MY CLICK EVENT!"))
-              .handleMouseExit { _ =>
-                popups.yesNo(frame, "Could you handle the yesno?")
-              }
-
   frame += ListView("A", "B", "C").onSelection { (self, from, to) =>
        println("from " + from + " - to " + to)
   }

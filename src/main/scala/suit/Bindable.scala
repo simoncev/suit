@@ -11,11 +11,11 @@ package suit
 trait Bindable[T] extends Stateful[T] {
   protected var holderV = HolderOf[T]()
 
-  protected def onChangeDoBind(variable: HolderOf[T]): Unit
+  def bindValue(): T
 
   def holder = holderV
   def holder_=(h: HolderOf[T]) = {
     holderV = h
-    onChangeDoBind(h)
+    changeEvents += (_ => h.value = bindValue)
   }
 }

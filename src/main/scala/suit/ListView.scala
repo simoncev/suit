@@ -11,7 +11,7 @@ import javax.swing.{JScrollPane, JList, ListSelectionModel}
  * @author Steven Dobay
  */
 case class ListView(items: AnyRef*)
-   extends Component with Bindable[List[AnyRef]] with Stateful[List[AnyRef]] {
+   extends Bindable[Array[AnyRef]] {
 
   private var list = new JList(items.toArray)
 
@@ -97,32 +97,6 @@ case class ListView(items: AnyRef*)
       new MouseHandler().handleClick(e => proc(e.toActionEvent)).create
     )
 
-  protected def onChangeDoBind(v: HolderOf[List[AnyRef]]) = {
-    val event = list.getListSelectionListeners.last
-    list.removeListSelectionListener(event)
-    list.addListSelectionListener(new ListSelectionListener {
-      override def valueChanged(e: ListSelectionEvent): Unit = {
-        v.value = items.slice(e.getFirstIndex, e.getLastIndex).toList
-        event.valueChanged(e)
-      }
-    })
-  }
-
-  protected type EventType = SelectionEvent
-  protected type ListenerType = ListSelectionListener
-
-  protected def createAndGetListener(proc: EventType => Unit) = {
-    val listener = new ListenerType {
-      override def valueChanged(e: ListSelectionEvent): Unit =
-       proc(SelectionEvent(e))
-    }
-    list.addListSelectionListener(listener)
-    listener
-  }
-
-  protected def removeListener(l: ListenerType) =
-    list.removeListSelectionListener(l)
-
   /**
    * @return with a pointer to the wrapped JComponent
    */
@@ -140,6 +114,26 @@ case class ListView(items: AnyRef*)
    * @return with the name of the class
    */
   def className = "ListView"
+
+  /**
+   * Section of Stateful's methods
+   */
+  protected type ChangeEventType = SelectionEvent
+  protected type ChangeListenerType = ListSelectionListener
+
+  protected def createAndAddChangeListener(proc: ChangeEventType => Unit) = {
+    val listener = new ChangeListenerType {
+      override def valueChanged(e: ListSelectionEvent): Unit =
+       proc(SelectionEvent(e))
+    }
+    list.addListSelectionListener(listener)
+    listener
+  }
+
+  protected def removeChangeListener(l: ChangeListenerType) =
+    list.removeListSelectionListener(l)
+
+  def bindValue() = list.getSelectedValuesList.toArray
 }
 
 /**

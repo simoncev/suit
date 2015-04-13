@@ -5,8 +5,6 @@ package suit
 
 import java.awt.event.ActionListener
 import javax.swing.JToggleButton
-import javax.swing.event.ChangeListener
-import javax.swing.event
 
 /**
  * @author Steven Dobay
@@ -20,20 +18,24 @@ case class ToggleButton()
   def text = button.getText
   def text_=(t: String) = button.setText(t)
 
+  def selected = button.isSelected
+
+  def selected_=(b: Boolean) = button.setSelected(b)
+
   def doClick() = button.doClick
 
-  protected def onChangeDoBind(v: HolderOf[Boolean]) = {
-    button.addChangeListener(new ChangeListener {
-      override def stateChanged(e: event.ChangeEvent): Unit =
-       v.value = button.isSelected
-    })
-  }
+  protected[suit] def wrapped = button
 
-  protected type EventType = ChangeEvent
-  protected type ListenerType = ActionListener
+  def className = "ToggleButton"
 
-  protected def createAndGetListener(proc: EventType => Unit) = {
-    val listener = new ListenerType {
+  /**
+   * Section of Stateful's methods
+   */
+  protected type ChangeEventType = ChangeEvent
+  protected type ChangeListenerType = ActionListener
+
+  protected def createAndAddChangeListener(proc: ChangeEventType => Unit) = {
+    val listener = new ChangeListenerType {
       override def actionPerformed(e: java.awt.event.ActionEvent): Unit =
         proc(ChangeEvent(e))
     }
@@ -41,10 +43,8 @@ case class ToggleButton()
     listener
   }
 
-  protected def removeListener(l: ListenerType) =
+  protected def removeChangeListener(l: ChangeListenerType) =
     button.removeActionListener(l)
 
-  protected[suit] def wrapped = button
-
-  def className = "ToggleButton"
+  def bindValue() = button.isSelected
 }

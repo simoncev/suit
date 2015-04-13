@@ -10,7 +10,7 @@ import javax.swing.JCheckBox
  * @author Steven Dobay
  */
 case class CheckBox(private val initIsChecked: Boolean = false)
- extends Component with Bindable[Boolean] with Stateful[Boolean] {
+ extends Bindable[Boolean]  {
 
   private val btn = new JCheckBox()
   btn.setSelected(initIsChecked)
@@ -25,14 +25,18 @@ case class CheckBox(private val initIsChecked: Boolean = false)
 
   def text_=(t: String) = btn.setText(t)
 
-  protected def onChangeDoBind(v: HolderOf[Boolean]) =
-   changeEvents += (_ => v.value = isSelected())
+ protected[suit] def wrapped = btn
 
-  protected type EventType = ChangeEvent
-  protected type ListenerType = ActionListener
+ def className = "CheckBox"
 
-  protected def createAndGetListener(proc: EventType => Unit) = {
-   val listener = new ListenerType {
+ /**
+  * Section of Stateful's methods
+  */
+  protected type ChangeEventType = ChangeEvent
+  protected type ChangeListenerType = ActionListener
+
+  protected def createAndAddChangeListener(proc: ChangeEventType => Unit) = {
+   val listener = new ChangeListenerType {
     override def actionPerformed(e: java.awt.event.ActionEvent): Unit =
      proc(ChangeEvent(e))
    }
@@ -40,10 +44,8 @@ case class CheckBox(private val initIsChecked: Boolean = false)
    listener
   }
 
- protected def removeListener(l: ListenerType) =
+ protected def removeChangeListener(l: ChangeListenerType) =
   btn.removeActionListener(l)
 
-  protected[suit] def wrapped = btn
-
-  def className = "CheckBox"
+ def bindValue() = isSelected()
 }

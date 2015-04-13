@@ -71,7 +71,7 @@ class MouseHandler {
    * @return with a new mouselistener where the methods
    *         are initialized with the given handlers
    */
-  def create = new MouseListener {
+  protected[suit] def create = new MouseListener {
     override def mouseExited(e: event.MouseEvent): Unit =
       onExit(MouseEvent(e))
     override def mouseClicked(e: event.MouseEvent): Unit =

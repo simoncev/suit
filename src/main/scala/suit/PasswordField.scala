@@ -3,20 +3,20 @@
  */
 package suit
 
-import java.awt.event.{ActionListener, InputMethodEvent, InputMethodListener}
-import javax.swing.{JComponent, JPasswordField, JTextField}
+import java.awt.event.{InputMethodEvent, InputMethodListener}
+import javax.swing.JPasswordField
 
 /**
  * @author Steven Dobay
  */
-case class PasswordField(private val initText: String = "")
+case class PasswordField()
   extends Widget with Bindable[Array[Char]] with Stateful[Array[Char]] {
 
-  private val field = new JPasswordField(initText)
+  private val field = new JPasswordField()
 
-  def text = field.getPassword
+  def password = field.getPassword
 
-  def text_=(t: String) = field.setText(t)
+  def password_=(pass: String) = field.setText(pass)
 
   def onEdit(proc: EditEvent => Unit) = {
     field.addInputMethodListener(new InputMethodListener {
@@ -32,11 +32,18 @@ case class PasswordField(private val initText: String = "")
     this
   }
 
-  protected type EventType = EditEvent
-  protected type ListenerType = InputMethodListener
+  def className = "PasswordField"
 
-  protected def createAndGetListener(proc: EventType => Unit) = {
-    val listener = new ListenerType {
+  protected[suit] def wrapped = field
+
+  /**
+   * Section of Stateful's methods
+   */
+  protected type ChangeEventType = EditEvent
+  protected type ChangeListenerType = InputMethodListener
+
+  protected def createAndAddChangeListener(proc: ChangeEventType => Unit) = {
+    val listener = new ChangeListenerType {
       override def caretPositionChanged(event: InputMethodEvent): Unit =
         proc(EditEvent(event, true))
       override def inputMethodTextChanged(event: InputMethodEvent): Unit =
@@ -46,14 +53,8 @@ case class PasswordField(private val initText: String = "")
     listener
   }
 
-  protected def removeListener(l: ListenerType) =
+  protected def removeChangeListener(l: ChangeListenerType) =
    field.removeInputMethodListener(l)
 
-  protected def onChangeDoBind(v: HolderOf[Array[Char]]) =
-    onEdit(_ => v.value = text)
-
-  def className = "PasswordField"
-
-  protected[suit] def wrapped = field
-
+  def bindValue() = field.getPassword
 }

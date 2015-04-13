@@ -40,4 +40,6 @@ case class Table_(private val initRows: Int,
 
   val selectionForeground =
     Property[Color](table.selectionForeground(_))
+
+  val onChange = Property[ChangeEvent => Unit](table.changeEvents += _)
 }
