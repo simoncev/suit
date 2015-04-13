@@ -70,5 +70,7 @@ case class RadioButtonGroup()
   protected def removeChangeListener(l: ChangeListenerType) =
     buttons.foreach(_.wrapped.removeActionListener(l))
 
-  def bindValue() = buttons.map(_.isSelected())
+  def componentValue() = buttons.map(_.isSelected())
+
+  protected[suit] def wrappedContainer = panel
 }

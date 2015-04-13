@@ -134,5 +134,5 @@ case class Table(private val initRows: Int,
   protected def removeChangeListener(l: ChangeListenerType) =
    table.removeInputMethodListener(l)
 
-  def bindValue() = data
+  def componentValue() = data
 }

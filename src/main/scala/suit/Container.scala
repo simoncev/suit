@@ -6,4 +6,6 @@ package suit
 /**
  * @author Steven Dobay
  */
-trait Container
+trait Container {
+  protected[suit] def wrappedContainer: java.awt.Component
+}

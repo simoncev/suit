@@ -51,5 +51,5 @@ case class Slider(private val initMin: Int = 0,
   protected def removeChangeListener(l: ChangeListenerType) =
     slider.removeChangeListener(l)
 
-  def bindValue() = value
+  def componentValue() = value
 }

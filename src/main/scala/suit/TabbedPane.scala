@@ -49,5 +49,7 @@ case class TabbedPane()
 
   protected[suit] def wrapped = tabs
 
+  protected[suit] def wrappedContainer = tabs
+
   def className = "TabbedPane"
 }

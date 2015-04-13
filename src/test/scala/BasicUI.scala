@@ -38,17 +38,17 @@ object BasicUI extends App("Basic UI") {
        * Adding a simple textmenu item with action by the "@>" operator
        */
       TextMenuItem("A") @> { mouseEvent =>
-        popups.info(frame, "A!")
+        popups.info("", "A!")
         println("The A action!")
       },
-      CheckBoxMenuItem("B") @> (_ => popups.warning(frame, "NO BEEEEE!")),
+      CheckBoxMenuItem("B") @> (_ => popups.warning("Warning!", "NO BEEEEE!")),
       TextMenuItem("Class name") @> ( mouseEvent =>
-         popups.info(frame, "You clicked from a " +
+         popups.info("", "You clicked from a " +
                               mouseEvent.source.className + "!")//we can get the source class
         )
       ),
     Menu("Exit") ++= (
-      TextMenuItem("Exit") @> (_ => popups.warning(frame, "I can't exit!"))
+      TextMenuItem("Exit") @> (_ => popups.warning("Warning!", "I can't exit!"))
       )
   )
 
@@ -66,8 +66,8 @@ object BasicUI extends App("Basic UI") {
     /**
      * Using the choice dialog from the popups
      */
-    val res = popups.choice(frame, "Choose: ", "Hello!",
-      Array("A", "B", "C"), "A")
+    val res = popups.choice("Choose: ", "Hello!",
+                            Array("A", "B", "C"), "A")
     println(res)
   }
 
@@ -90,6 +90,6 @@ object BasicUI extends App("Basic UI") {
 
   frame += new CheckBox_() {
     text := "Click!"
-    onChange := (_ => popups.info(frame, "Don't!"))
+    onChange := (_ => popups.info("Info:", "Don't!"))
   }.pack()
 }

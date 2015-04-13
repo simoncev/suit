@@ -71,7 +71,7 @@ case class FileChooser(private val initSelected: Array[File]
   protected def removeChangeListener(l: ChangeListenerType) =
    chooser.removeActionListener(l)
 
-  def bindValue() = selectedFiles()
+  def componentValue() = selectedFiles()
 }
 
 object FileChooser {

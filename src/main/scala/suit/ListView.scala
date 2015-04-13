@@ -133,7 +133,7 @@ case class ListView(items: AnyRef*)
   protected def removeChangeListener(l: ChangeListenerType) =
     list.removeListSelectionListener(l)
 
-  def bindValue() = list.getSelectedValuesList.toArray
+  def componentValue() = list.getSelectedValuesList.toArray
 }
 
 /**

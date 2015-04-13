@@ -16,4 +16,6 @@ case class Panel() extends ContainerComponent {
 
   protected[suit] def wrapped = panel
   def className = "Panel"
+
+  protected[suit] def wrappedContainer = panel
 }

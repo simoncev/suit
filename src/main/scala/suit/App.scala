@@ -12,6 +12,8 @@ class App(private val initTitle: String) {
   val frame = new Frame(initTitle)
   var arguments = Array[String]()
 
+  implicit val popupContainer = frame
+
   def onStart(): Unit = {}
 
   def main(args: Array[String]) = {

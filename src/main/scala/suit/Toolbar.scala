@@ -18,4 +18,6 @@ case class Toolbar() extends ContainerComponent {
   protected[suit] def wrapped = toolbar
 
   def className = "ToolBar"
+
+  protected[suit] def wrappedContainer = toolbar
 }

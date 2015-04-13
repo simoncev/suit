@@ -45,5 +45,5 @@ case class TextField(private val initText: String = "")
   protected def removeChangeListener(l: ChangeListenerType): Unit =
     field.removeInputMethodListener(l)
 
-  def bindValue() = text
+  def componentValue() = text
 }

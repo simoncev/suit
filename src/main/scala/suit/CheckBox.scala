@@ -47,5 +47,5 @@ case class CheckBox(private val initIsChecked: Boolean = false)
  protected def removeChangeListener(l: ChangeListenerType) =
   btn.removeActionListener(l)
 
- def bindValue() = isSelected()
+ def componentValue() = isSelected()
 }

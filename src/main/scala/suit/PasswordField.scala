@@ -56,5 +56,5 @@ case class PasswordField()
   protected def removeChangeListener(l: ChangeListenerType) =
    field.removeInputMethodListener(l)
 
-  def bindValue() = field.getPassword
+  def componentValue() = field.getPassword
 }

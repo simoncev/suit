@@ -46,5 +46,5 @@ case class ToggleButton()
   protected def removeChangeListener(l: ChangeListenerType) =
     button.removeActionListener(l)
 
-  def bindValue() = button.isSelected
+  def componentValue() = button.isSelected
 }

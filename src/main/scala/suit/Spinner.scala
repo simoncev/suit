@@ -41,5 +41,5 @@ case class Spinner()
   protected def removeChangeListener(l: ChangeListenerType) =
    spinner.removeChangeListener(l)
 
-  def bindValue() = value
+  def componentValue() = value
 }

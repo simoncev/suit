@@ -49,7 +49,7 @@ case class ColorChooser(private val initColor: Color = Color.WHITE)
   protected def removeChangeListener(l: ChangeListenerType) =
     chooser.removePropertyChangeListener(l)
 
-  def bindValue() = color
+  def componentValue() = color
 }
 
 object ColorChooser {

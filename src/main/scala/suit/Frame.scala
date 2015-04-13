@@ -206,7 +206,7 @@ case class Frame(private val initTitle: String) extends Container {
   /**
    * @return with the wrapped JFrame
    */
-  protected[suit] def wrapped = jframe
+  protected[suit] def wrappedContainer = jframe
 }
 
 object Frame {
