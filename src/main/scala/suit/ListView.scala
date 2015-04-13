@@ -9,6 +9,7 @@ import javax.swing.{JScrollPane, JList, ListSelectionModel}
 
 /**
  * @author Steven Dobay
+ * Component for visualizing lists.
  */
 case class ListView(items: AnyRef*)
    extends Bindable[Array[AnyRef]] {
@@ -76,14 +77,15 @@ case class ListView(items: AnyRef*)
   }
 
   /**
-   * Adds a selection listener to this listview
+   * Adds a selection listener to this list view
    *
    * @param proc
    */
   def onSelection(proc: (ListView, Int, Int) => Unit) = {
     list.addListSelectionListener(new ListSelectionListener {
       override def valueChanged(e: ListSelectionEvent): Unit =
-        proc(ListView(e.getSource), e.getFirstIndex, e.getLastIndex)
+        proc(ListView(e.getSource.asInstanceOf[JList[AnyRef]]),
+             e.getFirstIndex, e.getLastIndex)
     })
     this
   }
@@ -106,7 +108,7 @@ case class ListView(items: AnyRef*)
    * Sets the
    * @param l
    */
-  def setWrapped(l: JList[AnyRef]) = {
+  protected[suit] def setWrapped(l: JList[AnyRef]) = {
     list = l
   }
 
@@ -133,7 +135,8 @@ case class ListView(items: AnyRef*)
   protected def removeChangeListener(l: ChangeListenerType) =
     list.removeListSelectionListener(l)
 
-  def componentValue() = list.getSelectedValuesList.toArray
+  def componentValue() = list.getSelectedValuesList
+                             .toArray
 }
 
 /**

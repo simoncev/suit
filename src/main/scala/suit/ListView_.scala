@@ -7,7 +7,7 @@ package suit
  * @author Steven Dobay
  * For the properties' meaning got to ListView
  */
-abstract class ListView_(items: AnyRef*) extends Component_ {
+abstract class ListView_(private val items: AnyRef*) extends Component_ {
 
   private val view = new ListView(items)
 
@@ -23,9 +23,8 @@ abstract class ListView_(items: AnyRef*) extends Component_ {
 
   val fixedSize = Property[Dim](view.fixedSize(_))
 
-  val onSelection = Property[(ListView, Int, Int) => Unit](view.onSelection(_))
-
-  val onChange = Property[SelectionEvent => Unit](view.changeEvents += _)
+  val onSelection =
+    Property[(ListView, Int, Int) => Unit](view.onSelection(_))
 
   val onAction = Property[ActionEvent => Unit](view.onAction(_))
 }

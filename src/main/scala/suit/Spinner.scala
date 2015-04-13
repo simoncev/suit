@@ -14,7 +14,7 @@ case class Spinner()
 
   private val spinner = new JSpinner()
 
-  spinner.putClientProperty("scala-frame-wrapper", this)
+  spinner.putClientProperty("suit-wrapper", this)
 
   def value: Int = spinner.getValue.asInstanceOf[Int]
   def value_=(v: Int) = spinner.setValue(v)

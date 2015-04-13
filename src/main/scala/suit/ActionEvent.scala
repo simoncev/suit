@@ -25,7 +25,7 @@ case class ActionEvent(private val cSource: Component,
 object ActionEvent {
   def apply(e: java.awt.event.ActionEvent) = {
     val comp = e.getSource.asInstanceOf[JComponent]
-                .getClientProperty("scala-frame-wrapper")
+                .getClientProperty("suit-wrapper")
                 .asInstanceOf[Component]
     new ActionEvent(comp, e.getID, e.getWhen)
   }

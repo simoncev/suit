@@ -202,7 +202,7 @@ trait Component { self =>
 
   def popupMenu =
     wrapped.getComponentPopupMenu
-           .getClientProperty("scala-frame-wrapper")
+           .getClientProperty("suit-wrapper")
            .asInstanceOf[PopupMenu]
 
   /**

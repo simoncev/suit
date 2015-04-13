@@ -13,7 +13,7 @@ case class TabbedPane()
 
   private val tabs = new JTabbedPane()
 
-  tabs.putClientProperty ("scala-frame-wrapper", this)
+  tabs.putClientProperty ("suit-wrapper", this)
 
   def +=(tab: Tab) =
    if(tab.icon.isDefined) {

@@ -12,7 +12,7 @@ case class Label(private val initTitle: String) extends Widget {
 
   private val label = new JLabel(initTitle)
 
-  label.putClientProperty("scala-frame-wrapper", this)
+  label.putClientProperty("suit-wrapper", this)
 
   /**
    * @return with the label's text

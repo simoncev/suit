@@ -14,7 +14,7 @@ protected[suit] object ComponentHelpers {
 
   final implicit class ComponentFromJComponent(c: JComponent) {
     def readSuitComponent =
-      c.getClientProperty("scala-frame-wrapper").asInstanceOf[Component]
+      c.getClientProperty("suit-wrapper").asInstanceOf[Component]
   }
 
 }

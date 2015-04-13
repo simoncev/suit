@@ -20,13 +20,13 @@ object ChangeEvent {
 
   def apply(e: java.awt.event.ActionEvent) =
    new ChangeEvent(e.getSource.asInstanceOf[JComponent]
-                    .getClientProperty("scala-frame-wrapper")
+                    .getClientProperty("suit-wrapper")
                     .asInstanceOf[Component],
                    e.getID, e.getWhen, 1)
 
   def apply(e: javax.swing.event.ChangeEvent) =
     new ChangeEvent(e.getSource.asInstanceOf[JComponent]
-                     .getClientProperty("scala-frame-wrapper")
+                     .getClientProperty("suit-wrapper")
                      .asInstanceOf[Component],
                      -1, -1L, -1)
 }

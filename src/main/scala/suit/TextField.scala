@@ -15,7 +15,7 @@ case class TextField(private val initText: String = "")
 
   private val field = new JTextField(initText)
 
-  field.putClientProperty ("scala-frame-wrapper", this)
+  field.putClientProperty ("suit-wrapper", this)
 
   def text = field.getText
 

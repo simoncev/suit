@@ -11,7 +11,7 @@ import javax.swing.JToolBar
 case class Toolbar() extends ContainerComponent {
   private val toolbar = new JToolBar()
 
-  toolbar.putClientProperty ("scala-frame-wrapper", this)
+  toolbar.putClientProperty ("suit-wrapper", this)
 
   def addSeparator = toolbar.add(new JToolBar.Separator())
 

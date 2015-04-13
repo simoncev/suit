@@ -17,7 +17,7 @@ case class Slider(private val initMin: Int = 0,
 
   private val slider = new JSlider(initMin, initMax)
 
-  slider.putClientProperty ("scala-frame-wrapper", this)
+  slider.putClientProperty ("suit-wrapper", this)
   slider.setValue(initMin)
 
   def min = slider.getMinimum

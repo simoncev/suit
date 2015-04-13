@@ -16,7 +16,7 @@ case class TextMenuItem(private val initTitle: String)
 
   private val textMenuItem = menuItem.asInstanceOf[JMenuItem]
 
-  textMenuItem.putClientProperty ("scala-frame-wrapper", this)
+  textMenuItem.putClientProperty ("suit-wrapper", this)
 
   /**
    * @return with the title of the menuitem

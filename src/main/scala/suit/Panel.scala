@@ -12,7 +12,7 @@ case class Panel() extends ContainerComponent {
 
   private val panel = new JPanel
 
-  panel.putClientProperty ("scala-frame-wrapper", this)
+  panel.putClientProperty ("suit-wrapper", this)
 
   protected[suit] def wrapped = panel
   def className = "Panel"

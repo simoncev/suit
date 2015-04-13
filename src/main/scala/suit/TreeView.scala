@@ -14,7 +14,7 @@ case class TreeView() extends Component {
 
   def isSpecialized = false
 
-  tree.putClientProperty ("scala-frame-wrapper", this)
+  tree.putClientProperty ("suit-wrapper", this)
 
   /**
    * @param path

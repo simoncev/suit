@@ -38,7 +38,7 @@ case class ColorChooser(private val initColor: Color = Color.WHITE)
     val listener = new PropertyChangeListener {
       override def propertyChange(e: PropertyChangeEvent): Unit =
         proc(ChangeEvent(e.getSource.asInstanceOf[JComponent]
-                               .getClientProperty("scala-frame-wrapper")
+                               .getClientProperty("suit-wrapper")
                                .asInstanceOf[Component],
                     -1, -1, 1))
     }

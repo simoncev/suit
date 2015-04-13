@@ -21,7 +21,7 @@ object SelectionEvent {
     */
   def apply(e: javax.swing.event.ListSelectionEvent): SelectionEvent = {
     val list = e.getSource.asInstanceOf[JComponent]
-                .getClientProperty("scala-frame-wrapper")
+                .getClientProperty("suit-wrapper")
                 .asInstanceOf[ListView]
     SelectionEvent(list, -1, -1,
       list.items.slice(e.getFirstIndex, e.getLastIndex).toArray)
