@@ -1,7 +1,7 @@
 /**
  * Copyright© Steven Dobay 2015
  */
-package scala.test
+package charts
 
 import suit._
 import suit.charts._
