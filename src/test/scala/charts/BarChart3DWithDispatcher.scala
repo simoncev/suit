@@ -26,7 +26,7 @@ object BarChart3DWithDispatcher extends App("Bar chart with Dispatcher 3D") {
     )
     orientation := Horizontal
     dimension   := _3D
-  }.pack()
+  }
 
-  frame += new ChartPanel(chart)
+  frame += new ChartPanel(chart.pack())
 }

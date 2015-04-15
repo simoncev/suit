@@ -34,7 +34,7 @@ object TimeChartWithDispatcher extends App("Time chart with dispatcher") {
       (14, Day(new GregorianCalendar(2014, 1, 3))),
       (10, Day(new GregorianCalendar(2014, 1, 4)))
     ))
-  }.pack()
+  }
 
-  frame += new ChartPanel(chart)
+  frame += new ChartPanel(chart.pack())
 }
