@@ -6,7 +6,7 @@ package suit.charts
 import java.text.SimpleDateFormat
 import org.jfree.chart.ChartFactory
 import org.jfree.chart.axis.DateAxis
-import org.jfree.data.time._
+import org.jfree.data.time.{TimeSeries => JTimeSeries, TimeSeriesCollection}
 
 /**
  * @author Steven Dobay
@@ -34,16 +34,44 @@ case class TimeChart[T: Numeric](
    * @return with the chart with the new series added
    */
   def withSeries(lineTitle: String, values: List[(T, TimeUnit)]) = {
-    val series = new TimeSeries(lineTitle)
+    val series = new JTimeSeries(lineTitle)
     for(v <- values) series.add(v._2.time, v._1.asInstanceOf[Number])
     collection.addSeries(series)
     this
   }
 
   /**
-   * The same as withSeries
+   * @param lineTitle
+   * @param values
+   * @return with the chart with the new series added
    */
-  def ++ = withSeries _
+  def ++(lineTitle: String, values: List[(T, TimeUnit)]) =
+    withSeries(lineTitle, values)
+
+  /**
+   * Adds a new time series
+   * @param series : TimeSeries
+   * @return with the chart with the new series added
+   */
+  def withSeries(series: TimeSeries[T]): TimeChart[T] =
+    withSeries(series.lineTitle, series.values)
+
+  /**
+   * Adds a new time series
+   * @param series : TimeSeries
+   * @return with the chart with the new series added
+   */
+  def ++(series: TimeSeries[T]) =
+    withSeries(series.lineTitle, series.values)
+
+  /**
+   * @param dataset : a List of TimeSeries
+   * @return with the chart.
+   */
+  def withSeries(dataset: List[TimeSeries[T]]): TimeChart[T] = {
+    for(series <- dataset) withSeries(series)
+    this
+  }
 
   /**
    * @param format

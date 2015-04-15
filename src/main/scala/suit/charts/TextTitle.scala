@@ -115,5 +115,6 @@ object TextTitle {
   def apply(jFreeTextTitle: JFreeTextTitle) = {
     val t = new TextTitle()
     t.jFreeTextTitle(jFreeTextTitle)
+    t
   }
 }

@@ -1,4 +1,4 @@
-# Welcome to suit - Scala User Interface Terminals 0.7.0 !
+# Welcome to suit - Scala User Interface Terminals 0.7.1 !
 
 ![alt tag](https://travis-ci.org/stevendobay/suit.svg)
 

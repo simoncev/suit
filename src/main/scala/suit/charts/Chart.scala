@@ -21,19 +21,13 @@ trait Chart {
   /**
    * @return with the title object of the chart
    */
-  def title() = TextTitle(jFreeChart.getTitle)
+  def title = TextTitle(jFreeChart.getTitle)
 
   /**
    * Sets the chart's title by a TextTitle
    * @param t
    */
   def title_=(t: TextTitle) = jFreeChart.setTitle(t.jFreeTextTitle)
-
-  /**
-   * Sets the chart's title by string
-   * @param t
-   */
-  def title_=(t: String) = jFreeChart.setTitle(t)
 
   /**
    * @return with the background image
@@ -44,7 +38,7 @@ trait Chart {
    * Sets the chart's background image
    * @param i
    */
-  def backgroundImage(i: Image) = jFreeChart.setBackgroundImage(i)
+  def backgroundImage_=(i: Image) = jFreeChart.setBackgroundImage(i)
 
   /**
    * With this the chart's antialiasing can be switched on and off.
