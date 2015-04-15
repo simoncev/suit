@@ -3,47 +3,68 @@
  */
 package suit
 
-import java.awt.event.{InputMethodEvent, InputMethodListener}
 import javax.swing.JTextField
+import javax.swing.text.Document
 
 /**
  * @author Steven Dobay
  * Simple component to get text-based inputs.
  */
 case class TextField(private val initText: String = "")
-   extends Bindable[String] with Widget {
+   extends TextComponentLike[String](initText) with Widget {
 
   private val field = new JTextField(initText)
 
   field.putClientProperty ("suit-wrapper", this)
 
-  def text = field.getText
+  /**
+   * @return with the swing document
+   */
+  def document: Document = field.getDocument
 
-  def text_=(t: String) = field.setText(t)
+  /**
+   * Sets the swing document
+   * @param doc
+   */
+  def document_=(doc: Document): Unit =
+    field.setDocument(doc)
 
+  /**
+   * @return with the caret's index
+   */
+  def caretPosition: Int = field.getCaretPosition
+
+  /**
+   * Sets the caret's position
+   * @param pos
+   */
+  def caretPosition_=(pos: Int): Unit =
+    field.setCaretPosition(pos)
+
+  /**
+   * @return with the text of the component
+   */
+  def text: String = field.getText()
+
+  /**
+   * Sets the component's text
+   * @param str
+   */
+  def text_=(str: String): Unit =
+    field.setText(str)
+
+  /**
+   * @return with the name of the class
+   */
   def className = "TextField"
 
+  /**
+   * @return with a pointer to the wrapped JComponent
+   */
   protected[suit] def wrapped = field
 
   /**
-   * Section of Stateful's methods
+   * @return with the text of this component
    */
-  protected type ChangeEventType = EditEvent
-  protected type ChangeListenerType = InputMethodListener
-
-  protected def createAndAddChangeListener(proc: ChangeEventType => Unit): ChangeListenerType = {
-    val iml = new ChangeListenerType {
-      override def caretPositionChanged(ev: InputMethodEvent): Unit =
-       proc(EditEvent(ev, true))
-      override def inputMethodTextChanged(ev: InputMethodEvent): Unit =
-       proc(EditEvent(ev, false))
-    }
-    field.addInputMethodListener(iml)
-    iml
-  }
-
-  protected def removeChangeListener(l: ChangeListenerType): Unit =
-    field.removeInputMethodListener(l)
-
   def componentValue() = text
 }

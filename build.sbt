@@ -1,6 +1,6 @@
 name := "suit"
 
-version := "0.7.1"
+version := "0.7.3"
 
 scalaVersion := "2.11.6"
 

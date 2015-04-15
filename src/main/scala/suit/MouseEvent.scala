@@ -11,7 +11,7 @@ import helpers.ComponentHelpers._
  * @author Steven Dobay
  */
 class MouseEvent(private val cSource: Component,
-                 private val cId: Int,
+                 private val cId: Option[Int],
                  private val cWhen: Long,
                  val x: Int, val y: Int,
                  val clickCount: Int,
@@ -40,7 +40,7 @@ object MouseEvent {
    */
   def apply(s: Component, i: Int, w: Long,
             x: Int, y: Int, c: Int, p: Boolean) =
-   new MouseEvent(s, i, w, x, y, c, p)
+   new MouseEvent(s, Some(i), w, x, y, c, p)
 
   /**
    * @param e
@@ -48,6 +48,6 @@ object MouseEvent {
    */
   def apply(e: java.awt.event.MouseEvent) =
    new MouseEvent(e.getSource.asInstanceOf[JComponent].readSuitComponent,
-                  e.getID, e.getWhen,
+                  Some(e.getID), e.getWhen,
                   e.getX, e.getY, e.getClickCount, e.isPopupTrigger)
 }

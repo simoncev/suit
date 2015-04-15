@@ -37,10 +37,11 @@ case class ColorChooser(private val initColor: Color = Color.WHITE)
   protected def createAndAddChangeListener(proc: ChangeEventType => Unit) = {
     val listener = new PropertyChangeListener {
       override def propertyChange(e: PropertyChangeEvent): Unit =
-        proc(ChangeEvent(e.getSource.asInstanceOf[JComponent]
-                               .getClientProperty("suit-wrapper")
-                               .asInstanceOf[Component],
-                    -1, -1, 1))
+        proc(ChangeEvent.apply(e.getSource.asInstanceOf[JComponent]
+                                .getClientProperty("suit-wrapper")
+                                .asInstanceOf[Component],
+                               None, System.currentTimeMillis(),
+                               Some(1)))
     }
     chooser.addPropertyChangeListener("color", listener)
     listener

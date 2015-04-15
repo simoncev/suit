@@ -5,56 +5,75 @@ package suit
 
 import java.awt.event.{InputMethodEvent, InputMethodListener}
 import javax.swing.JPasswordField
+import javax.swing.text.Document
 
 /**
  * @author Steven Dobay
  */
 case class PasswordField()
-  extends Widget with Bindable[Array[Char]] with Stateful[Array[Char]] {
+  extends TextComponentLike[Array[Char]]("") with Widget {
 
   private val field = new JPasswordField()
 
+  /**
+   * @return with the swing document
+   */
+  def document: Document = field.getDocument
+
+  /**
+   * Sets the swing document
+   * @param doc
+   */
+  def document_=(doc: Document): Unit =
+    field.setDocument(doc)
+
+  /**
+   * @return with the caret's index
+   */
+  def caretPosition: Int = field.getCaretPosition
+
+  /**
+   * Sets the caret's position
+   * @param pos
+   */
+  def caretPosition_=(pos: Int): Unit =
+    field.setCaretPosition(pos)
+
+  /**
+   * @return with the text of the component
+   */
+  def text: String = field.getPassword.toString
+
+  /**
+   * Sets the component's text
+   * @param str
+   */
+  def text_=(str: String): Unit =
+    field.setText(str)
+
+  /**
+   * @return with the password
+   */
   def password = field.getPassword
 
+  /**
+   * Sets the initial text(or password)
+   * @param pass
+   */
   def password_=(pass: String) = field.setText(pass)
 
-  def onEdit(proc: EditEvent => Unit) = {
-    field.addInputMethodListener(new InputMethodListener {
-      override def caretPositionChanged(e: InputMethodEvent): Unit =
-        proc(EditEvent(e, true))
-      override def inputMethodTextChanged(e: InputMethodEvent): Unit =
-        proc(EditEvent(e, false))
-    })
-  }
-
-  def withEditAction(e: EditEvent => Unit) = {
-    onEdit(e)
-    this
-  }
-
+  /**
+   * @return with the name of the class
+   */
   def className = "PasswordField"
 
+  /**
+   * @return with a pointer to the wrapped JComponent
+   */
   protected[suit] def wrapped = field
 
   /**
-   * Section of Stateful's methods
+   * @return with the component's value(the password)
    */
-  protected type ChangeEventType = EditEvent
-  protected type ChangeListenerType = InputMethodListener
-
-  protected def createAndAddChangeListener(proc: ChangeEventType => Unit) = {
-    val listener = new ChangeListenerType {
-      override def caretPositionChanged(event: InputMethodEvent): Unit =
-        proc(EditEvent(event, true))
-      override def inputMethodTextChanged(event: InputMethodEvent): Unit =
-        proc(EditEvent(event, false))
-    }
-    field.addInputMethodListener(listener)
-    listener
-  }
-
-  protected def removeChangeListener(l: ChangeListenerType) =
-   field.removeInputMethodListener(l)
-
   def componentValue() = field.getPassword
 }

@@ -12,7 +12,7 @@ import helpers.ComponentHelpers._
  * Event-info data class.
  */
 case class MouseMotionEvent(private val cSource: Component,
-                            private val cId: Int,
+                            private val cId: Option[Int],
                             private val cWhen: Long,
                             private val cX: Int, private val cY: Int,
                             private val cClickCount: Int,
@@ -27,6 +27,6 @@ object MouseMotionEvent {
   def apply(e: java.awt.event.MouseEvent, isMouseMoved: Boolean)
   :MouseMotionEvent =
    MouseMotionEvent(e.getSource.asInstanceOf[JComponent].readSuitComponent,
-                    e.getID, e.getWhen, e.getX, e.getY, e.getClickCount,
+                    Some(e.getID), e.getWhen, e.getX, e.getY, e.getClickCount,
                     e.isPopupTrigger, isMouseMoved)
 }

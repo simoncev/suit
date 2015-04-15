@@ -3,6 +3,8 @@
  */
 package suit
 
+import javax.swing.text.Document
+
 /**
  * @author Steven Dobay
  */
@@ -15,7 +17,11 @@ abstract class PasswordField_(private val txt: String = "")
 
   val password = Property[String](field.password = _)
 
-  val onEdit = Property[EditEvent => Unit](field.onEdit(_))
+  val text = Property[String](field.text = _)
+
+  val document = Property[Document](field.document = _)
+
+  val caretPosition = Property[Int](field.caretPosition = _)
 
   val onChange = Property[ChangeEvent => Unit](field.changeEvents += _)
 }

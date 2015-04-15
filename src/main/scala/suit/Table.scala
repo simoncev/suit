@@ -4,7 +4,7 @@
 package suit
 
 import java.awt.Color
-import java.awt.event.{InputMethodEvent, InputMethodListener}
+import javax.swing.event.{TableModelEvent, TableModelListener}
 import javax.swing.{JScrollPane, JTable}
 
 /**
@@ -117,22 +117,20 @@ case class Table(private val initRows: Int,
   /**
    * Section of Stateful's methods
    */
-  protected type ChangeEventType = EditEvent
-  protected type ChangeListenerType = InputMethodListener
+  protected type ChangeEventType = TableChangeEvent
+  protected type ChangeListenerType = TableModelListener
 
   protected def createAndAddChangeListener(proc: ChangeEventType => Unit) = {
     val listener = new ChangeListenerType {
-      override def caretPositionChanged(event: InputMethodEvent): Unit =
-         proc(EditEvent(event, true))
-      override def inputMethodTextChanged(event: InputMethodEvent): Unit =
-         proc(EditEvent(event, false))
+      override def tableChanged(e: TableModelEvent): Unit =
+        proc(TableChangeEvent(e, System.currentTimeMillis()))
     }
-    table.addInputMethodListener(listener)
+    table.getModel.addTableModelListener(listener)
     listener
   }
 
   protected def removeChangeListener(l: ChangeListenerType) =
-   table.removeInputMethodListener(l)
+    table.getModel.removeTableModelListener(l)
 
   def componentValue() = data
 }

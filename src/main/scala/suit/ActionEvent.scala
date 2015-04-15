@@ -11,7 +11,7 @@ import javax.swing.JComponent
  * @author Steven Dobay
  */
 case class ActionEvent(private val cSource: Component,
-                       private val cId: Int,
+                       private val cId: Option[Int],
                        private val cWhen: Long)
  extends Event(cSource, cId, cWhen) {
 
@@ -19,7 +19,9 @@ case class ActionEvent(private val cSource: Component,
     new MouseEvent(source, id, when, -1, -1, 1, false)
 
   def toAWTActionEvent: JActionEvent =
-    new JActionEvent(source.wrapped, id, "", when, -1)
+    new JActionEvent(source.wrapped,
+                     if(cId.isDefined) cId.get else -1,
+                     "", when, -1)
 }
 
 object ActionEvent {
@@ -27,6 +29,6 @@ object ActionEvent {
     val comp = e.getSource.asInstanceOf[JComponent]
                 .getClientProperty("suit-wrapper")
                 .asInstanceOf[Component]
-    new ActionEvent(comp, e.getID, e.getWhen)
+    new ActionEvent(comp, Some(e.getID), e.getWhen)
   }
 }

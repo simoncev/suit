@@ -92,4 +92,10 @@ object BasicUI extends App("Basic UI") {
     text := "Click!"
     onChange := (_ => popups.info("Info:", "Don't!"))
   }.pack()
+
+  frame += new TextField_() {
+    onChange := (_ =>
+      popups.info("", "It's hard to write like this, isn't?")
+      )
+  }.pack()
 }

@@ -9,10 +9,10 @@ import javax.swing.JComponent
  * @author Steven Dobay
  */
 case class SelectionEvent(private val cSource: Component,
-                          private val cId: Int,
+                          private val cId: Option[Int],
                           private val cWhen: Long,
                           objects: Array[AnyRef])
- extends ChangeEvent(cSource, cId, cWhen, objects.size)
+ extends ChangeEvent(cSource, cId, cWhen, Some(objects.size))
 
 object SelectionEvent {
   /**
@@ -23,7 +23,7 @@ object SelectionEvent {
     val list = e.getSource.asInstanceOf[JComponent]
                 .getClientProperty("suit-wrapper")
                 .asInstanceOf[ListView]
-    SelectionEvent(list, -1, -1,
+    SelectionEvent(list, None, System.currentTimeMillis(),
       list.items.slice(e.getFirstIndex, e.getLastIndex).toArray)
   }
 }
