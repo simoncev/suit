@@ -3,7 +3,7 @@
  */
 package suit.charts
 
-import suit.Property
+import suit._
 
 /**
  * @author Steven Dobay
@@ -14,10 +14,10 @@ case class PieChart_[T: Numeric](private val initTitle: String = "")
   private var pie: PieChart[T] = null
 
   private var dataset: List[(String, T)] = List()
-  private var dim: ChartDimension = _2D
+  private var dim: Dimension = _2D
 
   val dataSet = Property[List[(String, T)]](dataset = _)
-  val dimension = Property[ChartDimension](dim = _)
+  val dimension = Property[Dimension](dim = _)
 
   protected[suit] def chart() = pie
 

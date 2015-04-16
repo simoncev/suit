@@ -4,6 +4,7 @@ import org.jfree.chart.ChartFactory
 import org.jfree.chart.plot.PiePlot3D
 import org.jfree.data.general.DefaultPieDataset
 import org.jfree.util.Rotation
+import suit._
 
 /**
  * @author Steven Dobay
@@ -19,7 +20,7 @@ import org.jfree.util.Rotation
 case class PieChart[T: Numeric](
   chartTitle: String,
   dataSet: List[(String, T)],
-  dimension: ChartDimension = _2D
+  dimension: Dimension = _2D
 ) extends Chart {
 
   private val pieDataset = new DefaultPieDataset

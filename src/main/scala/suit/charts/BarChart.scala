@@ -6,6 +6,7 @@ package suit.charts
 import org.jfree.chart.ChartFactory
 import org.jfree.chart.plot.PlotOrientation
 import org.jfree.data.category.DefaultCategoryDataset
+import suit._
 
 /**
  * @author Steven Dobay
@@ -27,7 +28,7 @@ case class BarChart[T: Numeric](
  yTitle: String,
  dataSet: List[(T, String, String)],
  orientation: Orientation = Vertical,
- dimension: ChartDimension = _2D
+ dimension: Dimension = _2D
 ) extends Chart {
 
   private val dataset = new DefaultCategoryDataset

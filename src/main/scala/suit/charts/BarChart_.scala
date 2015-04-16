@@ -3,7 +3,7 @@
  */
 package suit.charts
 
-import suit.Property
+import suit._
 
 /**
  * @author Steven Dobay
@@ -18,7 +18,7 @@ abstract class BarChart_[T: Numeric](private val initTitle: String = "")
   private var ytitle = ""
   private var dataset: List[(T, String, String)] = List()
   private var orient: Orientation = Vertical
-  private var dim: ChartDimension = _2D
+  private var dim: Dimension = _2D
 
   val xTitle = Property[String](xtitle = _)
 
@@ -26,7 +26,7 @@ abstract class BarChart_[T: Numeric](private val initTitle: String = "")
 
   val orientation = Property[Orientation](orient = _)
 
-  val dimension = Property[ChartDimension](dim = _)
+  val dimension = Property[Dimension](dim = _)
 
   val dataSet =
    Property[List[(T, String, String)]](dataset = _)
