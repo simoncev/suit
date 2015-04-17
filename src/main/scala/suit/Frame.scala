@@ -110,21 +110,34 @@ case class Frame(private val initTitle: String) extends Container {
    * Adds the component tot the Frame and updates the ui
    * @param comp
    */
-  def +=(comp: Component) = {
+  def +=(comp: Component): Unit = {
     jframe.getContentPane.add(comp.wrapped)
     comp.container = this
     updateUI
   }
 
   /**
-   * Removes the component from the Frame
+   * Adds a new component; updates the ui
+   * @param comp : a component's dispatcher
+   */
+  def +=(comp: Component_): Unit = this.+=(comp.pack())
+
+  /**
+   * Removes the component from the Frame; updates the ui
    * @param comp
    */
-  def -=(comp: Component) = {
+  def -=(comp: Component): Unit = {
     jframe.getContentPane.remove(comp.wrapped)
     comp.container = this
     updateUI
   }
+
+  /**
+   * Removes a component by its dispatcher; updates the ui
+   * @param comp
+   */
+  def -=(comp: Component_): Unit =
+    this.-=(comp.pack())
 
   /**
    * Adds the component to the Frame
@@ -136,13 +149,25 @@ case class Frame(private val initTitle: String) extends Container {
   }
 
   /**
+   * Ads the component by dispatcher
+   * @param comp
+   */
+  def add(comp: Component_): Unit = this.add(comp.pack())
+
+  /**
    * Removes the component from the Frame and updates the UI
    * @param comp
    */
-  def remove(comp: Component) = {
+  def remove(comp: Component): Unit = {
     jframe.getContentPane.remove(comp.wrapped)
     comp.container = this
   }
+
+  /**
+   * Removes the component by its dispatcher
+   * @param comp
+   */
+  def remove(comp: Component_): Unit = this.remove(comp.pack())
 
   /**
    * Removes the frame's components

@@ -22,5 +22,5 @@ object PieChart3DWithDispatching extends App("3D pie chart with dispatching!") {
     dimension := _3D
   }
 
-  frame += new ChartPanel(chart.pack())
+  frame += ChartPanel(chart)
 }

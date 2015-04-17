@@ -36,5 +36,5 @@ object TimeChartWithDispatcher extends App("Time chart with dispatcher") {
     ))
   }
 
-  frame += new ChartPanel(chart.pack())
+  frame += ChartPanel(chart)
 }

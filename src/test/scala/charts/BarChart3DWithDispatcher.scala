@@ -28,5 +28,5 @@ object BarChart3DWithDispatcher extends App("Bar chart with Dispatcher 3D") {
     dimension   := _3D
   }
 
-  frame += new ChartPanel(chart.pack())
+  frame += ChartPanel(chart)
 }

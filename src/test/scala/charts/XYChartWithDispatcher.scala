@@ -24,5 +24,5 @@ object XYChartWithDispatcher extends App("XY chart with dispatching") {
                    List((1, 1), (2, 3), (3, 5), (4, 7)))
   }
 
-  frame += new ChartPanel(chart.pack())
+  frame += ChartPanel(chart)
 }

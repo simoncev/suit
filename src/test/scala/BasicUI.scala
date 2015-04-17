@@ -81,21 +81,21 @@ object BasicUI extends App("Basic UI") {
   frame += new Label_("Fancy label!") {
     text := "I changed the text!"
     foreGround := Color.BLUE
-  }.pack
+  }
 
   frame += new PasswordField_() {
     foreGround := Color.RED
     preferredSize := Dim(100, 20)
-  }.pack
+  }
 
   frame += new CheckBox_() {
     text := "Click!"
     onChange := (_ => popups.info("Info:", "Don't!"))
-  }.pack()
+  }
 
   frame += new TextField_() {
     onChange := (_ =>
       popups.info("", "It's hard to write like this, isn't?")
       )
-  }.pack()
+  }
 }
