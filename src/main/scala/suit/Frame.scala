@@ -10,7 +10,7 @@ import javax.swing.{JFrame, JMenuBar, JMenu}
  */
 case class Frame(private val initTitle: String) extends Container {
   private val jframe = new JFrame(initTitle)
-  private var dim = Dim(0, 0)
+  private var dim = Size(0, 0)
   private var layoutM: Layout = layouts.FlowLayout()
   private var menuBar: Option[JMenuBar] = None
   private var isMenuBarInitialized = false
@@ -84,13 +84,13 @@ case class Frame(private val initTitle: String) extends Container {
   /**
    * @return with the size of the Frame
    */
-  def size = Dim(jframe.getSize)
+  def size = Size(jframe.getSize)
 
   /**
    * Sets the size of the Frame
    * @param d
    */
-  def size_=(d: Dim) = {
+  def size_=(d: Size) = {
     dim = d
     jframe.setSize(dim)
   }

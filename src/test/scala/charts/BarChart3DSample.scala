@@ -10,7 +10,7 @@ import suit.charts._
  * @author Steven Dobay
  */
 object BarChart3DSample extends App("Horizontal bar chart in 3D Sample") {
-  frame.size = Dim(800, 600)
+  frame.size = Size(800, 600)
 
   val chart = BarChart (
     "My Bar",                    //title

@@ -15,13 +15,13 @@ case class GridLayout(var rows: Int, var columns: Int) extends Layout {
   /**
    * @return with the size of the layout
    */
-  def size = Dim(rows, columns)
+  def size = Size(rows, columns)
 
   /**
    * Sets the size of the layout
    * @param dim
    */
-  def size_=(dim: Dim) = {
+  def size_=(dim: Size) = {
     rows = dim.width()
     columns = dim.height()
     layout.setRows(rows)
@@ -58,6 +58,6 @@ case class GridLayout(var rows: Int, var columns: Int) extends Layout {
 
 object GridLayout {
 
-  def apply(dim: Dim): GridLayout =
+  def apply(dim: Size): GridLayout =
     GridLayout(dim.width(), dim. height())
 }

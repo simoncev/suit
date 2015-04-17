@@ -13,7 +13,7 @@ import suit.charts._
  */
 object TimeChartSample extends App("Timechart Sample") {
 
-  frame.size = Dim(800, 600)
+  frame.size = Size(800, 600)
 
   val chart = TimeChart[Int]("My Time Chart", "X", "Y") // chart's title with the titles of x and y axises
     .withSeries("Series1", List(                  // data-set #1

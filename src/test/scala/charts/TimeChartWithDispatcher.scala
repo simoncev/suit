@@ -13,7 +13,7 @@ import suit.charts._
  */
 object TimeChartWithDispatcher extends App("Time chart with dispatcher") {
 
-  frame.size = Dim(800, 600)
+  frame.size = Size(800, 600)
 
   val chart = new TimeChart_[Int]("My Time Chart") {
     xTitle := "X"

@@ -12,7 +12,7 @@ import suit.charts._
 
 object PieChart3DSample extends App("Pie Chart Sample") {
 
-  frame.size = Dim(800, 600)
+  frame.size = Size(800, 600)
 
   val pie = PieChart (
     "Candy market",

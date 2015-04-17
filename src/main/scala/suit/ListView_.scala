@@ -21,7 +21,7 @@ abstract class ListView_(private val items: AnyRef*) extends Component_ {
 
   val layoutOrientation = Property[Int](view.layoutOrientation = _)
 
-  val fixedSize = Property[Dim](view.fixedSize(_))
+  val fixedSize = Property[Size](view.fixedSize(_))
 
   val onSelection =
     Property[(ListView, Int, Int) => Unit](view.onSelection(_))

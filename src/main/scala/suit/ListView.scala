@@ -70,7 +70,7 @@ case class ListView(items: AnyRef*)
    * Sets the fixed cell-size
    * @param d
    */
-  def fixedSize(d: Dim) = {
+  def fixedSize(d: Size) = {
     list.setFixedCellHeight(d.getHeight.toInt)
     list.setFixedCellWidth(d.getWidth.toInt)
     this

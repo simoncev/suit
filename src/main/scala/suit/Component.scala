@@ -49,13 +49,13 @@ trait Component { self =>
   /**
    * @param d
    */
-  def preferredSize_=(d: Dim) =
+  def preferredSize_=(d: Size) =
     wrapped.setPreferredSize(d)
 
   /**
    * @param d
    */
-  def withPreferredSize(d: Dim): self.type = {
+  def withPreferredSize(d: Size): self.type = {
     wrapped.setPreferredSize(d)
     self
   }
@@ -67,12 +67,12 @@ trait Component { self =>
   /**
    * @param d
    */
-  def minSize_=(d: Dim) =
+  def minSize_=(d: Size) =
     wrapped.setMinimumSize(d)
   /**
    * @param d
    */
-  def maxSize_=(d: Dim) =
+  def maxSize_=(d: Size) =
     wrapped.setMaximumSize(d)
 
   def font = wrapped.getFont

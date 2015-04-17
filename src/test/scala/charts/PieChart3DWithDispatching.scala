@@ -11,7 +11,7 @@ import suit.charts._
  */
 object PieChart3DWithDispatching extends App("3D pie chart with dispatching!") {
 
-  frame.size = Dim(800, 600)
+  frame.size = Size(800, 600)
 
   val chart = new PieChart_[Int]("Candies!") {
     dataSet := List(

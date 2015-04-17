@@ -21,7 +21,7 @@ object BasicUI extends App("Basic UI") {
   /**
    * Setting the size of the frame
    */
-  frame.size = Dim(300, 300)
+  frame.size = Size(300, 300)
 
   /**
    * Creating menus for the menubar
@@ -85,7 +85,7 @@ object BasicUI extends App("Basic UI") {
 
   frame += new PasswordField_() {
     foreGround := Color.RED
-    preferredSize := Dim(100, 20)
+    preferredSize := Size(100, 20)
   }
 
   frame += new CheckBox_() {

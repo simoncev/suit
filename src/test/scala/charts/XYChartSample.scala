@@ -19,7 +19,7 @@ object XYChartSample extends App("XY chart sample") {
                 List((1, 1), (2, 3), (3, 5), (4, 7)))
     .createChart() // creating the chart with the given datas
 
-  frame.size = Dim(800, 600)
+  frame.size = Size(800, 600)
 
   frame += new ChartPanel(chart)
 }

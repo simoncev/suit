@@ -13,7 +13,7 @@ import suit.charts._
  */
 object BarChart3DWithDispatcher extends App("Bar chart with Dispatcher 3D") {
 
-  frame.size = Dim(800, 600)
+  frame.size = Size(800, 600)
 
   val chart = new BarChart_[Int]("Charts!") {
     xTitle := "X"

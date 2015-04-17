@@ -11,7 +11,7 @@ import suit.charts._
  */
 object XYChartWithDispatcher extends App("XY chart with dispatching") {
 
-  frame.size = Dim(800, 600)
+  frame.size = Size(800, 600)
 
   val chart = new XYChart_[Int]("My XY") {
     xTitle := "X"

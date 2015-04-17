@@ -14,9 +14,9 @@ trait Component_ { self =>
 
   def pack(): Component
 
-  val preferredSize = Property[Dim](pack.preferredSize = _)
-  val minSize = Property[Dim](pack.minSize = _)
-  val maxSize = Property[Dim](pack.maxSize = _)
+  val preferredSize = Property[Size](pack.preferredSize = _)
+  val minSize = Property[Size](pack.minSize = _)
+  val maxSize = Property[Size](pack.maxSize = _)
 
   val font = Property[Font](pack.font = _)
 
