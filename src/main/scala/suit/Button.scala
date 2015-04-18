@@ -4,8 +4,9 @@
  */
 package suit
 
-import java.awt.event.ActionListener
-import javax.swing.JButton
+import java.awt.{event, Color}
+import java.awt.event.{MouseListener, ActionListener}
+import javax.swing.{BorderFactory, JButton}
 
 /**
  * @author Steven Dobay

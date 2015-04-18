@@ -4,7 +4,7 @@
 package suit
 
 import java.awt.event.ActionListener
-import javax.swing.JPanel
+import javax.swing.{JComponent, JPanel}
 import javax.swing.event.ChangeListener
 
 /**
@@ -15,32 +15,62 @@ case class RadioButtonGroup()
   private val panel = new JPanel
   private var buttons = new Array[RadioButton](5)
 
+  /**
+   * Adds a new radio button.
+   * @param btn
+   */
   def +=(btn: RadioButton) = {
     panel.add(btn.wrapped)
     buttons = Array.concat(buttons, Array(btn))
   }
 
-  def withButton(btn: RadioButton) = {
-    panel.add(btn.wrapped)
-    buttons = Array.concat(buttons, Array(btn))
-  }
-
+  /**
+   * Adds a sequnce of radio buttons.
+   * @param btns
+   */
   def ++=(btns: RadioButton*) = {
     for(btn <- btns) panel.add(btn.wrapped)
     buttons = Array.concat(buttons, btns.toArray)
   }
 
+  /**
+   * Adds a sequnce of radio buttons.
+   * @param btns
+   * @return with self.
+   */
   def withButtons(btns: RadioButton*) = {
     for(btn <- btns) panel.add(btn.wrapped)
     buttons = Array.concat(buttons, btns.toArray)
     this
   }
 
+  /**
+   * Removes the given radio button.
+   * @param btn
+   */
   def -=(btn: RadioButton) = {
     panel.remove(btn.wrapped)
     buttons = buttons.filter(_ != btn)
   }
 
+  /**
+   * @return with all components.
+   */
+  protected[suit] def allComponents() =
+    panel.getComponents
+      .map(_.asInstanceOf[JComponent]
+      .getClientProperty("suit-wrapper")
+      .asInstanceOf[Component])
+
+  /**
+   * @return with the number of components.
+   */
+  protected[suit] def componentsSize() =
+    panel.getComponentCount
+
+  /**
+   * @return with an array of buttons.
+   */
   def getButtons = buttons
 
   def selected: Option[String] = buttons.find(_.isSelected) match {
@@ -48,8 +78,14 @@ case class RadioButtonGroup()
     case _         => None
   }
 
+  /**
+   * @return with the name of the class
+   */
   def className = "RadioButtonGroup"
 
+  /**
+   * @return with a pointer to the wrapped JComponent
+   */
   protected[suit] def wrapped = panel
 
   /**

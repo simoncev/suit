@@ -3,7 +3,7 @@
  */
 package suit
 
-import javax.swing.{JFrame, JMenuBar, JMenu}
+import javax.swing.{JComponent, JFrame, JMenuBar, JMenu}
 
 /**
  * @author Steven Dobay
@@ -80,6 +80,20 @@ case class Frame(private val initTitle: String) extends Container {
   def removeMenu(menu: Menu): Unit =
    if(isMenuBarInitialized) menuBar.get.remove(menu.wrapped)
 
+  /**
+   * @return with all components.
+   */
+  protected[suit] def allComponents() =
+    jframe.getComponents
+      .map(_.asInstanceOf[JComponent]
+            .getClientProperty("suit-wrapper")
+            .asInstanceOf[Component])
+
+  /**
+   * @return with the number of components.
+   */
+  protected[suit] def componentsSize() =
+    jframe.getComponentCount
 
   /**
    * @return with the size of the Frame
@@ -180,12 +194,6 @@ case class Frame(private val initTitle: String) extends Container {
    */
   def onExit_=(op: Int) =
     jframe.setDefaultCloseOperation(op)
-
-  /**
-   * @return with the components of the frame in an array
-   */
-  def components =
-    jframe.getComponents.map(_.asInstanceOf[Component])
 
   /**
    * @param ix
