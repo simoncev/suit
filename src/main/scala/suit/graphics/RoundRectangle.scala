@@ -9,8 +9,8 @@ import suit.Size
  * @author Steven Dobay
  */
 case class RoundRectangle(
-  private val cStart: Point,
-  private val cSize: Size,
-  private val cFilled: Boolean = false,
-  arcWidth: Int, arcHeight: Int)
-  extends Rectangle(cStart, cSize, cFilled)
+  private val startPoint: Point,
+  private val initSize: Size,
+  private val arcSize: Size,
+  private val initFilled: Boolean = false)
+  extends Rectangle(startPoint, initSize, initFilled)

@@ -13,11 +13,15 @@ import suit.Size
 
 /**
  * @author Steven Dobay
+ *
+ * @param res : ImageResource
  */
-case class Picture(img: Image) {
+case class Picture(res: ImageResource) {
   private var start: Point = Point(0, 0)
   private var dim: Size = Size(0, 0)
   private var bg = Color.WHITE
+
+  val img = res.image()
 
   /**
    * @return with the start-point
@@ -33,7 +37,7 @@ case class Picture(img: Image) {
   /**
    * @return with the dimension
    */
-  def dimension(proc: ImageObserver => Boolean) =
+  def size(proc: ImageObserver => Boolean) =
     Size(img.getWidth(createImgListener(proc)),
         img.getHeight(createImgListener(proc)))
 
@@ -41,7 +45,7 @@ case class Picture(img: Image) {
    * Sets the dimension(width, height)
    * @param dm
    */
-  def dimension(dm: Size) = dim = dm
+  def size(dm: Size) = dim = dm
 
   /**
    * @return with the background's color
@@ -73,31 +77,4 @@ case class Picture(img: Image) {
           Size(width, height)),
           infoflags))
     }
-}
-
-object Picture {
-  /**
-   * Reads the image from the path.
-   *
-   * @param path
-   * @return with the picture initialized from it.
-   */
-  def apply(path: String): Picture =
-   Picture(ImageIO.read(new File(path)))
-
-  /**
-   * Make a picture out from another one;
-   * this just copies the image instance -
-   * the properties won't be included!
-   *
-   * @param pic
-   */
-  def apply(pic: Picture): Picture = Picture(pic.img)
-
-  /**
-   * Creates a picture from an url.
-   * @param url
-   * @return with a new picture
-   */
-  def apply(url: URL): Picture = Picture(ImageIO.read(url))
 }

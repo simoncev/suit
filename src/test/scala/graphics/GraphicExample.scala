@@ -20,14 +20,16 @@ object GraphicExample extends App("Basic graphical stuff") {
   canvas.preferredSize = Size(420, 420)
 
   canvas.color(Color.GREEN)
-  canvas += RoundRectangle(Point(5, 5), Size(415, 415), false, 10, 10)
+  canvas += RoundRectangle(Point(5, 5), Size(415, 415), Size(10, 10), false)
 
-  val pic = Picture(new URL("http://lolspoon.com/wp-content/" +
-                            "uploads/2012/09/" +
-                            "Cute-Kitten-Pictures-and-LOLs-2-400x400.jpg"))
-
+  val pic = Picture(URLResource(
+                      new URL("http://lolspoon.com/wp-content/" +
+                             "uploads/2012/09/" +
+                             "Cute-Kitten-Pictures-and-LOLs-2-400x400.jpg")
+                    )
+                   )
   pic.startPoint = Point(33, 33)
-  pic.dimension(Size(360, 360))
+  pic.size(Size(360, 360))
   canvas += pic
 
   canvas.color(Color.BLUE)
