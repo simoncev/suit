@@ -42,8 +42,7 @@ case class TabbedPane()
    * Adds a sequence of tabs
    * @param ts
    */
-  def ++=(ts: Tab*) =
-    for(t <- ts) this.+=(t)
+  def ++=(ts: Tab*) = for(t <- ts) this.+=(t)
 
   /**
    * Removes a sequence of tabs by its components

@@ -4,10 +4,15 @@
  */
 package suit
 
+import javax.swing.UIManager
+
+import javax.swing.plaf.nimbus.NimbusLookAndFeel
+
 /**
  * @author Steven Dobay
  */
 class App(private val initTitle: String) {
+  UIManager.setLookAndFeel(new NimbusLookAndFeel())
 
   val frame = new Frame(initTitle)
   var arguments = Array[String]()

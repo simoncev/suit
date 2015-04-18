@@ -7,7 +7,7 @@ package suit
 import java.awt.event.{FocusEvent => JFocusEvent}
 import java.awt.event.{MouseMotionListener, FocusListener, MouseListener}
 import java.awt.{event, Font, Color}
-import javax.swing.JComponent
+import javax.swing.{UIManager, JComponent}
 import javax.swing.border.Border
 
 /**
