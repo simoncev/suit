@@ -16,6 +16,8 @@ case class ListView(items: AnyRef*)
 
   private var list = new JList(items.toArray)
 
+  list.putClientProperty("suit-wrapper", this)
+
   /**
    * Adds scrollpane to the list
    */

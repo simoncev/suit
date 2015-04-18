@@ -33,6 +33,8 @@ trait Component_ { self =>
 
   val opaque = Property[Boolean](pack.setOpaque(_))
 
+  val addStyleClass = Property[String](pack.styleClasses += _)
+
   val property =
     Property[(String, AnyRef)](t => pack.property_=(t._1, t._2))
 

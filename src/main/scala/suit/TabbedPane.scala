@@ -54,11 +54,7 @@ case class TabbedPane()
   /**
    * @return with all components.
    */
-  protected[suit] def allComponents() =
-    tabs.getComponents
-        .map(_.asInstanceOf[JComponent]
-              .getClientProperty("suit-wrapper")
-              .asInstanceOf[Component])
+  protected[suit] def allComponents() = tabs.getComponents
 
   /**
    * @return with the number of components.

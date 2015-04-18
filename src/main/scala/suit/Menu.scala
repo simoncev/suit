@@ -12,6 +12,8 @@ import javax.swing.JMenu
 case class Menu(private val initTitle: String) {
   private var menu: JMenu = new JMenu(initTitle)
 
+  menu.putClientProperty("suit-wrapper", this)
+
   /**
    * @return with the title of the menu
    */

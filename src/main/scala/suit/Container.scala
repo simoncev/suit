@@ -4,6 +4,7 @@
 package suit
 
 import javax.swing.JComponent
+import scala.reflect.runtime.universe._
 
 /**
  * @author Steven Dobay
@@ -17,7 +18,7 @@ trait Container {
   /**
    * @return with all components.
    */
-  protected[suit] def allComponents(): Array[Component]
+  protected[suit] def allComponents(): Array[java.awt.Component]
 
   /**
    * @return with the number of components.
@@ -27,14 +28,65 @@ trait Container {
   /**
    * @return with an array of components
    */
-  def components() =
-    allComponents()
-     .map(_.asInstanceOf[JComponent]
-           .getClientProperty("suit-wrapper")
-           .asInstanceOf[Component])
+  def components(): Array[Component] =
+    allComponents().flatMap { comp =>
+      if(comp == null) Array[Component]()
+      else {
+        val wrapper = comp.asInstanceOf[JComponent]
+                          .getClientProperty("suit-wrapper")
+
+        if(wrapper == null) Array[Component]()
+        else Array(wrapper.asInstanceOf[Component])
+      }
+    }
 
   /**
    * @return with the number of components
    */
   def componentsCount() = componentsSize()
+
+  /**
+   * Executes the styling function for all components
+   * which class-name equals to the given one;
+   * if the class-name is an empty string then
+   * it executes for all.
+   *
+   * @param classNames : the names of the classes
+   * @param styler        : the styler function
+   * @tparam T            : the component's type
+   */
+  def forall[T <: Component](classNames: Set[String],
+                             styler: T => Unit)
+                            (implicit tag: TypeTag[T]): Unit = {
+      components().foreach { c: Component =>
+
+      val isDesiredType = runtimeMirror(getClass.getClassLoader).reflect(c).symbol ==
+                          typeOf[T].typeSymbol
+      val isClassDefined = classNames.exists(c.styleClasses.contains(_))
+      val isForAll = classNames.contains("")
+
+      if((isDesiredType && (isClassDefined || isForAll)))
+         styler(c.asInstanceOf[T])
+      if(c.isInstanceOf[Container])
+         c.asInstanceOf[Container].forall[T](classNames, styler)
+    }
+  }
+
+  /**
+   * Executes the styling function for all components
+   * which class-name equals to the given one;
+   * if the class-name is an empty string then
+   * it executes for all.
+   * NOTE! This method go through all components -
+   * it has a significant cost!
+   *
+   * @param className : the name of the class
+   * @param styler    : the styler function
+   * @tparam T        : the component's type
+   */
+  def forall[T <: Component](className: String,
+                             styler: T => Unit)
+                            (implicit tag: TypeTag[T]): Unit =
+   forall(Set(className), styler)
+
 }

@@ -14,6 +14,8 @@ case class ChartPanel(private var chartComponent: Chart)
 
   private val panel = new JChartPanel(chartComponent.jFreeChart)
 
+  panel.putClientProperty("suit-wrapper", this)
+
   /**
    * @return with the chart-object
    */

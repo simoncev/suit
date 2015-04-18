@@ -1,10 +1,13 @@
 name := "suit"
 
-version := "0.8.3"
+version := "0.8.5"
 
 scalaVersion := "2.11.6"
 
-libraryDependencies += "org.jfree" % "jfreechart" % "1.0.14"
+libraryDependencies ++= Seq(
+  "org.jfree" % "jfreechart" % "1.0.14",
+  "org.scala-lang" % "scala-reflect" % "2.11.6"
+)
 
 scalacOptions ++= Seq(
   "-deprecation",

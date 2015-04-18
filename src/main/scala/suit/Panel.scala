@@ -17,11 +17,7 @@ case class Panel() extends ContainerComponent {
   /**
    * @return with all components.
    */
-  protected[suit] def allComponents() =
-    panel.getComponents
-         .map(_.asInstanceOf[JComponent]
-               .getClientProperty("suit-wrapper")
-               .asInstanceOf[Component])
+  protected[suit] def allComponents() = panel.getComponents
 
   /**
    * @return with the number of components.

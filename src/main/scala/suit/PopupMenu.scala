@@ -11,6 +11,8 @@ import javax.swing.JPopupMenu
 case class PopupMenu() extends Component {
   private val popup = new JPopupMenu
 
+  popup.putClientProperty("suit-wrapper", this)
+
   def +=(item: MenuItem) =
     popup.add(item.wrapped)
 

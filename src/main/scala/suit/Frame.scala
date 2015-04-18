@@ -3,7 +3,7 @@
  */
 package suit
 
-import javax.swing.{JComponent, JFrame, JMenuBar, JMenu}
+import javax.swing._
 
 /**
  * @author Steven Dobay
@@ -84,10 +84,7 @@ case class Frame(private val initTitle: String) extends Container {
    * @return with all components.
    */
   protected[suit] def allComponents() =
-    jframe.getComponents
-      .map(_.asInstanceOf[JComponent]
-            .getClientProperty("suit-wrapper")
-            .asInstanceOf[Component])
+    jframe.getContentPane.getComponents
 
   /**
    * @return with the number of components.

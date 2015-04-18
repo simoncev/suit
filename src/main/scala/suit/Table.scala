@@ -19,6 +19,8 @@ case class Table(private val initRows: Int,
   private val table = new JTable(data, columnNames)
   private val scrollPane = new JScrollPane(table)
 
+  table.putClientProperty("suit-wrapper", this)
+
   def rows() = table.getRowCount
   def columns() = table.getColumnCount
 

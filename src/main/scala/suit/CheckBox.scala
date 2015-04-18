@@ -13,6 +13,9 @@ case class CheckBox(private val initIsChecked: Boolean = false)
  extends Bindable[Boolean]  {
 
   private val btn = new JCheckBox()
+
+  btn.putClientProperty("suit-wrapper", this)
+
   btn.setSelected(initIsChecked)
 
   def isSelected() = btn.isSelected

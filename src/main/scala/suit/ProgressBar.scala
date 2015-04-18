@@ -14,6 +14,8 @@ case class ProgressBar(private val lowerBound: Int = 0,
 
   private val bar = new JProgressBar()
 
+  bar.putClientProperty("suit-wrapper", this)
+
   bar.setValue(lowerBound)
   bar.setMinimum(lowerBound)
   bar.setMaximum(upperBound)

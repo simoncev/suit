@@ -5,7 +5,6 @@
 package scala.test
 
 import java.awt.Color
-
 import suit._
 
 /**
@@ -13,24 +12,21 @@ import suit._
  */
 object BasicUI extends App("Basic UI") {
 
-  /**
-   * Setting the layout model
-   */
+  // hide the frame until we aren't done!
+  frame.hide()
+
+  // Setting the layout model
   frame.layout = layouts.GridLayout(4, 2)
 
-  /**
-   * Setting the size of the frame
-   */
+
+   //Setting the size of the frame
   frame.size = Size(300, 300)
 
-  /**
-   * Creating menus for the menubar
-   */
+   //Creating menus for the menubar
   frame.addMenus(
     /**
      * Adding a simple menu with a title; the "++=" operator
      * can add multiple menus as varargs
-     *
      */
     Menu("General") ++= (
 
@@ -52,9 +48,7 @@ object BasicUI extends App("Basic UI") {
       )
   )
 
-  /**
-   * Adding the simple label
-   */
+  // Adding the simple label
   frame += Label("Take this: ")
 
   /**
@@ -63,9 +57,7 @@ object BasicUI extends App("Basic UI") {
    */
   frame += Button("Click me!") @> { _ =>
 
-    /**
-     * Using the choice dialog from the popups
-     */
+    // Using the choice dialog from the popups
     val res = popups.choice("Choose: ", "Hello!",
                             Array("A", "B", "C"), "A")
     println(res)
@@ -75,9 +67,7 @@ object BasicUI extends App("Basic UI") {
        println("from " + from + " - to " + to)
   }
 
-  /**
-   * Example for using tree-syntax with property-based dispatch
-   */
+   // Example for using tree-syntax with property-based dispatch
   frame += new Label_("Fancy label!") {
     text := "I changed the text!"
     foreGround := Color.BLUE
@@ -98,4 +88,18 @@ object BasicUI extends App("Basic UI") {
       popups.info("", "It's hard to write like this, isn't?")
       )
   }
+
+  frame += new Button("Just me, Button!")
+
+
+  /**
+   * Makes all buttons' color blue
+   * in this frame and its sub-components.
+   */
+  frame.forall(Set("Button"), { comp: Button =>
+    comp.background = Color.BLUE
+  })
+
+  // now we can show it!
+  frame.show()
 }

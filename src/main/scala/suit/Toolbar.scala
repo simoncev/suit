@@ -18,11 +18,7 @@ case class Toolbar() extends ContainerComponent {
   /**
    * @return with all components.
    */
-  protected[suit] def allComponents() =
-    toolbar.getComponents
-           .map(_.asInstanceOf[JComponent]
-                 .getClientProperty("suit-wrapper")
-                 .asInstanceOf[Component])
+  protected[suit] def allComponents() = toolbar.getComponents
 
   /**
    * @return with the number of components.

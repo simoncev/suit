@@ -15,6 +15,8 @@ case class PasswordField()
 
   private val field = new JPasswordField()
 
+  field.putClientProperty("suit-wrapper", this)
+
   /**
    * @return with the swing document
    */

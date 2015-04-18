@@ -15,6 +15,8 @@ case class Button(private val initText: String = "") extends Widget {
 
  private val button = new JButton(initText)
 
+ button.putClientProperty("suit-wrapper", this)
+
  /**
   * @return with the button's text
   */

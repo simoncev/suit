@@ -17,6 +17,8 @@ case class FileChooser(private val initSelected: Array[File]
 
   private val chooser = new JFileChooser()
 
+  chooser.putClientProperty("suit-wrapper", this)
+
   if(!initSelected.isEmpty) chooser.setSelectedFiles(initSelected)
 
   def selectedFile() = chooser.getSelectedFile

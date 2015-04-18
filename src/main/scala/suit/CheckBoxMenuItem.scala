@@ -16,6 +16,8 @@ case class CheckBoxMenuItem(private val initTitle: String,
 
   private def checkMenuItem = menuItem.asInstanceOf[JCheckBoxMenuItem]
 
+  checkMenuItem.putClientProperty("suit-wrapper", this)
+
   /**
    * @return with the title of the menuitem
    */

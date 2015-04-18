@@ -15,6 +15,8 @@ case class ColorChooser(private val initColor: Color = Color.WHITE)
 
   private val chooser = new JColorChooser()
 
+  chooser.putClientProperty("suit-wrapper", this)
+
   chooser.setColor(initColor)
 
   def color = chooser.getColor

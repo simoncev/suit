@@ -7,7 +7,7 @@ package suit
 import java.awt.event.{FocusEvent => JFocusEvent}
 import java.awt.event.{MouseMotionListener, FocusListener, MouseListener}
 import java.awt.{event, Font, Color}
-import javax.swing.{UIManager, JComponent}
+import javax.swing.JComponent
 import javax.swing.border.Border
 
 /**
@@ -23,6 +23,33 @@ trait Component { self =>
   protected[suit] def wrapped: JComponent
 
   protected var containerObj: Option[Container] = None
+
+  /**
+   * Manager of style classes.
+   */
+  object styleClasses {
+    private var classes: Set[String] = Set(className)
+
+    /**
+     * Adds a new style-class.
+     * @param name
+     */
+    def +=(name: String) =
+      if(name != className) classes = classes + name
+
+    /**
+     * Removes the style-class.
+     * @param name
+     */
+    def -=(name: String) =
+      if(name != className) classes = classes - name
+
+    /**
+     * @param name
+     * @return true if the style-class is already added to this component.
+     */
+    def contains(name: String) = classes.contains(name)
+  }
 
   /**
    * @return with a pointer to the parent optionally

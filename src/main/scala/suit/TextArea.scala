@@ -17,6 +17,8 @@ case class TextArea(private val initText: String = "")
 
   private val area = new JTextArea(initText)
 
+  area.putClientProperty("suit-wrapper", this)
+
   /**
    * @return with the swing document
    */

@@ -12,6 +12,8 @@ case class RadioButton(private val initTitle: String)
    extends Widget {
   private val button = new JRadioButton(initTitle)
 
+  button.putClientProperty("suit-wrapper", this)
+
   def isSelected() = button.isSelected
 
   def select() = button.setSelected(true)

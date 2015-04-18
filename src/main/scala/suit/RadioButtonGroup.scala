@@ -15,6 +15,8 @@ case class RadioButtonGroup()
   private val panel = new JPanel
   private var buttons = new Array[RadioButton](5)
 
+  panel.putClientProperty("suit-wrapper", this)
+
   /**
    * Adds a new radio button.
    * @param btn
@@ -56,11 +58,7 @@ case class RadioButtonGroup()
   /**
    * @return with all components.
    */
-  protected[suit] def allComponents() =
-    panel.getComponents
-      .map(_.asInstanceOf[JComponent]
-      .getClientProperty("suit-wrapper")
-      .asInstanceOf[Component])
+  protected[suit] def allComponents() = panel.getComponents
 
   /**
    * @return with the number of components.
