@@ -46,21 +46,28 @@ trait Container {
   def componentsCount() = componentsSize()
 
   /**
+   * Runtime-mirror for type-reflecting.
+   * It is really expensive to instantiate.
+   */
+  private val mirror = runtimeMirror(getClass.getClassLoader)
+
+  /**
    * Executes the styling function for all components
    * which class-name equals to the given one;
    * if the class-name is an empty string then
    * it executes for all.
+   * This method has a cost if you use it too often...
    *
    * @param classNames : the names of the classes
-   * @param styler        : the styler function
-   * @tparam T            : the component's type
+   * @param styler     : the styler function
+   * @tparam T         : the component's type
    */
   def forall[T <: Component](classNames: Set[String],
                              styler: T => Unit)
                             (implicit tag: TypeTag[T]): Unit = {
       components().foreach { c: Component =>
 
-      val isDesiredType = runtimeMirror(getClass.getClassLoader).reflect(c).symbol ==
+      val isDesiredType = mirror.reflect(c).symbol ==
                           typeOf[T].typeSymbol
       val isClassDefined = classNames.exists(c.styleClasses.contains(_))
       val isForAll = classNames.contains("")
@@ -77,8 +84,7 @@ trait Container {
    * which class-name equals to the given one;
    * if the class-name is an empty string then
    * it executes for all.
-   * NOTE! This method go through all components -
-   * it has a significant cost!
+   * This method has a cost if you use it too often...
    *
    * @param className : the name of the class
    * @param styler    : the styler function

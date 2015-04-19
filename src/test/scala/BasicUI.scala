@@ -12,9 +12,6 @@ import suit._
  */
 object BasicUI extends App("Basic UI") {
 
-  // hide the frame until we aren't done!
-  frame.hide()
-
   // Setting the layout model
   frame.layout = layouts.GridLayout(4, 2)
 
@@ -91,7 +88,6 @@ object BasicUI extends App("Basic UI") {
 
   frame += new Button("Just me, Button!")
 
-
   /**
    * Makes all buttons' color blue
    * in this frame and its sub-components.
@@ -99,7 +95,4 @@ object BasicUI extends App("Basic UI") {
   frame.forall(Set("Button"), { comp: Button =>
     comp.background = Color.BLUE
   })
-
-  // now we can show it!
-  frame.show()
 }
