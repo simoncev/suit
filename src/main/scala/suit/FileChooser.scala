@@ -21,6 +21,19 @@ case class FileChooser(private val initSelected: Array[File]
 
   if(!initSelected.isEmpty) chooser.setSelectedFiles(initSelected)
 
+  /**
+   * Runs the fiel chooser dialog.
+   * @param parent : parent container
+   * @param title  : title of the button(optional)
+   * @return with true if a there was a file selection.
+   */
+  def run(parent: Container, title: String = "") = {
+    chooser.showDialog(parent.wrappedContainer, title) match {
+      case JFileChooser.APPROVE_OPTION => true
+      case _ => false
+    }
+  }
+
   def selectedFile() = chooser.getSelectedFile
   def selectedFiles() = chooser.getSelectedFiles
 
