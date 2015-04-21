@@ -3,7 +3,7 @@
  */
 package suit
 
-import javax.swing.{JComponent, JToolBar}
+import javax.swing.JToolBar
 
 /**
  * @author Steven Dobay
