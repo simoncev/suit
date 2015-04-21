@@ -10,7 +10,7 @@ import suit._
 /**
  * @author Steven Dobay
  */
-object BasicUI extends App("Basic UI") {
+object BasicUI extends suit.App("Basic UI") {
 
   // Setting the layout model
   frame.layout = layouts.GridLayout(4, 2)
