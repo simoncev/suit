@@ -6,7 +6,7 @@ package org.suit
 /**
  * @author Steven Dobay
  *
- * A different DocumentListener for org.suit to handle
+ * A different DocumentListener for suit to handle
  * document-events better.
  */
 protected[suit] abstract class DocumentListener

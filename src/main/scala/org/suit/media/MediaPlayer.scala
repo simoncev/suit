@@ -9,7 +9,7 @@ import org.gstreamer.elements.PlayBin2
 
 /**
  * @author Steven Dobay
- * Lightweight media player for org.suit based on gstreamer-java.
+ * Lightweight media player for suit based on gstreamer-java.
  * You need an installed version of gstreamer below 1.0 and jna!
  *
  * @param initURL : the url of the source.

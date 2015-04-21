@@ -1,6 +1,6 @@
 /**
  * Copyright© Steven Dobay 2015
- * LICENSE: LGPLv3.0 - https://github.com/stevendobay/scala-frame/blob/master/LICENSE
+ * LICENSE: LGPLv3.0 - https://github.com/stevendobay/suit/blob/master/LICENSE
  */
 package scala.test
 

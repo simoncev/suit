@@ -1,4 +1,4 @@
-name := "org/suit"
+name := "suit"
 
 version := "0.9.0"
 
