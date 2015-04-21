@@ -3,13 +3,13 @@
  */
 package charts
 
-import suit._
-import suit.charts._
+import org.suit._
+import org.suit.charts._
 
 /**
  * @author Steven Dobay
  */
-object XYChartSample extends App("XY chart sample") {
+object XYChartSample extends DesktopApp("XY chart sample") {
   val chart = XYChart[Int]("My XY", "X", "Y") // chart's title with the titles of x and y axises
     .withSeries("Evens",
                 List((1, 2), (2, 4), (3, 6), (4, 8))) //datasets...

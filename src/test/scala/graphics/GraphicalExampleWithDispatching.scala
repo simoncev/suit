@@ -6,8 +6,8 @@ package scala.test.graphics
 import java.awt.Color
 import java.net.URL
 
-import suit._
-import suit.graphics._
+import org.suit._
+import org.suit.graphics._
 
 /**
  * @author Steven Dobay
@@ -15,7 +15,7 @@ import suit.graphics._
  * A graphical example(same as GraphicalExample.scala)
  * using dispatching of the shapes.
  */
-object GraphicalExampleWithDispatching extends App("Basic graphical stuff") {
+object GraphicalExampleWithDispatching extends DesktopApp("Basic graphical stuff") {
   frame.layout = layouts.GridLayout(1, 1)
   frame.size = Size(450, 450)
 

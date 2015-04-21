@@ -5,13 +5,13 @@ package scala.test.charts
 
 import java.util.GregorianCalendar
 
-import suit._
-import suit.charts._
+import org.suit._
+import org.suit.charts._
 
 /**
  * @author Steven Dobay
  */
-object TimeChartWithDispatcher extends App("Time chart with dispatcher") {
+object TimeChartWithDispatcher extends DesktopApp("Time chart with dispatcher") {
 
   frame.size = Size(800, 600)
 

@@ -1,14 +1,14 @@
 /**
  * Copyright© Steven Dobay 2015
  */
-package scala.test.suit
+package scala.test
 
-import suit.{popups, ListBox, Size}
+import org.suit.{popups, ListBox, Size}
 
 /**
  * @author Steven Dobay
  */
-object ListBoxExample extends suit.App("Example for list box") {
+object ListBoxExample extends org.suit.DesktopApp("Example for list box") {
 
   frame.size = Size(300, 300)
 

@@ -5,16 +5,14 @@
 package scala.test
 
 import java.awt.Color
-import suit._
-
+import org.suit._
 /**
  * @author Steven Dobay
  */
-object BasicUI extends suit.App("Basic UI") {
+object BasicUI extends DesktopApp("Basic UI") {
 
   // Setting the layout model
   frame.layout = layouts.GridLayout(4, 2)
-
 
    //Setting the size of the frame
   frame.size = Size(300, 300)

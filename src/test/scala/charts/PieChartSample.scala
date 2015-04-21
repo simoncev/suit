@@ -3,14 +3,14 @@
  */
 package charts
 
-import suit._
-import suit.charts._
+import org.suit._
+import org.suit.charts._
 
 /**
  * @author Steven Dobay
  */
 
-object PieChartSample extends App("Pie Chart Sample") {
+object PieChartSample extends DesktopApp("Pie Chart Sample") {
 
   frame.size = Size(800, 600)
 

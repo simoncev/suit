@@ -3,15 +3,15 @@
  */
 package scala.test.media
 
-import suit.{App, Size, layouts, FileChooser, popups}
-import suit.media._
+import org.suit.{DesktopApp, Size, layouts, FileChooser, popups}
+import org.suit.media._
 
 /**
  * @author Steven Dobay
  *
  * Simple video playing frame.
  */
-object VideoPlayerExample extends App("Example for using VideoPlayer") {
+object VideoPlayerExample extends DesktopApp("Example for using VideoPlayer") {
 
   frame.size = Size(400, 300)
   frame.layout = layouts.GridLayout(1, 1)

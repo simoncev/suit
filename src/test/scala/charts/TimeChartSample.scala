@@ -5,13 +5,13 @@ package charts
 
 import java.util.GregorianCalendar
 
-import suit._
-import suit.charts._
+import org.suit._
+import org.suit.charts._
 
 /**
  * @author Steven Dobay
  */
-object TimeChartSample extends App("Timechart Sample") {
+object TimeChartSample extends DesktopApp("Timechart Sample") {
 
   frame.size = Size(800, 600)
 

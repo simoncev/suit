@@ -3,13 +3,13 @@
  */
 package scala.test.media
 
-import suit.media.AudioPlayer
-import suit.{popups, FileChooser, Size}
+import org.suit.media.AudioPlayer
+import org.suit.{popups, FileChooser, Size}
 
 /**
  * @author Steven Dobay
  */
-object AudioPlayerExample extends suit.App("Example for audio player") {
+object AudioPlayerExample extends org.suit.DesktopApp("Example for audio player") {
   frame.size = Size(100, 100)
 
   // creating the player

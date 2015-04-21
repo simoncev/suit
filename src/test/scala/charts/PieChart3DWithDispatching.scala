@@ -3,13 +3,13 @@
  */
 package scala.test.charts
 
-import suit._
-import suit.charts._
+import org.suit._
+import org.suit.charts._
 
 /**
  * @author Steven Dobay
  */
-object PieChart3DWithDispatching extends App("3D pie chart with dispatching!") {
+object PieChart3DWithDispatching extends DesktopApp("3D pie chart with dispatching!") {
 
   frame.size = Size(800, 600)
 

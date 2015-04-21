@@ -3,13 +3,13 @@
  */
 package charts
 
-import suit._
-import suit.charts._
+import org.suit._
+import org.suit.charts._
 
 /**
  * @author Steven Dobay
  */
-object BarChart3DSample extends App("Horizontal bar chart in 3D Sample") {
+object BarChart3DSample extends DesktopApp("Horizontal bar chart in 3D Sample") {
   frame.size = Size(800, 600)
 
   val chart = BarChart (

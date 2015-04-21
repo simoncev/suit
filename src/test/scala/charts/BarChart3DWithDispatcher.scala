@@ -3,15 +3,15 @@
  */
 package scala.test.charts
 
-import suit._
-import suit.charts._
+import org.suit._
+import org.suit.charts._
 
 /**
  * @author Steven Dobay
  *
  * 3D bar chart created with dispatching.
  */
-object BarChart3DWithDispatcher extends App("Bar chart with Dispatcher 3D") {
+object BarChart3DWithDispatcher extends DesktopApp("Bar chart with Dispatcher 3D") {
 
   frame.size = Size(800, 600)
 
