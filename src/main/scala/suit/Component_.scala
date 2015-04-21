@@ -44,6 +44,12 @@ trait Component_ { self =>
 
   val onMouseEvent = Property[MouseHandler](pack.mouseEvents += _)
 
+  val onAction = Property[ActionEvent => Unit](pack.onAction(_))
+
+  val futureAction = Property[ActionEvent => Unit](pack.futureAction(_))
+
+  val enabled = Property[Boolean](if(_) pack.enable() else pack().disable())
+
   val onMouseMotionEvent =
     Property[MouseMotionEvent => Unit](pack.mouseMotions += _)
 }

@@ -20,7 +20,7 @@ object AudioPlayerExample extends suit.App("Example for audio player") {
 
   // when we chosen we creates the video component and starts it
   if(chooser.run(frame, "Choose an audio(or a video)!")) {
-    player.urlLocation(chooser.selectedFile().toURI.toURL())
+    player.urlLocation = chooser.selectedFile().toURI.toURL()
     player.play()
   } else popups.warning("No file was selected!", "Choose a file to play it!")
 

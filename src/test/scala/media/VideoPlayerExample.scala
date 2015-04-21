@@ -26,7 +26,7 @@ object VideoPlayerExample extends App("Example for using VideoPlayer") {
 
   // when we chosen we creates the video component and starts it
   if(chooser.runOpen(frame)) {
-    player.urlLocation(chooser.selectedFile().toURI.toURL())
+    player.urlLocation = chooser.selectedFile().toURI.toURL()
     player.play()
   } else popups.warning("No file was selected!", "Choose a file to play it!")
 

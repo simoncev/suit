@@ -7,7 +7,7 @@ package suit
 import java.awt.event.{FocusEvent => JFocusEvent}
 import java.awt.event.{MouseMotionListener, FocusListener, MouseListener}
 import java.awt.{event, Font, Color}
-import javax.swing.JComponent
+import javax.swing.{SwingUtilities, JComponent}
 import javax.swing.border.Border
 
 /**
@@ -185,6 +185,16 @@ trait Component { self =>
   def setOpaque(b: Boolean) = wrapped.setOpaque(b)
 
   /**
+   * Enables the component.
+   */
+  def enable() = wrapped.setEnabled(true)
+
+  /**
+   * Disables the component.
+   */
+  def disable() = wrapped.setEnabled(false)
+
+  /**
    * Adds action handling to the component
    * @param proc
    */
@@ -195,9 +205,22 @@ trait Component { self =>
    * @param proc
    * @return with the component's pointer
    */
-  def withAction(proc: ActionEvent => Unit): self.type  = {
+  def withAction(proc: ActionEvent => Unit): self.type = {
     onAction(proc)
     self
+  }
+
+  /**
+   * Calls the event's body in a new Thread
+   * @param proc
+   */
+  def futureAction(proc: ActionEvent => Unit): Unit = {
+    onAction { e =>
+      val thread = new Thread {
+        override def run = proc(e)
+      }
+      thread.start()
+    }
   }
 
   /**

@@ -12,12 +12,12 @@ import org.gstreamer.elements.PlayBin2
  * Lightweight media player for suit based on gstreamer-java.
  * You need an installed version of gstreamer below 1.0 and jna!
  *
- * @param url : the url of the source.
+ * @param initURL : the url of the source.
  */
-abstract class MediaPlayer(private var url: Option[URL] = None) { self =>
+abstract class MediaPlayer(private var initURL: Option[URL] = None) { self =>
   Gst.init("MediaPlayer", Array())
   protected val playBin2 = new PlayBin2("MediaPlayer")
-  if(url.isDefined) playBin2.setURI(url.get.toURI)
+  if(initURL.isDefined) playBin2.setURI(initURL.get.toURI)
 
   /**
    * Starts the video.
@@ -66,10 +66,15 @@ abstract class MediaPlayer(private var url: Option[URL] = None) { self =>
    * Gives the source's url to the player.
    * @param url
    */
-  def urlLocation(url: URL) = {
-    this.url = Some(url)
+  def urlLocation_=(url: URL) = {
+    this.initURL = Some(url)
     playBin2.setURI(url.toURI)
   }
+
+  /**
+   * @return with the url-location
+   */
+  def urlLocation = initURL
 
   /**
    * @return with the percent of the volume.

@@ -25,6 +25,4 @@ abstract class ListView_(private val items: AnyRef*) extends Component_ {
 
   val onSelection =
     Property[(ListView, Int, Int) => Unit](view.onSelection(_))
-
-  val onAction = Property[ActionEvent => Unit](view.onAction(_))
 }
