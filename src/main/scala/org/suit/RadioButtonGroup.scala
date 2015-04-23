@@ -3,16 +3,22 @@
  */
 package org.suit
 
+import java.awt.Graphics
 import java.awt.event.ActionListener
-import javax.swing.{JComponent, JPanel}
-import javax.swing.event.ChangeListener
+import javax.swing.JPanel
 
 /**
  * @author Steven Dobay
  */
 case class RadioButtonGroup()
   extends Bindable[Array[Boolean]] with Container {
-  private val panel = new JPanel
+  private val panel = new JPanel {
+    override def paintComponent(g: Graphics) = {
+      super.paintComponent(g)
+      paintObjects(g)
+    }
+  }
+
   private var buttons = new Array[RadioButton](5)
   private var layoutObject: Option[Layout] = None
 

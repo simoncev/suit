@@ -3,7 +3,7 @@
  */
 package org.suit
 
-import java.awt.GridBagConstraints
+import java.awt.{Graphics, GridBagConstraints}
 
 /**
  * @author Steven Dobay

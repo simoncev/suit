@@ -3,6 +3,7 @@
  */
 package org.suit
 
+import java.awt.Graphics
 import javax.swing.JPanel
 
 /**
@@ -10,7 +11,12 @@ import javax.swing.JPanel
  */
 case class Panel() extends ContainerComponent {
 
-  private val panel = new JPanel
+  private val panel = new JPanel {
+    override def paintComponent(g: Graphics) = {
+      super.paintComponent(g)
+      paintObjects(g)
+    }
+  }
 
   panel.putClientProperty ("suit-wrapper", this)
 
