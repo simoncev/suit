@@ -3,7 +3,7 @@
  */
 package org.suit
 
-import javax.swing.{JComponent, JPanel}
+import javax.swing.JPanel
 
 /**
  * @author Steven Dobay

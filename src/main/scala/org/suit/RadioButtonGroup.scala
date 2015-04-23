@@ -14,6 +14,7 @@ case class RadioButtonGroup()
   extends Bindable[Array[Boolean]] with Container {
   private val panel = new JPanel
   private var buttons = new Array[RadioButton](5)
+  private var layoutObject: Option[Layout] = None
 
   panel.putClientProperty("suit-wrapper", this)
 
@@ -53,6 +54,20 @@ case class RadioButtonGroup()
   def -=(btn: RadioButton) = {
     panel.remove(btn.wrapped)
     buttons = buttons.filter(_ != btn)
+  }
+
+  /**
+   * @return with the layout.
+   */
+  def layout = layoutObject
+
+  /**
+   * Sets the layout manager.
+   * @param l
+   */
+  def layout_=(l: Layout) = {
+    layoutObject = Some(l)
+    panel.setLayout(l.wrapped)
   }
 
   /**

@@ -1,10 +1,11 @@
 name := "suit"
 
-version := "0.9.0"
+version := "0.9.5"
 
 scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq(
+  "com.typesafe.akka" %% "akka-actor" % "2.3.9",
   "org.jfree" % "jfreechart" % "1.0.14",
   "org.scala-lang" % "scala-reflect" % "2.11.6",
   "net.java.dev.jna" % "jna" % "4.1.0",

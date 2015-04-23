@@ -3,25 +3,63 @@
  */
 package org.suit
 
+import java.awt.GridBagConstraints
 import javax.swing._
 
 /**
  * @author Steven Dobay
  */
-case class Frame(private val initTitle: String) extends Container {
+case class Frame(private val initTitle: String) extends ContainerComponent {
   private val jframe = new JFrame(initTitle)
   private var dim = Size(0, 0)
-  private var layoutM: Layout = layouts.FlowLayout()
   private var menuBar: Option[JMenuBar] = None
   private var isMenuBarInitialized = false
 
   /**
    * Initialization
    */
-  show
+  show()
   jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
-  jframe.setLayout(layoutM.wrapped)
+  layout = layouts.FlowLayout()
 
+  /**
+   * Sets the layout model.
+   * @param l
+   */
+  override def layout_=(l: Layout) = {
+    layoutModel = Some(l)
+    jframe.setLayout(l.wrapped)
+  }
+
+  /**
+   * Adds the new component.
+   * @param comp
+   */
+  override def add(comp: Component): Unit =
+    jframe.add(comp.wrapped)
+
+  /**
+   * Adds the component to the layout with the given grid-bag constraints.
+   * @param comp
+   * @param constraint
+   */
+  override def add(comp: Component, constraint: GridBagConstraints) =
+    jframe.add(comp.wrapped, constraint)
+
+  /**
+   * Adds a component with a border-layout constraint.
+   * @param comp
+   * @param constraint
+   */
+  override def add(comp: Component, constraint: String) =
+    jframe.add(comp.wrapped, constraint)
+
+  /**
+   * Removs the component.
+   * @param comp
+   */
+  override def remove(comp: Component) =
+    jframe.remove(comp.wrapped)
 
   /**
    * Initializes the menubar
@@ -30,6 +68,7 @@ case class Frame(private val initTitle: String) extends Container {
     menuBar = Some(new JMenuBar)
     jframe.setJMenuBar(menuBar.get)
     isMenuBarInitialized = true
+    menuBar.get.setVisible(true)
   }
 
   /**
@@ -118,72 +157,14 @@ case class Frame(private val initTitle: String) extends Container {
   def title_=(t: String) = jframe.setTitle(t)
 
   /**
-   * Adds the component tot the Frame and updates the ui
-   * @param comp
+   * Makes the frame visible.
    */
-  def +=(comp: Component): Unit = {
-    jframe.getContentPane.add(comp.wrapped)
-    comp.container = this
-    updateUI
-  }
+  override def show() = jframe.setVisible(true)
 
   /**
-   * Adds a new component; updates the ui
-   * @param comp : a component's dispatcher
+   * Hides the frame.
    */
-  def +=(comp: Component_): Unit = this.+=(comp.pack())
-
-  /**
-   * Removes the component from the Frame; updates the ui
-   * @param comp
-   */
-  def -=(comp: Component): Unit = {
-    jframe.getContentPane.remove(comp.wrapped)
-    comp.container = this
-    updateUI
-  }
-
-  /**
-   * Removes a component by its dispatcher; updates the ui
-   * @param comp
-   */
-  def -=(comp: Component_): Unit =
-    this.-=(comp.pack())
-
-  /**
-   * Adds the component to the Frame
-   * @param comp
-   */
-  def add(comp: Component): Unit = {
-    jframe.getContentPane.add(comp.wrapped)
-    comp.container = this
-  }
-
-  /**
-   * Ads the component by dispatcher
-   * @param comp
-   */
-  def add(comp: Component_): Unit = this.add(comp.pack())
-
-  /**
-   * Removes the component from the Frame and updates the UI
-   * @param comp
-   */
-  def remove(comp: Component): Unit = {
-    jframe.getContentPane.remove(comp.wrapped)
-    comp.container = this
-  }
-
-  /**
-   * Removes the component by its dispatcher
-   * @param comp
-   */
-  def remove(comp: Component_): Unit = this.remove(comp.pack())
-
-  /**
-   * Removes the frame's components
-   */
-  def clear() = jframe.removeAll
+  override def hide() = jframe.setVisible(false)
 
   /**
    * Sets the exit operation
@@ -202,20 +183,6 @@ case class Frame(private val initTitle: String) extends Container {
    else None
 
   /**
-   * Sets the layout strategy
-   * @param layout
-   */
-  def layout_=(layout: Layout) = {
-    layoutM = layout
-    jframe.setLayout(layout.wrapped)
-  }
-
-  /**
-   * @return with a pointer to the layout manager
-   */
-  def layout = layoutM
-
-  /**
    * Updates the UI by revalidating and repainting
    */
   def updateUI() = {
@@ -224,19 +191,19 @@ case class Frame(private val initTitle: String) extends Container {
   }
 
   /**
-   * Makes the frame visible
-   */
-  def show() = jframe.setVisible(true)
-
-  /**
-   * Makes the frame invisible
-   */
-  def hide() = jframe.setVisible(false)
-
-  /**
    * @return with the wrapped JFrame
    */
   protected[suit] def wrappedContainer = jframe
+
+  /**
+   * @return with the name of the class
+   */
+  def className = "Frame"
+
+  /**
+   * @return with a pointer to the wrapped JComponent
+   */
+  protected[suit] def wrapped = jframe.getRootPane
 }
 
 object Frame {

@@ -10,6 +10,18 @@ import scala.reflect.runtime.universe._
  * @author Steven Dobay
  */
 trait Container {
+
+  /**
+   * @return with the layout.
+   */
+  def layout: Option[Layout]
+
+  /**
+   * Sets the layout.
+   * @param l
+   */
+  def layout_=(l: Layout): Unit
+
   /**
    * @return with the wrapped container
    */

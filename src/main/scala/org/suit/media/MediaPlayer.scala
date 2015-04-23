@@ -4,6 +4,7 @@
 package org.suit.media
 
 import java.net.URL
+import java.util.concurrent.TimeUnit
 import org.gstreamer._
 import org.gstreamer.elements.PlayBin2
 
@@ -77,6 +78,11 @@ abstract class MediaPlayer(private var initURL: Option[URL] = None) { self =>
   def urlLocation = initURL
 
   /**
+   * @return true if media is defined.
+   */
+  def isMediaDefined() = initURL.isDefined
+
+  /**
    * @return with the percent of the volume.
    */
   def volume = playBin2.getVolumePercent
@@ -88,7 +94,33 @@ abstract class MediaPlayer(private var initURL: Option[URL] = None) { self =>
   def volume_=(percent: Int) = playBin2.setVolumePercent(percent)
 
   /**
-   * @return with the size of the video
+   * @return with the position in millis
    */
-  def videoSize() = playBin2.getVideoSize
+  def position = playBin2.queryPosition(TimeUnit.MILLISECONDS)
+
+  /**
+   * Sets the position in millis.
+   * @param time
+   * @return
+   */
+  def position_=(time: Long) = playBin2.seek(time, TimeUnit.MILLISECONDS)
+
+  /**
+   * @param unit
+   * @return with the time position formatted by the given
+   *         TimeUnit.
+   */
+  def position(unit: TimeUnit) = playBin2.queryPosition(unit)
+
+  /**
+   * Sets the position.
+   * @param time
+   * @param unit
+   */
+  def seek(time: Long, unit: TimeUnit) = playBin2.seek(time, unit)
+
+  /**
+   * @return with the duration as millis.
+   */
+  def duration() = playBin2.queryDuration(TimeUnit.MILLISECONDS)
 }

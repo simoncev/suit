@@ -26,7 +26,7 @@ case class Slider(private val initMin: Int = 0,
   def min_=(m: Int) = slider.setMinimum(m)
   def max_=(m: Int) = slider.setMaximum(m)
 
-  def value = slider.getValue
+  def value: Int = slider.getValue
   def value_=(v: Int) = slider.setValue(v)
 
   protected[suit] def wrapped = slider

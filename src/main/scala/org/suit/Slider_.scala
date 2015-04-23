@@ -18,4 +18,6 @@ abstract class Slider_(private val initMin: Int = 0,
   val onChange = Property[ChangeEvent => Unit](slider.changeEvents += _)
 
   val holder = Property[HolderOf[Int]](slider.holder = _)
+
+  def pack() = slider
 }

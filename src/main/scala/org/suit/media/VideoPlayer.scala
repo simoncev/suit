@@ -6,6 +6,8 @@ package org.suit.media
 import java.io.File
 import java.net.URL
 
+import org.suit.Size
+
 /**
  * @author Steven Dobay
  *
@@ -21,6 +23,11 @@ case class VideoPlayer(private val url: Option[URL] = None)
   private val component = new org.gstreamer.swing.VideoComponent()
   playBin2.setVideoSink(component.getElement)
   playBin2.setVisualization(component.getElement)
+
+  /**
+   * @return with the size of the video
+   */
+  def videoSize() = Size(playBin2.getVideoSize)
 
   /**
    * @return with the number of components.

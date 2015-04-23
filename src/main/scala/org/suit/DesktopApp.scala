@@ -22,7 +22,6 @@ abstract class DesktopApp(private val initTitle: String) {
   def onStart(): Unit = {}
 
   def main(args: Array[String]) = {
-    frame.show
     arguments = args
     onStart
   }

@@ -3,7 +3,10 @@
  */
 package scala.test.media
 
-import org.suit.{DesktopApp, Size, layouts, FileChooser, popups}
+import java.awt.GridBagConstraints
+
+import org.suit._
+import org.suit.layouts.BorderLayoutPosition
 import org.suit.media._
 
 /**
@@ -13,21 +16,27 @@ import org.suit.media._
  */
 object VideoPlayerExample extends DesktopApp("Example for using VideoPlayer") {
 
-  frame.size = Size(400, 300)
-  frame.layout = layouts.GridLayout(1, 1)
-
-  // adding the component
-  val player = VideoPlayer()
-  player.preferredSize = Size(400, 300)
-  frame += player
+  frame.size = Size(800, 600)
+  frame.layout = layouts.BorderLayout()
 
   // we use a chooser to choose a video file
   val chooser = new FileChooser()
 
-  // when we chosen we creates the video component and starts it
-  if(chooser.runOpen(frame)) {
-    player.urlLocation = chooser.selectedFile().toURI.toURL()
-    player.play()
-  } else popups.warning("No file was selected!", "Choose a file to play it!")
+  // adding the component
+  val player = VideoPlayer()
+  player.popupMenu = new PopupMenu_() {
+    newItem := TextMenuItem("Open video") @> (_ =>
+                 if(chooser.runOpen(frame))
+                 player.urlLocation =
+                 chooser.selectedFile().toURI.toURL()
+               )
+  }.pack()
 
+  player.preferredSize = Size(1260, 670)
+  frame.add(player, BorderLayoutPosition.CENTER)
+
+  val controller = new MediaController(player)
+  frame.add(controller, BorderLayoutPosition.PAGE_END)
+
+  frame.updateUI()
 }

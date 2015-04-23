@@ -9,7 +9,7 @@ import javax.swing.{JComponent, Icon, JTabbedPane}
  * @author Steven Dobay
  */
 case class TabbedPane()
-  extends Component with Container {
+  extends Component {
 
   private val tabs = new JTabbedPane()
 

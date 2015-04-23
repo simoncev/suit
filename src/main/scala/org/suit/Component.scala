@@ -4,10 +4,9 @@
  */
 package org.suit
 
-import java.awt.event.{FocusEvent => JFocusEvent}
-import java.awt.event.{MouseMotionListener, FocusListener, MouseListener}
-import java.awt.{event, Font, Color}
-import javax.swing.{SwingUtilities, JComponent}
+import java.awt.event.{FocusEvent => JFocusEvent, _}
+import java.awt._
+import javax.swing.JComponent
 import javax.swing.border.Border
 
 /**
@@ -242,7 +241,6 @@ trait Component { self =>
   def property_=(key: String, value: AnyRef) =
     wrapped.putClientProperty(key, value)
 
-
   /**
    * Adds a popupmenu to the component
    * @param p
@@ -313,6 +311,24 @@ trait Component { self =>
 
     protected def removeListener(l: MouseMotionListener) =
      wrapped.removeMouseMotionListener(l)
+  }
+
+  /**
+   * Handler of mouse wheels.
+   */
+  object mouseWheels extends EventManager[MouseWheelEvent => Unit,
+                                          MouseWheelListener] {
+    protected def createAndAddListener(proc: MouseWheelEvent => Unit) = {
+      val l = new MouseWheelListener {
+        override def mouseWheelMoved(e: event.MouseWheelEvent): Unit =
+         proc(MouseWheelEvent(e))
+      }
+      wrapped.addMouseWheelListener(l)
+      l
+    }
+
+    protected def removeListener(l: MouseWheelListener) =
+      wrapped.removeMouseWheelListener(l)
   }
 
   override def equals(obj: Any) =

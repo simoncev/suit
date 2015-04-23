@@ -43,4 +43,6 @@ object GraphicExample extends DesktopApp("Basic graphical stuff") {
   addCircle(Point(370, 370))
 
   frame += canvas.doDrawing()
+
+  frame.updateUI()
 }

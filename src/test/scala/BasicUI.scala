@@ -15,7 +15,7 @@ object BasicUI extends DesktopApp("Basic UI") {
   frame.layout = layouts.GridLayout(4, 2)
 
    //Setting the size of the frame
-  frame.size = Size(300, 300)
+  frame.size = Size(500, 400)
 
    //Creating menus for the menubar
   frame.addMenus(
@@ -67,7 +67,7 @@ object BasicUI extends DesktopApp("Basic UI") {
     text := "I changed the text!"
     foreGround := Color.BLUE
   }
-
+  frame.show()
   frame += new PasswordField_() {
     foreGround := Color.RED
     preferredSize := Size(100, 20)
@@ -93,4 +93,5 @@ object BasicUI extends DesktopApp("Basic UI") {
   frame.forall(Set("Button"), { comp: Button =>
     comp.background = Color.BLUE
   })
+
 }
