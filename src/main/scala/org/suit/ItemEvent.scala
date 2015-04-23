@@ -21,7 +21,7 @@ object ItemEvent {
   import helpers.ComponentHelpers._
   def apply[T](e: JItemEvent): ItemEvent[T] =
     new ItemEvent[T](e.getSource.asInstanceOf[JComponent].readSuitComponent,
-                     Some(e.getID), System.currentTimeMillis(), None,
+                     None, System.currentTimeMillis(), None,
                      if(e.getItem != null) Some(e.getItem.asInstanceOf[T])
                      else None,
                      if(e.getStateChange == JItemEvent.DESELECTED) false
