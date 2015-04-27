@@ -3,8 +3,7 @@
  */
 package scala.test.media
 
-import java.awt.GridBagConstraints
-
+import java.net.URL
 import org.suit._
 import org.suit.layouts.BorderLayoutPosition
 import org.suit.media._
@@ -25,10 +24,14 @@ object VideoPlayerExample extends DesktopApp("Example for using VideoPlayer") {
   // adding the component
   val player = VideoPlayer()
   player.popupMenu = new PopupMenu_() {
-    newItem := TextMenuItem("Open video") @> (_ =>
+    newItem := TextMenuItem("Open video from file") @> (_ =>
                  if(chooser.runOpen(frame))
+                   player.urlLocation =
+                    chooser.selectedFile().toURI.toURL()
+               )
+    newItem := TextMenuItem("Open video from URL") @> ( e =>
                  player.urlLocation =
-                 chooser.selectedFile().toURI.toURL()
+                   new URL(popups.input("", "Write here the video's URL: "))
                )
   }.pack()
 

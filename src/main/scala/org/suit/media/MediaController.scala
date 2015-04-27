@@ -3,6 +3,8 @@
  */
 package org.suit.media
 
+import java.util.concurrent.TimeUnit
+
 import org.suit._
 import akka.actor.{Props, ActorSystem, Actor}
 
@@ -36,9 +38,16 @@ case class MediaController(mediaPlayer: MediaPlayer)
     soundSlider.value = 50
     panel += soundSlider
 
+    private val timerLabel = new Label("00:00:00")
+    panel += timerLabel
+
+    private val durationLabel = new Label("->  00:00:00")
+    panel += durationLabel
+
     val player = context.actorOf(Props(new MediaPlayerHandler()), "player")
     val playHandler = context.actorOf(Props(new PlayHandler), "playHandler")
     val stopHandler = context.actorOf(Props(new StopHandler), "stopHandler")
+    val timerHandler = context.actorOf(Props(new TimerHandler()), "timerHandler")
 
     val volumeController = new VolumeController()
     volumeController.start()
@@ -52,6 +61,10 @@ case class MediaController(mediaPlayer: MediaPlayer)
      case class Text(txt: String)
      case class SetVolume(percent: Int)
      case class Enabled(flag: Boolean)
+     case class GetTime()
+     case class TheTime(seconds: Long)
+     case class IsItPlaying()
+     case class PlayingState(flag: Boolean)
 
     /**
      * Handler for the media player.
@@ -69,12 +82,29 @@ case class MediaController(mediaPlayer: MediaPlayer)
       def receive = {
         case Start() => if(playThread.isEmpty) {
           val thread = new PlayThread()
+          val secs = mediaPlayer.duration() / 1000
+          durationLabel.text = "->  " + timeToString(secs)
           playThread = Some(thread)
           thread.start()
+          timerHandler ! Start()
         }
-        case Pause() => { closePlayThread(); mediaPlayer.pause() }
-        case Stop()  => { closePlayThread(); mediaPlayer.stop() }
+        case Pause() => {
+          closePlayThread()
+          mediaPlayer.pause()
+          timerHandler ! Pause()
+        }
+        case Stop()  => {
+          closePlayThread()
+          mediaPlayer.stop()
+          durationLabel.text = "->  00:00:00"
+          timerHandler ! Stop()
+        }
         case SetVolume(p) => mediaPlayer.volume = p
+        case GetTime() =>
+          sender() ! TheTime(mediaPlayer.position(TimeUnit.SECONDS))
+        case IsItPlaying() =>
+          if(mediaPlayer.isPlaying()) PlayingState(true)
+          else PlayingState(false)
       }
     }
 
@@ -122,6 +152,40 @@ case class MediaController(mediaPlayer: MediaPlayer)
           soundSlider.value = soundSlider.value -
                      (e.preciseWheelRotation * 5).toInt
           player ! SetVolume(soundSlider.value)
+        }
+      }
+    }
+
+    /**
+     * Controller of the timer.
+     */
+    class TimerHandler extends Actor {
+      private var secs = 0L
+      class TimerThread extends Thread {
+        override def run =
+          while (true) try {
+            Thread.sleep(1000)
+            secs += 1L
+            timerLabel.text = timeToString(secs)
+          } catch { case ex: InterruptedException => () }
+      }
+      private var tt: Option[TimerThread] = None
+      def receive = {
+        case Start() => player ! GetTime()
+        case Pause() => {
+          tt.get.interrupt()
+          tt = None
+        }
+        case Stop()  => {
+          if(tt.isDefined) tt.get.interrupt()
+          tt = None
+          secs = 0L
+          timerLabel.text = timeToString(0L)
+        }
+        case TheTime(time) => {
+          tt = Some(new TimerThread())
+          secs = time
+          tt.get.start()
         }
       }
     }

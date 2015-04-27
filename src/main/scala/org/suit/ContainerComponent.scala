@@ -48,8 +48,19 @@ trait ContainerComponent extends Container with Component {
    * @param comp
    * @param constraint
    */
-  def add(comp: Component, constraint: String) =
+  def add(comp: Component, constraint: String): Unit =
     wrapped.add(comp.wrapped, constraint)
+
+  import layouts.UniLayout._
+
+  /**
+   * Adds a new component with
+   * @param comp
+   * @param constraints
+   */
+  def add(comp: Component, constraints: UniLayoutProperty*): Unit =
+    this.add(comp,
+    constraints.toList.map(_.get).toString.stripPrefix("List(").init)
 
   /**
    * Removs the component.

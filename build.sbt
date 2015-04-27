@@ -1,6 +1,6 @@
 name := "suit"
 
-version := "0.9.6"
+version := "0.9.7"
 
 scalaVersion := "2.11.6"
 
@@ -9,7 +9,8 @@ libraryDependencies ++= Seq(
   "org.jfree" % "jfreechart" % "1.0.14",
   "org.scala-lang" % "scala-reflect" % "2.11.6",
   "net.java.dev.jna" % "jna" % "4.1.0",
-  "net.java.dev.jna" % "jna-platform" % "4.1.0"
+  "net.java.dev.jna" % "jna-platform" % "4.1.0",
+  "com.miglayout" % "miglayout-swing" % "5.0"
 )
 
 scalacOptions ++= Seq(
