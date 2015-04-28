@@ -16,7 +16,7 @@ import akka.actor.{Props, ActorSystem, Actor}
  * implementation of MediaPlayer like VideoPlayer.
  */
 case class MediaController(mediaPlayer: MediaPlayer)
-   extends ContainerComponent {
+  extends ContainerComponent {
 
   private val context = ActorSystem("MediaController")
   private val player = context.actorOf(Props(new MediaHandler()))
@@ -81,9 +81,9 @@ case class MediaController(mediaPlayer: MediaPlayer)
   timeSlider.keyEvents += { e =>
     var hasChange = true
     timeSlider.value = timeSlider.value - (
-    if(e.keyCode == KeyEvent.VK_LEFT) 5
-    else if(e.keyCode == KeyEvent.VK_RIGHT) -5
-    else { hasChange = false; 0 } )
+      if(e.keyCode == KeyEvent.VK_LEFT) 5
+      else if(e.keyCode == KeyEvent.VK_RIGHT) -5
+      else { hasChange = false; 0 } )
     if(hasChange) player ! Seek(timeSlider.value)
   }
 
