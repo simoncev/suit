@@ -4,10 +4,13 @@
 package org.suit.media
 
 import org.suit._
+import java.util.concurrent.TimeUnit
+import org.suit.helpers.ConcHelpers._
 import akka.actor.{Props, ActorSystem, Actor}
 
 /**
  * @author Steven Dobay
+ * @version 0.9
  *
  * Simple controller which is capable of controlling an
  * implementation of MediaPlayer like VideoPlayer.
@@ -15,117 +18,130 @@ import akka.actor.{Props, ActorSystem, Actor}
 case class MediaController(mediaPlayer: MediaPlayer)
    extends ContainerComponent {
 
+  private val context = ActorSystem("MediaController")
+  private val player = context.actorOf(Props(new MediaHandler()))
+  private var isPlaying = mediaPlayer.isPlaying()
   private val panel = new Panel()
   panel.layout = layouts.FlowLayout()
 
-  private val context = ActorSystem("MediaController")
-  private val comps = new ActorComponents()
-
-  private class ActorComponents() {
-    import scala.concurrent.ExecutionContext.Implicits.global
-
-    private val playBtn = new Button("Play")
-    playBtn @> (_ => playHandler ! Start())
-    panel += playBtn
-
-    private val stopBtn = new Button("Stop") @> (_ => stopHandler ! Stop())
-    stopBtn.disable()
-    panel += stopBtn
-
-    private val soundSlider = new Slider(0, 100)
-    soundSlider.value = 50
-    panel += soundSlider
-
-    val player = context.actorOf(Props(new MediaPlayerHandler()), "player")
-    val playHandler = context.actorOf(Props(new PlayHandler), "playHandler")
-    val stopHandler = context.actorOf(Props(new StopHandler), "stopHandler")
-
-    val volumeController = new VolumeController()
-    volumeController.start()
-
-    /**
-     * Message types for actors to control thair behaviors.
-     */
-     case class Start()
-     case class Pause()
-     case class Stop()
-     case class Text(txt: String)
-     case class SetVolume(percent: Int)
-     case class Enabled(flag: Boolean)
-
-    /**
-     * Handler for the media player.
-     */
-     class MediaPlayerHandler() extends Actor {
-      class PlayThread extends Thread {
-        override def run = mediaPlayer.play()
+  private val playBtn = new Button_("Play") {
+    if(isPlaying) text := "Pause"
+    onAction := ( _ => if(mediaPlayer.isMediaDefined()) {
+      if (isPlaying) {
+        text := "Play"
+        player ! Pause()
+      } else {
+        text := "Pause"
+        stopBtn.enable()
+        player ! Play()
       }
-      private var playThread: Option[PlayThread] = None
+    })
+    container := panel
+  }.pack()
 
-      def closePlayThread() = if(playThread.isDefined) {
-        playThread.get.join(100)
-        playThread = None
-      }
-      def receive = {
-        case Start() => if(playThread.isEmpty) {
-          val thread = new PlayThread()
-          playThread = Some(thread)
-          thread.start()
-        }
-        case Pause() => { closePlayThread(); mediaPlayer.pause() }
-        case Stop()  => { closePlayThread(); mediaPlayer.stop() }
-        case SetVolume(p) => mediaPlayer.volume = p
-      }
+  private val stopBtn: Button = new Button_("Stop") {
+    enabled := false
+    onAction := { _ =>
+      enabled := false
+      player ! Stop()
+      playBtn.text = "Play"
     }
+    container := panel
+  }.pack()
 
-    /**
-     * Handler for play/pause buttons.
-     */
-     class PlayHandler() extends Actor {
-      def receive = {
-        case Start() if (mediaPlayer.isMediaDefined()) => {
-          if (playBtn.text == "Play") {
-            playBtn.text = "Pause"
-            stopHandler ! Enabled(true)
-            player ! Start()
-          } else {
-            playBtn.text = "Play"
-            player ! Pause()
+  val soundSlider = new Slider_(0, 100) {
+    onAction := (_ => player ! SetVolume() )
+    container := panel
+    value := 50
+  }.pack()
+
+  panel.mouseWheels += { e =>
+    soundSlider.value = soundSlider.value -
+      (e.preciseWheelRotation * 5).toInt
+    player ! SetVolume()
+  }
+
+  soundSlider.keyEvents += { e =>
+    soundSlider.value = soundSlider.value -
+      (if(e.keyCode == KeyEvent.VK_LEFT) 5
+      else if(e.keyCode == KeyEvent.VK_RIGHT) -5
+      else 0)
+    player ! SetVolume()
+  }
+
+  private val timerLabel = new Label("00:00:00")
+  panel += timerLabel
+
+  private val timeSlider = new Slider_() {
+    min := 0
+    max := 6000
+    container := panel
+  }.pack()
+
+  timeSlider.keyEvents += { e =>
+    var hasChange = true
+    timeSlider.value = timeSlider.value - (
+    if(e.keyCode == KeyEvent.VK_LEFT) 5
+    else if(e.keyCode == KeyEvent.VK_RIGHT) -5
+    else { hasChange = false; 0 } )
+    if(hasChange) player ! Seek(timeSlider.value)
+  }
+
+  private val durationLabel = new Label("00:00:00")
+  panel += durationLabel
+
+  /**
+   * Signals for actors.
+   */
+  private case class Play()
+  private case class Pause()
+  private case class Stop()
+  private case class Seek(pos: Int)
+  private case class SetVolume()
+
+  private class MediaHandler() extends Actor {
+    private var playHandler: Option[Thread] = None
+    private var timerHandler: Option[Thread] = None
+    private var seconds = 0
+
+    private def reset() =
+      if(playHandler.isDefined) {
+        playHandler.get.interrupt()
+        isPlaying = false
+        timerHandler.get.interrupt()
+        playHandler = None
+        timerHandler = None
+      }
+
+    def receive = {
+      case Play() => {
+        playHandler = Some(SimpleThread(mediaPlayer.play()))
+        timeSlider.max = (mediaPlayer.duration() / 1000).toInt
+        isPlaying = true
+        timerHandler = Some(SimpleThread (
+          while(true) timeSlider.synchronized {
+            Thread.sleep(1000)
+            seconds += 1
+            timeSlider.value = seconds
+            timerLabel.text = timeToString(seconds)
           }
-        }
-        case Stop() => {
-          playBtn.text = "Play"
-          player ! Stop()
-          stopHandler ! Enabled(false)
-        }
-      }
-    }
+        ))
 
-    /**
-     * Handler for stopbutton.
-     */
-     class StopHandler() extends Actor {
-      def receive = {
-        case Stop() => playHandler ! Stop()
-        case Enabled(true)  => stopBtn.enable()
-        case Enabled(false) => stopBtn.disable()
+        durationLabel.text = timeToString(mediaPlayer.duration() / 1000)
       }
-    }
-
-    /**
-     * Handler for the volume.
-     */
-     class VolumeController extends Thread {
-      override def run = {
-        player ! SetVolume(50)
-        panel.mouseWheels += { e =>
-          soundSlider.value = soundSlider.value -
-                     (e.preciseWheelRotation * 5).toInt
-          player ! SetVolume(soundSlider.value)
-        }
+      case Pause() => { mediaPlayer.pause(); reset() }
+      case Stop() => {
+        mediaPlayer.stop()
+        reset()
+        seconds = 0
       }
+      case Seek(pos) => {
+        seconds = pos
+        mediaPlayer.seek(pos, TimeUnit.SECONDS)
+      }
+      case SetVolume() =>
+        mediaPlayer.volume = soundSlider.value
     }
-
   }
 
   /**

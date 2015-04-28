@@ -12,7 +12,7 @@ import javax.swing.JPanel
  */
 case class Canvas() extends Component {
 
-  private var panel = new JPanel()
+  private var panel: JPanel = new JPanel()
   private var objects: List[Graphics => Unit] = List()
 
   panel.putClientProperty("suit-wrapper", this)
@@ -30,6 +30,11 @@ case class Canvas() extends Component {
     }
     this
   }
+
+  /**
+   * @return with a list of drawn objects.
+   */
+  protected[suit] def getObjects() = objects
 
   /**
    * Buffers the new image-drawing function

@@ -26,6 +26,15 @@ case class Slider(private val initMin: Int = 0,
   def min_=(m: Int) = slider.setMinimum(m)
   def max_=(m: Int) = slider.setMaximum(m)
 
+  def minorSpacing = slider.getMinorTickSpacing
+  def minorSpacing_=(s: Int) = slider.setMinorTickSpacing(s)
+
+  def majorSpacing = slider.getMajorTickSpacing
+  def majorSpacing_=(s: Int) = slider.setMajorTickSpacing(s)
+
+  def paintTicks() = slider.setPaintTicks(true)
+  def hideTicks() = slider.setPaintTicks(false)
+
   def value: Int = slider.getValue
   def value_=(v: Int) = slider.setValue(v)
 

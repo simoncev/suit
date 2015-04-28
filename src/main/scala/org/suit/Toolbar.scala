@@ -3,13 +3,19 @@
  */
 package org.suit
 
+import java.awt.Graphics
 import javax.swing.JToolBar
 
 /**
  * @author Steven Dobay
  */
 case class Toolbar() extends ContainerComponent {
-  private val toolbar = new JToolBar()
+  private val toolbar = new JToolBar() {
+    override def paintComponent(g: Graphics) = {
+      super.paintComponent(g)
+      paintObjects(g)
+    }
+  }
 
   toolbar.putClientProperty ("suit-wrapper", this)
 

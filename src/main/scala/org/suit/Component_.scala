@@ -52,4 +52,8 @@ trait Component_ { self =>
 
   val onMouseMotionEvent =
     Property[MouseMotionEvent => Unit](pack.mouseMotions += _)
+
+  val onKeyEvent = Property[KeyEvent => Unit](pack.keyEvents += _)
+
+  val container = Property[ContainerComponent](_ += pack)
 }

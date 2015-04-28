@@ -4,7 +4,10 @@
  */
 package org.suit
 
-import java.awt.event.{FocusEvent => JFocusEvent, _}
+import java.awt.event.{FocusEvent => JFocusEvent,
+MouseWheelListener, KeyListener, MouseListener,
+MouseMotionListener, FocusListener,
+KeyEvent => JKeyEvent}
 import java.awt._
 import javax.swing.JComponent
 import javax.swing.border.Border
@@ -282,14 +285,14 @@ trait Component { self =>
      wrapped.removeFocusListener(l)
 
     protected def createAndAddListener(proc: FocusEvent => Unit) = {
-      val l = new FocusListener {
+      val listener = new FocusListener {
         override def focusGained(e: JFocusEvent): Unit =
           proc(FocusEvent(e).copy(focusGained = true))
         override def focusLost(e: JFocusEvent): Unit =
           proc(FocusEvent(e))
       }
-      wrapped.addFocusListener(l)
-      l
+      wrapped.addFocusListener(listener)
+      listener
     }
   }
 
@@ -299,14 +302,14 @@ trait Component { self =>
   object mouseMotions
     extends EventManager[MouseMotionEvent => Unit, MouseMotionListener] {
      protected def createAndAddListener(proc: MouseMotionEvent => Unit) = {
-       val l = new MouseMotionListener {
+       val listener = new MouseMotionListener {
         override def mouseMoved(e: event.MouseEvent): Unit =
           proc(MouseMotionEvent(e, true))
         override def mouseDragged(e: event.MouseEvent): Unit =
           proc(MouseMotionEvent(e, false))
        }
-       wrapped.addMouseMotionListener(l)
-       l
+       wrapped.addMouseMotionListener(listener)
+       listener
      }
 
     protected def removeListener(l: MouseMotionListener) =
@@ -314,23 +317,48 @@ trait Component { self =>
   }
 
   /**
-   * Handler of mouse wheels.
+   * Manager of mouse wheels.
    */
   object mouseWheels extends EventManager[MouseWheelEvent => Unit,
                                           MouseWheelListener] {
     protected def createAndAddListener(proc: MouseWheelEvent => Unit) = {
-      val l = new MouseWheelListener {
+      val listener = new MouseWheelListener {
         override def mouseWheelMoved(e: event.MouseWheelEvent): Unit =
          proc(MouseWheelEvent(e))
       }
-      wrapped.addMouseWheelListener(l)
-      l
+      wrapped.addMouseWheelListener(listener)
+      listener
     }
 
     protected def removeListener(l: MouseWheelListener) =
       wrapped.removeMouseWheelListener(l)
   }
 
+  /**
+   * Manager of key events.
+   */
+  object keyEvents extends EventManager[KeyEvent => Unit, KeyListener] {
+    protected def removeListener(l: KeyListener) =
+      wrapped.removeKeyListener(l)
+
+    protected def createAndAddListener(proc: KeyEvent => Unit) = {
+      val listener = new KeyListener {
+        override def keyTyped(e: JKeyEvent): Unit =
+          proc(KeyEvent(e, true, false, false))
+        override def keyPressed(e: JKeyEvent): Unit =
+          proc(KeyEvent(e, false, true, false))
+        override def keyReleased(e: JKeyEvent): Unit =
+          proc(KeyEvent(e, false, false, true))
+      }
+      wrapped.addKeyListener(listener)
+      listener
+    }
+  }
+
+  /**
+   * @param obj
+   * @return true if the object equals to this.
+   */
   override def equals(obj: Any) =
    if(obj.isInstanceOf[self.type])
      obj.asInstanceOf[self.type].wrapped == wrapped

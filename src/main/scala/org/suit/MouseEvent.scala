@@ -48,6 +48,6 @@ object MouseEvent {
    */
   def apply(e: java.awt.event.MouseEvent) =
    new MouseEvent(e.getSource.asInstanceOf[JComponent].readSuitComponent,
-                  Some(e.getID), e.getWhen,
+                  None, e.getWhen,
                   e.getX, e.getY, e.getClickCount, e.isPopupTrigger)
 }

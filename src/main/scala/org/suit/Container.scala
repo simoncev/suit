@@ -3,6 +3,7 @@
  */
 package org.suit
 
+import java.awt.Graphics
 import javax.swing.JComponent
 import scala.reflect.runtime.universe._
 
@@ -21,6 +22,18 @@ trait Container {
    * @param l
    */
   def layout_=(l: Layout): Unit
+
+  /**
+   * Canvas for all components.
+   */
+  object canvas extends graphics.Canvas
+
+  /**
+   * Draws the objects for the component.
+   * @param g
+   */
+  protected[suit] def paintObjects(g: Graphics) =
+    canvas.getObjects.foreach(_.apply(g))
 
   /**
    * @return with the wrapped container

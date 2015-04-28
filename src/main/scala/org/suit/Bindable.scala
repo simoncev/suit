@@ -18,4 +18,5 @@ trait Bindable[T] extends Stateful[T] {
     holderV = h
     changeEvents += (_ => h.value = componentValue)
   }
+
 }

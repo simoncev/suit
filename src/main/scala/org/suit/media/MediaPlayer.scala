@@ -24,6 +24,7 @@ abstract class MediaPlayer(private var initURL: Option[URL] = None) { self =>
    * Starts the video.
    */
   def play() = {
+    Gst.init()
     playBin2.setState(State.PLAYING)
     playBin2.play()
     Gst.main()
@@ -49,7 +50,7 @@ abstract class MediaPlayer(private var initURL: Option[URL] = None) { self =>
   def stop() = playBin2.setState(State.NULL)
 
   /**
-   * @return with the mediaplayer's state
+   * @return with the media player's state
    */
   def getState() = playBin2.getState
 

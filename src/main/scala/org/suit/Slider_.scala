@@ -19,5 +19,11 @@ abstract class Slider_(private val initMin: Int = 0,
 
   val holder = Property[HolderOf[Int]](slider.holder = _)
 
+  val minorSpaciong = Property[Int](pack.minorSpacing = _)
+  val majorSpaciong = Property[Int](pack.majorSpacing = _)
+
+  val paintTicks = Property[Boolean](if(_) pack.paintTicks()
+                                     else pack.hideTicks())
+
   def pack() = slider
 }
