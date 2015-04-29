@@ -41,6 +41,9 @@ case class TextField(private val initText: String = "")
   def caretPosition_=(pos: Int): Unit =
     field.setCaretPosition(pos)
 
+  protected def setValue(v: String) =
+    field.setText(v)
+
   /**
    * @return with the text of the component
    */

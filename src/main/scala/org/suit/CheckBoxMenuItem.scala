@@ -54,6 +54,13 @@ case class CheckBoxMenuItem(private val initTitle: String,
   }
 
   /**
+   * @param v
+   * @return
+   */
+  protected def setValue(v: Boolean) =
+   if(v) check() else uncheck()
+
+  /**
    * @return with the name of the class
    */
   def className = "CheckBoxMenuItem"

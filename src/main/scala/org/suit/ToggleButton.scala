@@ -24,6 +24,10 @@ case class ToggleButton()
 
   def doClick() = button.doClick
 
+  protected def setValue(v: Boolean) =
+    if(v) button.setSelected(true)
+    else button.setSelected(false)
+
   protected[suit] def wrapped = button
 
   def className = "ToggleButton"

@@ -67,6 +67,10 @@ case class RadioButtonGroup()
    */
   def layout = layoutObject
 
+  protected def setValue(v: Array[Boolean]) =
+    for(i <- 0 to buttons.size - 1)
+      if(v(i)) buttons(i).select() else buttons(i).deselect()
+
   /**
    * Sets the layout manager.
    * @param l

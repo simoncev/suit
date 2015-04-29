@@ -42,6 +42,9 @@ case class TextArea(private val initText: String = "")
   def caretPosition_=(pos: Int): Unit =
    area.setCaretPosition(pos)
 
+  protected def setValue(v: String) =
+    area.setText(v)
+
   /**
    * @return with the text of the component
    */

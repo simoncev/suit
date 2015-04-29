@@ -28,9 +28,12 @@ case class CheckBox(private val initIsChecked: Boolean = false)
 
   def text_=(t: String) = btn.setText(t)
 
- protected[suit] def wrapped = btn
+  protected def setValue(v: Boolean) =
+    if(v) select() else deselect()
 
- def className = "CheckBox"
+  protected[suit] def wrapped = btn
+
+  def className = "CheckBox"
 
  /**
   * Section of Stateful's methods

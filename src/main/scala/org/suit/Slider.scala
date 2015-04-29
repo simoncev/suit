@@ -38,6 +38,9 @@ case class Slider(private val initMin: Int = 0,
   def value: Int = slider.getValue
   def value_=(v: Int) = slider.setValue(v)
 
+  protected def setValue(v: Int) =
+     slider.setValue(v)
+
   protected[suit] def wrapped = slider
 
   def className = "Slider"

@@ -59,6 +59,8 @@ case class ColorChooser(private val initColor: Color = Color.WHITE)
   def color_=(rgb: (Int, Int, Int)) =
     chooser.setColor(rgb._1, rgb._2, rgb._3)
 
+  protected def setValue(v: Color) = color = v
+
   /**
    * @return with a pointer to the wrapped JComponent
    */

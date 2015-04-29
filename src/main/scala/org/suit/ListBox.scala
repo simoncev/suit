@@ -61,6 +61,9 @@ case class ListBox[T](private val initItems: T*)
     def count() = list.getItemCount
   }
 
+  protected def setValue(v: Option[T]) =
+    if(v.isDefined) list.setSelectedItem(v.get)
+
   /**
    * @return with the selected item's index.
    */

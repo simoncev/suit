@@ -57,6 +57,9 @@ case class FileChooser(private val initSelected: Array[File]
       case _ => false
     }
 
+  protected def setValue(v: Array[File]) =
+   chooser.setSelectedFiles(v)
+
   /**
    * @return with the slected file
    */

@@ -54,6 +54,9 @@ case class ListView(items: AnyRef*)
    */
   def selectionMode = list.getSelectionMode
 
+  protected def setValue(values: Array[AnyRef]) =
+     for(v <- values) list.setSelectedValue(v, false)
+
   /**
    * Sets the layout orientation
    * @param mode

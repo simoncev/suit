@@ -19,6 +19,9 @@ case class Spinner()
   def value: Int = spinner.getValue.asInstanceOf[Int]
   def value_=(v: Int) = spinner.setValue(v)
 
+  protected def setValue(v: Int) =
+    spinner.setValue(v)
+
   protected[suit] def wrapped = spinner
 
   def className = "Spinner"

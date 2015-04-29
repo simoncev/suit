@@ -44,6 +44,11 @@ case class Table(private val initRows: Int,
 
   def editingColumn = table.getEditingColumn
 
+  protected def setValue(v: Array[Array[AnyRef]]) =
+    for(i <- 0 to data.size)
+      for(j <- 0 to data.size)
+        valueAt(v(i)(j), i, j)
+
   /**
    * @param ix
    */
