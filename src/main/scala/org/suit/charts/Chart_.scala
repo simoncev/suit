@@ -11,7 +11,14 @@ import java.awt.Image
 abstract class Chart_(private val initTitle: String) {
   protected var properties: List[ChartProperty[_]] = List()
 
+  /**
+   * @return with the chart.
+   */
   protected[suit] def chart(): Chart
+
+  /**
+   * Initializes the chart.
+   */
   protected[suit] def onPack(): Unit
   
   val title = ChartProperty[TextTitle](chart.title = _)
