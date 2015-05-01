@@ -19,7 +19,7 @@ object TimeChartWithDispatcher extends DesktopApp("Time chart with dispatcher") 
     xTitle := "X"
     yTitle := "Y"
 
-    withSeries := new TimeSeries(
+    dataSet += new TimeSeries(
       "Series1", List(
       (10, Day(new GregorianCalendar(2014, 1, 1))),
       (12, Day(new GregorianCalendar(2014, 1, 2))),
@@ -27,7 +27,7 @@ object TimeChartWithDispatcher extends DesktopApp("Time chart with dispatcher") 
       (13, Day(new GregorianCalendar(2014, 1, 4)))
     ))
 
-    withSeries := new TimeSeries(
+    dataSet += new TimeSeries(
       "Series2", List(
       (13, Day(new GregorianCalendar(2014, 1, 1))),
       (12, Day(new GregorianCalendar(2014, 1, 2))),

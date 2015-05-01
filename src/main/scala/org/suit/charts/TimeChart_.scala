@@ -7,9 +7,12 @@ import org.suit._
 import org.suit.charts._
 
 /**
- * @author Steven Dobay
- *
  * Dispatcher for TimeChart.
+ *
+ * @author Steven Dobay
+ * @param initTitle
+ * @param ev1
+ * @tparam T
  */
 case class TimeChart_[T: Numeric](private val initTitle: String = "")
  extends Chart_(initTitle) {
@@ -22,10 +25,20 @@ case class TimeChart_[T: Numeric](private val initTitle: String = "")
 
   val xTitle = Property[String](xtitle = _)
   val yTitle = Property[String](ytitle = _)
-  val withSeries = Property[TimeSeries[T]](series =>
-   dataset = dataset ++ List(series)
-  )
 
+ /**
+  * Collector of datas.
+  */
+  object dataSet {
+    def add(series: TimeSeries[T]) =
+      dataset = dataset ++ List(series)
+
+    def += = add _
+  }
+
+ /**
+  * @return with the chart.
+  */
   protected[suit] def chart() = timeChart
 
   protected[suit] def onPack() =

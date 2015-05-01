@@ -6,9 +6,11 @@ package org.suit.charts
 import org.suit._
 
 /**
- * @author Steven Dobay
- *
  * Dispatcher for BarChart.
+ * @author Steven Dobay
+ * @param initTitle
+ * @param ev1
+ * @tparam T
  */
 abstract class BarChart_[T: Numeric](private val initTitle: String = "")
  extends Chart_(initTitle) {
@@ -28,8 +30,15 @@ abstract class BarChart_[T: Numeric](private val initTitle: String = "")
 
   val dimension = Property[Dimension](dim = _)
 
-  val dataSet =
-   Property[List[(T, String, String)]](dataset = _)
+  /**
+   * Collector of datas.
+   */
+  object dataSet {
+    def add(value: T, column: String, row: String) =
+      dataset = dataset ++ List((value, column, row))
+
+    def += = add _
+  }
 
   protected[suit] def chart() = bar
 

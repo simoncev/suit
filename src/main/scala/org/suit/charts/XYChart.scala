@@ -5,7 +5,7 @@ package org.suit.charts
 
 import org.jfree.chart.ChartFactory
 import org.jfree.chart.plot.PlotOrientation
-import org.jfree.data.xy.{XYSeries, XYSeriesCollection}
+import org.jfree.data.xy.{XYSeries => JXYSeries, XYSeriesCollection}
 
 /**
  * @author Steven Dobay
@@ -35,7 +35,7 @@ case class XYChart[T: Numeric](
    * @param values
    */
   def withSeries(title: String, values: List[(T, T)]): XYChart[T] = {
-    val series = new XYSeries(title)
+     val series = new JXYSeries(title)
     for(v <- values) series.add(v._1.asInstanceOf[Number],
                                 v._2.asInstanceOf[Number])
     collection.addSeries(series)
@@ -47,7 +47,7 @@ case class XYChart[T: Numeric](
    * @param series
    * @return with the chart
    */
-  def withSeries(series: Series[T]): XYChart[T] =
+  def withSeries(series: XYSeries[T]): XYChart[T] =
     withSeries(series.title, series.values)
 
   /**
@@ -63,7 +63,7 @@ case class XYChart[T: Numeric](
    * @param series
    * @return with the chart
    */
-  def ++(series: Series[T]) = withSeries(series)
+  def ++(series: XYSeries[T]) = withSeries(series)
 
   /**
    * @return with the fully initialized chart.

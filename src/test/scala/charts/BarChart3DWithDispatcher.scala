@@ -18,14 +18,13 @@ object BarChart3DWithDispatcher extends DesktopApp("Bar chart with Dispatcher 3D
   val chart = new BarChart_[Int]("Charts!") {
     xTitle := "X"
     yTitle := "Y"
-    dataSet := List (
-      (10, "First", "One"),  //dataset...
-      (7, "First", "Two"),
-      (8, "Second", "One"),
-      (6, "Second", "Two")
-    )
     orientation := Horizontal
     dimension   := _3D
+
+    dataSet += (10, "First", "One")
+    dataSet += (7, "First", "Two")
+    dataSet += (8, "Second", "One")
+    dataSet += (6, "Second", "Two")
   }
 
   frame += ChartPanel(chart)

@@ -6,4 +6,4 @@ package org.suit.charts
 /**
  * @author Steven Dobay
  */
-case class Series[T: Numeric](title: String, values: List[(T, T)])
+case class XYSeries[T: Numeric](title: String, values: List[(T, T)])

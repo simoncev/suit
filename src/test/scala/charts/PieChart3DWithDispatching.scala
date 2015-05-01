@@ -14,11 +14,9 @@ object PieChart3DWithDispatching extends DesktopApp("3D pie chart with dispatchi
   frame.size = Size(800, 600)
 
   val chart = new PieChart_[Int]("Candies!") {
-    dataSet := List(
-      ("Chocolates", 10),
-      ("Biscuits", 7),
-      ("Cakes", 5)
-    )
+    dataSet += ("Chocolates", 10)
+    dataSet += ("Biscuits", 7)
+    dataSet += ("Cakes", 5)
     dimension := _3D
   }
 

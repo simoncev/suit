@@ -16,11 +16,11 @@ object XYChartWithDispatcher extends DesktopApp("XY chart with dispatching") {
   val chart = new XYChart_[Int]("My XY") {
     xTitle := "X"
     yTitle := "Y"
-    withSeries := Series("Evens",
+    dataSet += XYSeries("Evens",
                    List((1, 2), (2, 4), (3, 6), (4, 8)))
-    withSeries := Series("Primes",
+    dataSet += XYSeries("Primes",
                    List((1, 2), (2, 3), (3, 5), (4, 7)))
-    withSeries := Series("Odds",
+    dataSet += XYSeries("Odds",
                    List((1, 1), (2, 3), (3, 5), (4, 7)))
   }
 

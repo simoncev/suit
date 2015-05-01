@@ -6,9 +6,12 @@ package org.suit.charts
 import org.suit.Property
 
 /**
- * @author Steven Dobay
- *
  * Dispatcher for XYChart.
+ *
+ * @author Steven Dobay
+ * @param initTitle
+ * @param ev1
+ * @tparam T
  */
 case class XYChart_[T: Numeric](private val initTitle: String = "")
  extends Chart_(initTitle) {
@@ -18,15 +21,28 @@ case class XYChart_[T: Numeric](private val initTitle: String = "")
   private var xtitle: String = ""
   private var ytitle: String = ""
   private var orient: Orientation = Vertical
-  private var dataset: List[Series[T]] = List()
+  private var dataset: List[XYSeries[T]] = List()
 
   val xTitle = Property[String](xtitle = _)
   val yTitle = Property[String](ytitle = _)
   val orientation = Property[Orientation](orient = _)
-  val withSeries = Property[Series[T]](series =>
-    dataset = dataset ++ List(series)
-  )
 
+  /**
+   * Collector of datas.
+   */
+  object dataSet {
+    /**
+     * @param series
+     */
+    def add(series: XYSeries[T]) =
+      dataset = dataset ++ List(series)
+
+    def += = add _
+  }
+
+  /**
+   * @return with the chart.
+   */
   protected[suit] def chart() = xychart
 
   protected[suit] def onPack() = {

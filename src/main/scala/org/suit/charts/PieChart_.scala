@@ -7,6 +7,9 @@ import org.suit._
 
 /**
  * @author Steven Dobay
+ * @param initTitle
+ * @param ev1
+ * @tparam T
  */
 case class PieChart_[T: Numeric](private val initTitle: String = "")
  extends Chart_(initTitle) {
@@ -16,8 +19,17 @@ case class PieChart_[T: Numeric](private val initTitle: String = "")
   private var dataset: List[(String, T)] = List()
   private var dim: Dimension = _2D
 
-  val dataSet = Property[List[(String, T)]](dataset = _)
   val dimension = Property[Dimension](dim = _)
+
+  /**
+   * Collector of datas.
+   */
+  object dataSet {
+    def add(label: String, value: T) =
+      dataset = dataset ++ List((label, value))
+
+    def += = add _
+  }
 
   protected[suit] def chart() = pie
 
