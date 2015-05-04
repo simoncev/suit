@@ -6,6 +6,7 @@ package scala.test
 
 import java.awt.Color
 import org.suit._
+
 /**
  * @author Steven Dobay
  */

@@ -4,7 +4,7 @@ version := "0.10.0"
 
 scalaVersion := "2.11.6"
 
-libraryDependencies ++= Seq(
+libraryDependencies ++= Seq (
   "com.typesafe.akka" %% "akka-actor" % "2.3.9",
   "org.jfree" % "jfreechart" % "1.0.14",
   "org.scala-lang" % "scala-reflect" % "2.11.6",
@@ -13,10 +13,11 @@ libraryDependencies ++= Seq(
   "com.miglayout" % "miglayout-swing" % "5.0"
 )
 
-scalacOptions ++= Seq(
+scalacOptions ++= Seq (
   "-deprecation",
   "-unchecked",
   "-feature",
+  "-optimize",
   "-Xfatal-warnings",
   "-Xlint"
 )

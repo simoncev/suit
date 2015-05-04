@@ -9,7 +9,7 @@ package org.suit
  * Binds a component's contained value into the given Holder instance
  */
 trait Bindable[T] extends Stateful[T] {
-  protected var holderV = HolderOf[T]()
+  protected var holderV = HolderOf[T]() 
 
   /**
    * @return with the component's value
