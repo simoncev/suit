@@ -36,7 +36,7 @@ case class Frame(private val initTitle: String) extends ContainerComponent {
    * @param comp
    */
   override def add(comp: Component): Unit =
-    jframe.add(comp.wrapped)
+    jframe.add(formatter(comp).wrapped)
 
   /**
    * Adds the component to the layout with the given grid-bag constraints.
@@ -44,7 +44,7 @@ case class Frame(private val initTitle: String) extends ContainerComponent {
    * @param constraint
    */
   override def add(comp: Component, constraint: GridBagConstraints) =
-    jframe.add(comp.wrapped, constraint)
+    jframe.add(formatter(comp).wrapped, constraint)
 
   /**
    * Adds a component with a border-layout constraint.
@@ -52,7 +52,7 @@ case class Frame(private val initTitle: String) extends ContainerComponent {
    * @param constraint
    */
   override def add(comp: Component, constraint: String) =
-    jframe.add(comp.wrapped, constraint)
+    jframe.add(formatter(comp).wrapped, constraint)
 
   /**
    * Removs the component.

@@ -3,7 +3,7 @@
  */
 package org.suit
 
-import java.awt.{Graphics, GridBagConstraints}
+import java.awt.GridBagConstraints
 
 /**
  * @author Steven Dobay
@@ -14,7 +14,19 @@ trait ContainerComponent extends Container with Component {
 
   protected var layoutModel: Option[Layout] = None
   private type ComponentDispatcher = Component_
-  
+
+  protected var formatter: Option[Component => Unit] = None
+
+  /**
+   * @param fn The formatter procedure
+   */
+  protected implicit class Formatter(fn: Option[Component => Unit]) {
+    def apply(comp: Component) = {
+      if(fn.isDefined) fn.get(comp)
+      comp
+    }
+  }
+
   /**
    * @return with the layout.
    */
@@ -31,25 +43,35 @@ trait ContainerComponent extends Container with Component {
 
   /**
    * Adds the new component.
+   * If you override don't forget to add transformer(formatter)
+   * tracking.
+   *
    * @param comp
    */
-  def add(comp: Component): Unit = wrapped.add(comp.wrapped)
+  def add(comp: Component): Unit =
+    wrapped.add(formatter(comp).wrapped)
 
   /**
    * Adds the component to the layout with the given grid-bag constraints.
+   * If you override don't forget to add transformer(formatter)
+   * tracking.
+   *
    * @param comp
    * @param constraint
    */
   def add(comp: Component, constraint: GridBagConstraints) =
-    wrapped.add(comp.wrapped, constraint)
+    wrapped.add(formatter(comp).wrapped, constraint)
 
   /**
    * Adds a component with a border-layout constraint.
+   * If you override don't forget to add transformer(formatter)
+   * tracking.
+   *
    * @param comp
    * @param constraint
    */
   def add(comp: Component, constraint: String): Unit =
-    wrapped.add(comp.wrapped, constraint)
+    wrapped.add(formatter(comp).wrapped, constraint)
 
   import layouts.UniLayout._
 
@@ -107,8 +129,6 @@ trait ContainerComponent extends Container with Component {
    * @param comp
    */
   def -=(comp: Component) = remove(comp)
-
-
 
   /**
    * Removs the component.
@@ -170,4 +190,17 @@ trait ContainerComponent extends Container with Component {
    */
   def clearComponentPalette() =
     components().foreach(remove _)
+
+  /**
+   * @return with the transformer procedure.
+   */
+  def transformer = formatter
+
+  /**
+   * Formatter which will be applied to all components
+   * before adding to this container.
+   * @param proc
+   */
+  def transformer_=(proc: Component => Unit) =
+    formatter = Some(proc)
 }
