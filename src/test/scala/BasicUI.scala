@@ -29,18 +29,18 @@ object BasicUI extends DesktopApp("Basic UI") {
       /**
        * Adding a simple textmenu item with action by the "@>" operator
        */
-      TextMenuItem("A") @> { mouseEvent =>
+      TextMenuItem("A") #> {
         popups.info("", "A!")
         println("The A action!")
       },
-      CheckBoxMenuItem("B") @> (_ => popups.warning("Warning!", "NO BEEEEE!")),
-      TextMenuItem("Class name") @> ( mouseEvent =>
+      CheckBoxMenuItem("B") @> (popups.warning("Warning!", "NO BEEEEE!")),
+      TextMenuItem("Class name") @> ( (ev: ActionEvent) =>
          popups.info("", "You clicked from a " +
-                              mouseEvent.source.className + "!")//we can get the source class
+                              ev.source.className + "!")//we can get the source class
         )
       ),
     Menu("Exit") ++= (
-      TextMenuItem("Exit") @> (_ => popups.warning("Warning!", "I can't exit!"))
+      TextMenuItem("Exit") #> ( popups.warning("Warning!", "I can't exit!"))
       )
   )
 
@@ -51,12 +51,11 @@ object BasicUI extends DesktopApp("Basic UI") {
    * Adding a simple button and an actionevent handler
    * with the '@>' operator(same as withAction)
    */
-  frame += Button("Click me!") @> { _ =>
+  frame += Button("Click me!") #> {
 
     // Using the choice dialog from the popups
-    val res = popups.choice("Choose: ", "Hello!",
-                            Array("A", "B", "C"), "A")
-    println(res)
+    println( popups.choice("Choose: ", "Hello!",
+                            Array("A", "B", "C"), "A"))
   }
 
   frame += ListView("A", "B", "C").onSelection { (self, from, to) =>

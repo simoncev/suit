@@ -24,12 +24,12 @@ object VideoPlayerExample extends DesktopApp("Example for using VideoPlayer") {
   // adding the component
   val player = VideoPlayer()
   player.popupMenu = new PopupMenu_() {
-    newItem := TextMenuItem("Open video from file") @> (_ =>
+    newItem := TextMenuItem("Open video from file") #> (
                  if(chooser.runOpen(frame))
                    player.urlLocation =
                     chooser.selectedFile().toURI.toURL()
                )
-    newItem := TextMenuItem("Open video from URL") @> ( e =>
+    newItem := TextMenuItem("Open video from URL") #> (
                  player.urlLocation =
                    new URL(popups.input("", "Write here the video's URL: "))
                )

@@ -213,6 +213,15 @@ trait Component { self =>
   }
 
   /**
+   * Adds action handling to the component
+   * Function to use Function0 procedures on event handling(don't have to write "_ => ")
+   * @param proc
+   * @return with the component's pointer
+   */
+  def withAction(proc: => Unit): self.type =
+    withAction(_ => proc)
+
+  /**
    * Calls the event's body in a new Thread
    * @param proc
    */
@@ -229,8 +238,14 @@ trait Component { self =>
    * Adds action handling to the component
    * @return with the component's pointer
    */
-  def @> = withAction _
+  def @>(proc: => Unit): self.type = withAction(proc)
 
+  /**
+   * Operator to use Function0 procedures on event handling(don't have to write "_ => ")
+   * @param proc
+   * @return with the component's pointer
+   */
+  def #>(proc: => Unit): self.type = withAction(proc)
 
   /**
    * @param key
