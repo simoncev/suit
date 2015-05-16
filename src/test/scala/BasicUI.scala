@@ -11,12 +11,12 @@ import org.suit._
  * @author Steven Dobay
  */
 object BasicUI extends DesktopApp("Basic UI") {
-
+  frame.hide()
   // Setting the layout model
   frame.layout = layouts.GridLayout(4, 2)
 
    //Setting the size of the frame
-  frame.size = Size(500, 400)
+  frame.size = Size(800, 600)
 
    //Creating menus for the menubar
   frame.addMenus(
@@ -64,7 +64,7 @@ object BasicUI extends DesktopApp("Basic UI") {
 
    // Example for using tree-syntax with property-based dispatch
   frame += new Label_("Fancy label!") {
-    text := "I changed the text!"
+    text := "I've changed the text!"
     foreGround := Color.BLUE
   }
   frame.show()
@@ -94,4 +94,10 @@ object BasicUI extends DesktopApp("Basic UI") {
     comp.background = Color.BLUE
   })
 
+
+  frame += new Button_("Boom!") {
+    action(popups.error("BOOM!", "!!!"))
+  }
+
+  frame.show()
 }

@@ -46,6 +46,8 @@ trait Component_ { self =>
 
   val onAction = Property[ActionEvent => Unit](pack.onAction(_))
 
+  def action(proc: => Unit) = pack.onAction(_ => proc)
+
   val futureAction = Property[ActionEvent => Unit](pack.futureAction(_))
 
   val enabled = Property[Boolean](if(_) pack.enable() else pack().disable())
