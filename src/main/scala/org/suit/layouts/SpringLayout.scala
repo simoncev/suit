@@ -7,17 +7,18 @@ import org.suit._
 
 /**
  * @author Steven Dobay
- * @version 0.1
+ * @version 1.0
+ *
  * Wrapper for java's spring-layout.
  */
 case class SpringLayout() extends Layout {
   private val layout = new javax.swing.SpringLayout()
 
   /**
-   * @param constraint1 : SpringLayout._
+   * @param constraint1 : use a constant from SpringLayout._
    * @param comp1
    * @param value
-   * @param constraint2 : SpringLayout._
+   * @param constraint2 : use a constant from SpringLayout._
    * @param comp2
    */
   def addConstraint(constraint1: String, comp1: Component,
@@ -26,7 +27,7 @@ case class SpringLayout() extends Layout {
                          constraint2, comp2.wrapped)
 
   /**
-   * @param constraint : SpringLayout._
+   * @param constraint : a SpringLayout constant.
    * @param comp
    * @return
    */
@@ -34,6 +35,7 @@ case class SpringLayout() extends Layout {
     layout.getConstraint(constraint, comp.wrapped)
 
   /**
+   * Removes a component.
    * @param comp
    */
   def remove(comp: Component) = layout.removeLayoutComponent(comp.wrapped)
@@ -50,6 +52,9 @@ case class SpringLayout() extends Layout {
   protected[suit] def wrapped = layout
 }
 
+/**
+ * Contains the constants imported and wrapped from javax.swing.SpringLayout.
+ */
 object SpringLayout {
   import javax.swing.{SpringLayout => SL}
 
