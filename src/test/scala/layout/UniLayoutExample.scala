@@ -1,7 +1,7 @@
 /**
  * Copyright© Steven Dobay 2015
  */
-package scala.test
+package layout
 
 import org.suit._
 
