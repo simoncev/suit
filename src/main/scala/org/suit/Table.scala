@@ -10,13 +10,8 @@ import javax.swing.{JScrollPane, JTable}
 /**
  * @author Steven Dobay
  */
-case class Table(private val initRows: Int,
-                 private val initColumns: Int,
-                 private val columnNames: Array[Object])
-   extends Bindable[Array[Array[AnyRef]]] {
+case class Table(table: JTable) extends Bindable[Array[Array[AnyRef]]] {
 
-  private var data = Array.ofDim[AnyRef](initRows, initColumns)
-  private val table = new JTable(data, columnNames)
   private val scrollPane = new JScrollPane(table)
 
   table.putClientProperty("suit-wrapper", this)
@@ -24,7 +19,12 @@ case class Table(private val initRows: Int,
   def rows() = table.getRowCount
   def columns() = table.getColumnCount
 
-  def tableData() = data
+  def data(): Array[Array[AnyRef]] = {
+    val arr = Array.ofDim[AnyRef](rows, columns)
+    for(i <- 0 to rows - 1; j <- 0 to columns - 1)
+      arr(i)(j) = valueAt(i, j)
+    arr
+  }
 
   /**
    * @param obj
@@ -44,10 +44,12 @@ case class Table(private val initRows: Int,
 
   def editingColumn = table.getEditingColumn
 
-  protected def setValue(v: Array[Array[AnyRef]]) =
-    for(i <- 0 to data.size)
-      for(j <- 0 to data.size)
+  protected def setValue(v: Array[Array[AnyRef]]) = {
+    val len = data.size
+    for (i <- 0 to len)
+      for (j <- 0 to len)
         valueAt(v(i)(j), i, j)
+  }
 
   /**
    * @param ix
