@@ -1,9 +1,9 @@
 /**
  * Copyright© Steven Dobay 2015
  */
-package scala.test
+package scala.test.component
 
-import org.suit.{popups, ListBox, Size}
+import org.suit.{ListBox, Size, popups}
 
 /**
  * @author Steven Dobay

@@ -1,9 +1,9 @@
 /**
  * Copyright© by Steven Dobay on 2015
  */
-package scala.test
+package scala.test.component
 
-import org.suit.{ListBox, TableBuilder, Size, DesktopApp}
+import org.suit.{DesktopApp, ListBox, Size, TableBuilder}
 
 /**
  * @author Steven Dobay
