@@ -1,4 +1,4 @@
-# Welcome to suit - Scala User Interface Terminals 0.10.4 !
+# Welcome to suit - Scala User Interface Terminals 0.10.5 !
 
 ![alt tag](https://travis-ci.org/stevendobay/suit.svg)
 
