@@ -5,7 +5,7 @@ package scala.test.media
 
 import java.net.URL
 import org.suit._
-import org.suit.layouts.BorderLayoutPosition
+import org.suit.layouts.BorderLayout
 import org.suit.media._
 
 /**
@@ -36,10 +36,10 @@ object VideoPlayerExample extends DesktopApp("Example for using VideoPlayer") {
   }.pack()
 
   player.preferredSize = Size(1260, 670)
-  frame.add(player, BorderLayoutPosition.CENTER)
+  frame.add(player, BorderLayout.CENTER)
 
   val controller = new MediaController(player)
-  frame.add(controller, BorderLayoutPosition.PAGE_END)
+  frame.add(controller, BorderLayout.PAGE_END)
 
   frame.updateUI()
 }

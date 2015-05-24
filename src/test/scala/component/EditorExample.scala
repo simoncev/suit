@@ -5,7 +5,7 @@ package scala.test.component
 
 import java.net.URL
 
-import org.suit.layouts.{BorderLayoutPosition, BorderLayout}
+import org.suit.layouts.BorderLayout
 import org.suit.{Editor, Size, DesktopApp}
 
 /**
@@ -21,7 +21,7 @@ object EditorExample extends DesktopApp("Editor Example") {
 
   editor.page = new URL("http://www.scala-lang.org")
 
-  frame.add(editor, BorderLayoutPosition.CENTER)
+  frame.add(editor, BorderLayout.CENTER)
 
   frame.show()
 }

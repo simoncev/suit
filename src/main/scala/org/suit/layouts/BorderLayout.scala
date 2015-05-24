@@ -40,7 +40,7 @@ case class BorderLayout() extends Layout {
   protected[suit] def wrapped = layout
 }
 
-object BorderLayoutPosition extends Enumeration {
+object BorderLayout {
   import java.awt.{ BorderLayout => JBL }
   val AFTER_LAST_LINE = JBL.AFTER_LAST_LINE
   val AFTER_LINE_ENDS = JBL.AFTER_LINE_ENDS
