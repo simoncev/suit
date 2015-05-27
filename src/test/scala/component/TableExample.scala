@@ -45,7 +45,9 @@ object TableExample extends DesktopApp("Table Example") {
     })
   }
 
-  frame += table.buildTable // this method builds the model and the table - DON'T FORGET TO USE!!!
+  // method "buildTable" builds the model and the table - DON'T FORGET TO USE!!!
+  // method "withScrollPane()" helps to show the columns' name
+  frame += table.buildTable.withScrollPane()
 
   frame.show()
 }

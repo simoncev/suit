@@ -27,6 +27,12 @@ trait Component { self =>
   protected var containerObj: Option[Container] = None
 
   /**
+   * @return with a ScrollPane containing the component.
+   */
+  def withScrollPane(): ScrollPane[this.type] =
+    ScrollPane[this.type](this)
+
+  /**
    * Manager of style classes.
    */
   object styleClasses {
