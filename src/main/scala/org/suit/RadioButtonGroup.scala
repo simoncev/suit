@@ -11,7 +11,8 @@ import javax.swing.JPanel
  * @author Steven Dobay
  */
 case class RadioButtonGroup()
-  extends Bindable[Array[Boolean]] with Container {
+  extends Bindable[String] with Container {
+
   private val panel = new JPanel {
     override def paintComponent(g: Graphics) = {
       super.paintComponent(g)
@@ -19,10 +20,25 @@ case class RadioButtonGroup()
     }
   }
 
-  private var buttons = new Array[RadioButton](5)
+  protected var buttons = new Array[RadioButton](0)
   private var layoutObject: Option[Layout] = None
 
   panel.putClientProperty("suit-wrapper", this)
+
+  /**
+   * Deselects all radio buttons except the given one.
+   */
+  protected def deselectIfNot(rb: RadioButton) =
+    buttons.foreach(x => if(!rb.equals(x)) x.deselect())
+
+  /**
+   * Action handler for buttons.
+   *
+   * @param btn
+   * @return with the mouse handler.
+   */
+  protected def action(btn: RadioButton) =
+    new MouseHandler().handleClick(_ => deselectIfNot(btn))
 
   /**
    * Adds a new radio button.
@@ -30,6 +46,7 @@ case class RadioButtonGroup()
    */
   def +=(btn: RadioButton) = {
     panel.add(btn.wrapped)
+    btn.mouseEvents += action(btn)
     buttons = Array.concat(buttons, Array(btn))
   }
 
@@ -38,7 +55,10 @@ case class RadioButtonGroup()
    * @param btns
    */
   def ++=(btns: RadioButton*) = {
-    for(btn <- btns) panel.add(btn.wrapped)
+    for(btn <- btns) {
+      btn.mouseEvents += action(btn)
+      panel.add(btn.wrapped)
+    }
     buttons = Array.concat(buttons, btns.toArray)
   }
 
@@ -48,7 +68,10 @@ case class RadioButtonGroup()
    * @return with self.
    */
   def withButtons(btns: RadioButton*) = {
-    for(btn <- btns) panel.add(btn.wrapped)
+    for(btn <- btns) {
+      panel.add(btn.wrapped)
+      btn.mouseEvents += action(btn)
+    }
     buttons = Array.concat(buttons, btns.toArray)
     this
   }
@@ -67,9 +90,15 @@ case class RadioButtonGroup()
    */
   def layout = layoutObject
 
-  protected def setValue(v: Array[Boolean]) =
-    for(i <- 0 to buttons.size - 1)
-      if(v(i)) buttons(i).select() else buttons(i).deselect()
+  /**
+   * Selects the firt button by title.
+   * @param title
+   */
+  protected def setValue(title: String) =
+    buttons.find(_.text == title) match {
+      case Some(btn) => btn.select()
+      case _         => ()
+    }
 
   /**
    * Sets the layout manager.
@@ -126,10 +155,22 @@ case class RadioButtonGroup()
     listener
   }
 
+  /**
+   * @param l
+   */
   protected def removeChangeListener(l: ChangeListenerType) =
     buttons.foreach(_.wrapped.removeActionListener(l))
 
-  def componentValue() = buttons.map(_.isSelected())
+  /**
+   * @return with the component's value
+   */
+  def componentValue() = selected match {
+    case Some(str) => str
+    case _         => ""
+  }
 
+  /**
+   * @return with the wrapped container
+   */
   protected[suit] def wrappedContainer = panel
 }

@@ -19,4 +19,6 @@ abstract class RadioButton_(private val txt: String)
   val selected = Property[Boolean](
     b => if(b) btn.select() else btn.deselect()
   )
+
+  val onChange = Property[ChangeEvent => Unit](btn.changeEvents += _)
 }
