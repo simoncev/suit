@@ -13,7 +13,7 @@ case class TabbedPane()
 
   private val tabs = new JTabbedPane()
 
-  tabs.putClientProperty ("suit-wrapper", this)
+  tabs.putClientProperty("suit-wrapper", this)
 
   /**
    * Adds a new Tab.
