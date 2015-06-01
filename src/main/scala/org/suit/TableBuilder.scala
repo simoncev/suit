@@ -3,6 +3,8 @@
  */
 package org.suit
 
+import scala.language.existentials
+
 import javax.swing.event.{TableModelEvent, TableModelListener}
 import javax.swing.{DefaultCellEditor, JTable}
 import javax.swing.table.AbstractTableModel
@@ -17,8 +19,8 @@ trait TableBuilder {
   private var textFieldColumns: List[(Int, TextField)] = List()
   private var changeListener: Option[(AnyRef, Int, Int) => Unit] = None
 
+  var columnClasses: List[Class[_]] = List()
   var columnNames: List[String] = List()
-  var rowNames: List[String] = List()
   var rows = 0
   var columns = 0
 
@@ -44,7 +46,9 @@ trait TableBuilder {
   }
 
   /**
-   * @return with a new abstract
+   * Creates a new tablemodel based on the given
+   * procedures and values.
+   * @return with a new tablemodel.
    */
   private def createModel() = new AbstractTableModel {
     override def getRowCount: Int = rows
@@ -61,9 +65,15 @@ trait TableBuilder {
     override def getColumnName(cix: Int) =
       if(columnNames.isEmpty) "" else columnNames(cix)
 
-    override def setValueAt(value: AnyRef, row: Int, column: Int) =
+    override def setValueAt(value: AnyRef, row: Int, column: Int) = {
+      super.fireTableDataChanged()
+      super.fireTableCellUpdated(row, column)
       if(changeListener.isDefined) changeListener.get(value, row, column)
-      else super.fireTableCellUpdated(row, column)
+    }
+
+    override def getColumnClass(columnIx: Int): Class[_] =
+      if(columnClasses.isEmpty) classOf[String]
+      else columnClasses(columnIx)
   }
 
   /**

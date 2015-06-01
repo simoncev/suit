@@ -10,7 +10,7 @@ import javax.swing.{JScrollPane, JTable}
 /**
  * @author Steven Dobay
  */
-case class Table(table: JTable) extends Bindable[Array[Array[AnyRef]]] {
+case class Table(private val table: JTable) extends Bindable[Array[Array[AnyRef]]] {
 
   private val scrollPane = new JScrollPane(table)
 
