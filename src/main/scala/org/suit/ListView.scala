@@ -35,6 +35,11 @@ case class ListView(items: AnyRef*)
     this
   }
 
+  def withVisibleRowCount(n: Int) = {
+    list.setVisibleRowCount(n)
+    this
+  }
+
   /**
    * @return with the number of visible rows
    */
@@ -44,8 +49,11 @@ case class ListView(items: AnyRef*)
    * Sets the selection mode
    * @param mode
    */
-  def selectionMode_=(mode: Int) = {
+  def selectionMode_=(mode: Int) =
     list.setSelectionMode(mode)
+
+  def withSelectionMode(mode: Int) = {
+    selectionMode = mode
     this
   }
 

@@ -26,6 +26,11 @@ case class Label(private val initTitle: String) extends Widget {
   def text_=(t: String) =
     label.setText(t)
 
+  def withText(txt: String) = {
+    label.setText(txt)
+    this
+  }
+
   /**
    * @return with the name of the class
    */

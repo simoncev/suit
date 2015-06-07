@@ -29,6 +29,11 @@ case class PasswordField()
   def document_=(doc: Document): Unit =
     field.setDocument(doc)
 
+  def withDocument(doc: Document) = {
+    field.setDocument(doc)
+    this
+  }
+
   protected def setValue(v: Array[Char]) = {
     var buffer = ""
     for(c <- v) buffer += c

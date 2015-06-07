@@ -24,6 +24,11 @@ case class CheckBox(private val initIsChecked: Boolean = false)
 
   def deselect() = btn.setSelected(false)
 
+  def withText(txt: String) = {
+    btn.setText(txt)
+    this
+  }
+
   def text = btn.getText
 
   def text_=(t: String) = btn.setText(t)

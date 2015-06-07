@@ -9,10 +9,11 @@ import javax.swing.event.ChangeListener
 /**
  * @author Steven Dobay
  */
-case class Spinner()
+case class Spinner(defaultValue: Int = 0)
    extends Bindable[Int] with Widget {
 
   private val spinner = new JSpinner()
+  spinner.setValue(defaultValue)
 
   spinner.putClientProperty("suit-wrapper", this)
 

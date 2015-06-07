@@ -25,6 +25,11 @@ case class RadioButton(private val initTitle: String)
 
   def text_=(t: String) = button.setText(t)
 
+  def withText(txt: String) = {
+    button.setText(txt)
+    this
+  }
+
   /**
    * Handler of change events.
    */

@@ -97,7 +97,18 @@ trait Component { self =>
 
 
   def minSize = wrapped.getMinimumSize
+
+  def withMinSize(d: Size) = {
+    wrapped.setMinimumSize(d)
+    self
+  }
+
   def maxSize = wrapped.getMaximumSize
+
+  def withMaxSize(d: Size) = {
+    wrapped.setMaximumSize(d)
+    self
+  }
 
   /**
    * @param d
@@ -144,6 +155,11 @@ trait Component { self =>
    */
   def border_=(b: Border) = wrapped.setBorder(b)
 
+  def withBorder(b: Border) = {
+    wrapped.setBorder(b)
+    self
+  }
+
   def revalidate() = wrapped.revalidate()
 
   def repaint(l: Long) =
@@ -183,6 +199,11 @@ trait Component { self =>
    */
   def toolTip_=(t: String) =
     wrapped.createToolTip().setTipText(t)
+
+  def withToolTip(t: String) = {
+    wrapped.createToolTip().setTipText(t)
+    self
+  }
 
   def isOpaque = wrapped.isOpaque
 
@@ -264,6 +285,11 @@ trait Component { self =>
    */
   def property_=(key: String, value: AnyRef) =
     wrapped.putClientProperty(key, value)
+
+  def withProperties(key: String, value: AnyRef) = {
+    wrapped.putClientProperty(key, value)
+    self
+  }
 
   /**
    * Adds a popupmenu to the component

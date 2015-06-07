@@ -18,6 +18,11 @@ case class ToggleButton()
   def text = button.getText
   def text_=(t: String) = button.setText(t)
 
+  def withText(txt: String) = {
+    button.setText(txt)
+    this
+  }
+
   def selected = button.isSelected
 
   def selected_=(b: Boolean) = button.setSelected(b)

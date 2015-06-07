@@ -29,8 +29,18 @@ case class Slider(private val initMin: Int = 0,
   def minorSpacing = slider.getMinorTickSpacing
   def minorSpacing_=(s: Int) = slider.setMinorTickSpacing(s)
 
+  def withMinorSpacing(n: Int) = {
+    slider.setMinorTickSpacing(n)
+    this
+  }
+
   def majorSpacing = slider.getMajorTickSpacing
   def majorSpacing_=(s: Int) = slider.setMajorTickSpacing(s)
+
+  def withMajorSpacing(n: Int) = {
+    slider.setMajorTickSpacing(n)
+    this
+  }
 
   def paintTicks() = slider.setPaintTicks(true)
   def hideTicks() = slider.setPaintTicks(false)

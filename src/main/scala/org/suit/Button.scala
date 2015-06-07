@@ -17,6 +17,11 @@ case class Button(private val initText: String = "") extends Widget {
 
  button.putClientProperty("suit-wrapper", this)
 
+ def withText(txt: String) = {
+   button.setText(txt)
+   this
+ }
+
  /**
   * @return with the button's text
   */

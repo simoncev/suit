@@ -29,6 +29,11 @@ case class TextField(private val initText: String = "")
   def document_=(doc: Document): Unit =
     field.setDocument(doc)
 
+  def withDocument(doc: Document) = {
+    field.setDocument(doc)
+    this
+  }
+
   /**
    * @return with the caret's index
    */
@@ -55,6 +60,11 @@ case class TextField(private val initText: String = "")
    */
   def text_=(str: String): Unit =
     field.setText(str)
+
+  def withText(txt: String) = {
+    field.setText(txt)
+    this
+  }
 
   /**
    * @return with the name of the class
