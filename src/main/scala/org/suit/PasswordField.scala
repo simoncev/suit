@@ -55,7 +55,7 @@ case class PasswordField()
   /**
    * @return with the text of the component
    */
-  def text: String = field.getPassword.toString
+  def text: String = field.getPassword.mkString("")
 
   /**
    * Sets the component's text
