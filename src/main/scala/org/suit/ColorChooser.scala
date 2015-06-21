@@ -97,6 +97,20 @@ case class ColorChooser(private val initColor: Color = Color.WHITE)
 }
 
 object ColorChooser {
+
+  /**
+   * @param parent : the parent of the dialog
+   * @param title  : the title of the dialog
+   * @param defaultColor : the defualt color value
+   * @return with the selected color.
+   */
+  def run(parent: ContainerComponent,
+          title: String = "",
+          defaultColor: Color = Color.WHITE): Color =
+    JColorChooser.showDialog(
+      parent.wrappedContainer, title, defaultColor
+    )
+
   /**
    * @param r
    * @param g
