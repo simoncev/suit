@@ -22,7 +22,7 @@ object SelectionEvent {
   def apply(e: javax.swing.event.ListSelectionEvent): SelectionEvent = {
     val list = e.getSource.asInstanceOf[JComponent]
                 .getClientProperty("suit-wrapper")
-                .asInstanceOf[ListView]
+                .asInstanceOf[ListView[_ <: AnyRef]]
     SelectionEvent(list, None, System.currentTimeMillis(),
       list.items.slice(e.getFirstIndex, e.getLastIndex).toArray)
   }

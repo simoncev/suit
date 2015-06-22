@@ -58,7 +58,7 @@ object BasicUI extends DesktopApp("Basic UI") {
                             Array("A", "B", "C"), "A"))
   }
 
-  frame += ListView("A", "B", "C").onSelection { (self, from, to) =>
+  frame += ListView(Vector("A", "B", "C")).onSelection { (self, from, to) =>
        println("from " + from + " - to " + to)
   }
 

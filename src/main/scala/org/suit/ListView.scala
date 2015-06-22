@@ -5,16 +5,30 @@
 package org.suit
 
 import javax.swing.event.{ListSelectionEvent, ListSelectionListener}
-import javax.swing.{JScrollPane, JList, ListSelectionModel}
+import javax.swing.{JScrollPane, JList, ListSelectionModel, JComponent}
+
+import scala.reflect.ClassTag
 
 /**
  * @author Steven Dobay
  * Component for visualizing lists.
  */
-case class ListView(items: AnyRef*)
-   extends Bindable[Array[AnyRef]] {
+case class ListView[T <: AnyRef](items: Vector[T])
+                                (implicit CT: ClassTag[T])
+   extends Bindable[Array[T]] {
 
-  private var list = new JList(items.toArray)
+  /**
+   * @return with an array containing the items.
+   */
+  val values = items.toArray
+
+  /**
+   * @param ix : the index
+   * @return with the item at the given index.
+   */
+  def value(ix: Int) = items(ix)
+
+  private var list = new JList[T](values)
 
   list.putClientProperty("suit-wrapper", this)
 
@@ -62,7 +76,7 @@ case class ListView(items: AnyRef*)
    */
   def selectionMode = list.getSelectionMode
 
-  protected def setValue(values: Array[AnyRef]) =
+  protected def setValue(values: Array[T]) =
      for(v <- values) list.setSelectedValue(v, false)
 
   /**
@@ -94,10 +108,13 @@ case class ListView(items: AnyRef*)
    *
    * @param proc
    */
-  def onSelection(proc: (ListView, Int, Int) => Unit) = {
+  def onSelection(proc: (ListView[T], Int, Int) => Unit) = {
     list.addListSelectionListener(new ListSelectionListener {
       override def valueChanged(e: ListSelectionEvent): Unit =
-        proc(ListView(e.getSource.asInstanceOf[JList[AnyRef]]),
+        proc(e.getSource()
+              .asInstanceOf[JComponent]
+              .getClientProperty("suit-wrapper")
+              .asInstanceOf[ListView[T]],
              e.getFirstIndex, e.getLastIndex)
     })
     this
@@ -121,7 +138,7 @@ case class ListView(items: AnyRef*)
    * Sets the
    * @param l
    */
-  protected[suit] def setWrapped(l: JList[AnyRef]) = {
+  protected[suit] def setWrapped(l: JList[T]) = {
     list = l
   }
 
@@ -148,8 +165,8 @@ case class ListView(items: AnyRef*)
   protected def removeChangeListener(l: ChangeListenerType) =
     list.removeListSelectionListener(l)
 
-  def componentValue() = list.getSelectedValuesList
-                             .toArray
+  def componentValue() =
+    list.getSelectedValuesList.toArray.asInstanceOf[Array[T]]
 }
 
 /**
@@ -175,8 +192,8 @@ object ListView {
    * @param l
    * @return with a new ListView wrapping the given JList
    */
-  def apply(l: JList[AnyRef]) = {
-    val lw = new ListView()
+  def apply[T <: AnyRef](l: JList[T])(implicit CT: ClassTag[T]) = {
+    val lw = new ListView[T](Vector[T]())
     lw.setWrapped(l)
     lw
   }

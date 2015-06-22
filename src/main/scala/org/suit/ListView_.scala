@@ -3,13 +3,16 @@
  */
 package org.suit
 
+import scala.reflect.ClassTag
+
 /**
  * @author Steven Dobay
- * For the properties' meaning got to ListView
+ * For the properties' meaning go to ListView
  */
-abstract class ListView_(private val items: AnyRef*) extends Component_ {
+abstract class ListView_[T <: AnyRef](private val items: T*)
+                                     (implicit CT: ClassTag[T]) extends Component_ {
 
-  private val view = new ListView(items)
+  private val view = new ListView(items.toVector)
 
   def pack() = view
 
@@ -24,5 +27,5 @@ abstract class ListView_(private val items: AnyRef*) extends Component_ {
   val fixedSize = Property[Size](view.fixedSize(_))
 
   val onSelection =
-    Property[(ListView, Int, Int) => Unit](view.onSelection(_))
+    Property[(ListView[T], Int, Int) => Unit](view.onSelection(_))
 }
