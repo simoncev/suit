@@ -13,6 +13,10 @@ abstract class ToggleButton_ extends Widget_ {
 
   def pack() = btn
 
+  def value() = btn.text
+
+  def map(fn: String => String) = btn.text = fn(btn.text)
+
   val text = Property[String](btn.text = _)
 
   val toggled = Property[Boolean](b => if(b) btn.doClick())

@@ -13,7 +13,10 @@ abstract class Slider_(private val initMin: Int = 0,
 
   val min = Property[Int](slider.min = _)
   val max = Property[Int](slider.max = _)
-  val value = Property[Int](slider.value = _)
+
+  def value() = Property[Int](slider.value = _)
+
+  def map(fn: Int => Int) = slider.value = fn(slider.value)
 
   val onChange = Property[ChangeEvent => Unit](slider.changeEvents += _)
 

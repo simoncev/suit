@@ -17,6 +17,10 @@ abstract class TextArea_(private val txt: String = "")
 
   val text = Property[String](area.text = _)
 
+  def value() = area.text
+
+  def map(fn: String => String) = area.text = fn(area.text)
+
   val document = Property[Document](area.document = _)
 
   val caretPosition = Property[Int](area.caretPosition = _)

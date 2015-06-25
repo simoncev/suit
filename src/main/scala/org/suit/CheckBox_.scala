@@ -17,6 +17,8 @@ case class CheckBox_(private val isChecked: Boolean = false)
 
   val text = Property[String](btn.text = _)
 
+  def value() = btn.isSelected()
+
   val holder = Property[HolderOf[Boolean]](btn.holder = _)
 
   val onChange = Property[ChangeEvent => Unit](btn.changeEvents += _)

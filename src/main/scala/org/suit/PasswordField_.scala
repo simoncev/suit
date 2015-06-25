@@ -19,6 +19,11 @@ abstract class PasswordField_(private val txt: String = "")
 
   val text = Property[String](field.text = _)
 
+  def value() = field.text
+
+  def map(fn: String => String) =
+    field.text = fn(field.text)
+
   val document = Property[Document](field.document = _)
 
   val caretPosition = Property[Int](field.caretPosition = _)

@@ -16,6 +16,8 @@ abstract class RadioButton_(private val txt: String)
 
   val text = Property[String](btn.text = _)
 
+  def value() = btn.isSelected()
+
   val selected = Property[Boolean](
     b => if(b) btn.select() else btn.deselect()
   )

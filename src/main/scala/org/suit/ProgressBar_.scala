@@ -15,8 +15,12 @@ abstract class ProgressBar_(private val lowerBound: Int = 0,
     = new ProgressBar(lowerBound, upperBound, defaultValue)
 
   val min = Property[Int](bar.min = _)
+
   val max = Property[Int](bar.max = _)
-  val value = Property[Int](bar.value = _)
+
+  def value() = Property[Int](bar.value = _)
+
+  def map(fn: Int => Int) = bar.value = fn(bar.value)
 
   def pack() = bar
 }
