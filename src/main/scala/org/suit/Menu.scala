@@ -9,8 +9,10 @@ import javax.swing.JMenu
 /**
  * @author Steven Dobay
  */
-case class Menu(private val initTitle: String) {
-  private var menu: JMenu = new JMenu(initTitle)
+case class Menu(private val initTitle: String)
+ extends MenuItem(new JMenu(initTitle)) {
+
+  private var menu: JMenu = menuItem.asInstanceOf[JMenu]
 
   menu.putClientProperty("suit-wrapper", this)
 
@@ -75,30 +77,6 @@ case class Menu(private val initTitle: String) {
    })
 
   /**
-   * Adds the action-handling to the menu
-   * @param proc
-   * @return with the menu
-   */
-  def withAction(proc : ActionEvent => Unit): Menu = {
-    menu.addActionListener(new ActionListener {
-      override def actionPerformed(e: JAction): Unit =
-        proc(ActionEvent(e))
-    })
-    this
-  }
-
-  /**
-   * Adds the action-handling to the menu
-   * @return with the menu
-   */
-  def @> = withAction _
-
-  /**
-   * @return with the wrapped object
-   */
- protected[suit] def wrapped = menu
-
-  /**
    * Updates the wrapped jmenu
    * @param m
    */
@@ -114,4 +92,9 @@ case class Menu(private val initTitle: String) {
   else if(obj.isInstanceOf[JMenu])
     obj.asInstanceOf[JMenu] == wrapped
   else false
+
+  /**
+   * @return with the name of the class
+   */
+  def className = "Menu"
 }
