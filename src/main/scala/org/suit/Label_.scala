@@ -7,7 +7,7 @@ package org.suit
  * @author Steven Dobay
  */
 abstract class Label_(private val t: String) extends Widget_ {
-  private var lab = new Label(t)
+  private val lab = new Label(t)
 
   def pack() = lab
 

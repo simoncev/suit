@@ -10,6 +10,7 @@ import javax.swing.text.Document
  */
 abstract class PasswordField_(private val txt: String = "")
   extends Widget_ {
+
   private val field = new PasswordField()
   field.password = txt
 
