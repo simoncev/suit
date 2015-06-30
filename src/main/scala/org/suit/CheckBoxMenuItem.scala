@@ -9,6 +9,7 @@ import javax.swing.JCheckBoxMenuItem
 
 /**
  * @author Steven Dobay
+ * A checkbox to be shown in a menu.
  */
 case class CheckBoxMenuItem(private val initTitle: String,
                             private val isChecked: Boolean = false)

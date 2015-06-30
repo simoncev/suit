@@ -95,16 +95,27 @@ trait Component { self =>
     self
   }
 
-
+  /**
+   * @return with the minimum size
+   */
   def minSize = wrapped.getMinimumSize
 
+  /**
+   * Builder to set the minimum size of the component
+   */
   def withMinSize(d: Size) = {
     wrapped.setMinimumSize(d)
     self
   }
 
+  /**
+   * @return with the maximum size of the component
+   */
   def maxSize = wrapped.getMaximumSize
 
+  /**
+   * Builder to set the maximum size of the component
+   */
   def withMaxSize(d: Size) = {
     wrapped.setMaximumSize(d)
     self
@@ -155,18 +166,31 @@ trait Component { self =>
    */
   def border_=(b: Border) = wrapped.setBorder(b)
 
+  /**
+   * Builder to set the border of the component
+   */
   def withBorder(b: Border) = {
     wrapped.setBorder(b)
     self
   }
 
+  /**
+   * Revalidates the component.
+   */
   def revalidate() = wrapped.revalidate()
 
+  /**
+   * Repaints the component in the given time in millis.
+   */
   def repaint(l: Long) =
     wrapped.repaint(l)
 
+  /**
+   * Repaints the component.
+   */
   def repaint() =
     wrapped.repaint()
+
   /**
    * @return with the component's background
    */

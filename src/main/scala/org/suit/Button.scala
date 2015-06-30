@@ -9,7 +9,8 @@ import java.awt.event.{MouseListener, ActionListener}
 import javax.swing.{BorderFactory, JButton}
 
 /**
- * @author Steven Dobay
+ * @author Steven Dobayű
+ * Simple button object to make simple actions.
  */
 case class Button(private val initText: String = "") extends Widget {
 
@@ -17,6 +18,9 @@ case class Button(private val initText: String = "") extends Widget {
 
  button.putClientProperty("suit-wrapper", this)
 
+  /**
+   * Builder to set the text of the button.
+   */
  def withText(txt: String) = {
    button.setText(txt)
    this
